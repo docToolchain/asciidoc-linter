@@ -27,12 +27,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
+    	<loc>http://jbake.org/arc42/index.html</loc>
     	<lastmod>2024-11-26</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/index.html</loc>
+    	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
     	<lastmod>2024-11-26</lastmod>
     </url>
 
@@ -57,12 +57,42 @@
     </url>
 
     <url>
+    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
     	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
     	<lastmod>2024-11-26</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
+    	<loc>http://jbake.org/manual/testing.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/development.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/usage.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/introduction.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/index.html</loc>
+    	<lastmod>2024-11-26</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/rules.html</loc>
     	<lastmod>2024-11-26</lastmod>
     </url>
 

@@ -1,0 +1,1904 @@
+<!doctype html>
+<html lang="de">
+<head>
+    
+    <!-- sourceuri: arc42/index.html -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="jbake" name="generator">
+    <meta content="INDEX, FOLLOW" name="ROBOTS">
+
+    <title>AsciiDoc Linter Architecture Documentation</title>
+    <meta content="docToolchain" property="og:title">
+    <meta content="build your dev docs the easy way..." property="og:description">
+    <meta content="website" property="og:type">
+    <meta content="docToolchain" property="og:site_name">
+    <meta content="docToolchain" itemprop="name">
+    <meta content="build your dev docs the easy way..." itemprop="description">
+    <meta content="summary" name="twitter:card">
+    <meta content="docToolchain" name="twitter:title">
+    <meta content="build your dev docs the easy way..." name="twitter:description">
+
+    <link as="style"
+        href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        rel="preload">
+    <link href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        integrity=""
+        rel="stylesheet">
+    <link href="../css/asciidoctor.css" rel="stylesheet">
+    <link href="../css/prettify.css" rel="stylesheet">
+
+    <!-- favicon generated with https://www.favicon-generator.org/ -->
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <style>
+    div.bg-light {
+        background-color: rgba(127, 180, 224, 0.3) !important;
+    }
+
+    /* for blog posts */
+    span.blogtag {
+        border-radius: 10px;
+        background-color: #30638E;
+        color: white;
+        padding: 5px 10px;
+    }
+
+    span.blogblogtag a {
+        color: white;
+        padding: 0
+    }
+
+    span.blogtag span {
+        margin-left: 10px;
+        border-radius: 10px;
+        background-color: white;
+        color: #30638E;
+    }
+
+    div.td-toc {
+        height: calc(100vh - 5rem) !important;
+    }
+
+    div#toctitle {
+        display: none
+    }
+
+    #td-section-nav {
+        max-height: calc(100vh - 4rem);
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    .td-page-meta {
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    #td-section-nav ul.td-sidebar-nav__section {
+        padding-left: 0;
+    }
+
+    span.navbar-logo {
+        padding-right: 1.5em;
+    }
+
+    .match {
+        font-size: smaller;
+    }
+
+    .admonitionblock td.icon .fa:before {
+        font-size: xxx-large;
+    }
+    </style>
+
+    <style>
+    div.openblock.primary div.content, div.openblock.secondary div.content {
+        border: 1px solid #7a2518;
+        padding: 5px;
+    }
+
+    div.openblock.primary div.content div.content, div.openblock.secondary div.content div.content {
+        border: 0 solid #7a2518;
+        padding: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .switch {
+        border-width: 1px 1px 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+        display: inline-block;
+    }
+
+    .switch--item {
+        padding: 2px 10px;
+        background-color: #ffffff;
+        color: #7a2518;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .switch--item:not(:first-child) {
+        border-width: 0 0 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+    }
+
+    .switch--item.selected {
+        background-color: #7a2519;
+        color: #ffffff;
+    }
+    </style>
+
+    <!-- copy-n-paste.js -->
+    <style>
+        div.listingblock {
+            position: relative;
+        }
+        div.listingblock > span.icon {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            visibility: hidden;
+            z-index: 2;
+            cursor: pointer;
+        }
+        div.listingblock:hover > span.icon {
+            visibility: visible;
+        }
+        div.listingblock div.content pre {
+            margin: 0;
+        }
+    </style>
+    <style>
+        .td-sidebar-nav__section {
+            padding-left: 9px;
+        }
+        details {
+            margin-left: 10px;
+        }
+        summary {
+            cursor: pointer;
+            padding-left: 10px; /* Erhöhter linker Padding für den Pfeil */
+            list-style: none;
+            position: relative; /* Für absolute Positionierung des Pfeils */
+        }
+        summary::before {
+            content: '>';
+            position: absolute;
+            left: 10px; /* Position des Pfeils */
+            top: 50%;
+            transform: translateY(-50%) translateX(-120%);
+            transition: transform 0.3s;
+        }
+        details[open] > summary::before {
+            transform: translateY(-50%) translateX(-120%) rotate(90deg);
+        }
+    </style>
+</head>
+
+<body onload="prettyPrint()" class="td-section">
+<header>
+	
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+    <a class="navbar-brand" href="../index.html">
+        <span class="navbar-logo"><img src="../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
+            class="font-weight-bold">docToolchain</span>
+    </a>
+    <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+        <ul class="navbar-nav mt-2 mt-lg-0">
+    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="navbar-nav d-none d-lg-block" >
+        <form action="../search.html">
+        <input aria-label="Search this site…" autocomplete="off" class="form-control td-search-input"
+               placeholder=" Search this site…" type="search" name="q">
+        </form>
+    </div>
+</nav>
+
+</header>
+<div class="container-fluid td-outer">
+	<div class="td-main">
+		<div class="row flex-xl-nowrap">
+			<div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+				<div class="td-sidebar__inner" id="td-sidebar-menu" >
+					
+
+        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../search.html">
+
+            <input aria-label="Search this site…" name="q" autocomplete="off" class="form-control td-search-input"
+                   placeholder=" Search this site…" type="search">
+
+
+            <button aria-controls="td-docs-nav" aria-expanded="false"
+                    aria-label="Toggle section navigation" class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" data-target="#td-section-nav"
+                    data-toggle="collapse" type="button">
+            </button>
+        </form>
+
+        <nav aria-label="Submenu" class="collapse td-sidebar-nav" id="td-section-nav" >
+
+            <ul class="td-sidebar-nav__section">
+                <li class="td-sidebar-nav__section-title">
+                    <span class="align-left pl-0 pr-2 pt-2 active td-sidebar-link td-sidebar-link__section">arc42</span>
+                </li>
+                <li>
+                  <ul>
+                      <li class="collapse show" id="docs">
+                          
+                        <ul class="td-sidebar-nav__section ul-0">
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
+                                   href="../arc42/index.html" title="AsciiDoc Linter Architecture Documentation">AsciiDoc Linter Architecture Documentation</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/01_introduction_and_goals.html" title="Introduction and Goals">Introduction and Goals</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/02_architecture_constraints.html" title="Architecture Constraints">Architecture Constraints</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/03_system_scope_and_context.html" title="System Scope and Context">System Scope and Context</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/04_solution_strategy.html" title="Solution Strategy">Solution Strategy</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/05_building_block_view.html" title="Building Block View">Building Block View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/06_runtime_view.html" title="Runtime View">Runtime View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/07_deployment_view.html" title="Deployment View">Deployment View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/08_concepts.html" title="Cross-cutting Concepts">Cross-cutting Concepts</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/09_architecture_decisions.html" title="Architecture Decisions">Architecture Decisions</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/10_quality_requirements.html" title="Quality Requirements">Quality Requirements</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/11_technical_risks.html" title="Technical Risks and Technical Debt">Technical Risks and Technical Debt</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../arc42/12_glossary.html" title="Glossary">Glossary</a>
+                                
+                            </li>
+                        </ul>
+                      </li>
+                  </ul>
+                <li>
+        </nav>
+
+				</div>
+			</div>
+			<div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+				<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+					
+
+        <a href="##git-repo-url##/arc42/index.adoc"
+           target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
+
+
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Architecture+Documentation%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/index.adoc%0A%23branch:%20main" target="_blank"><i
+                class="fab fa-github fa-fw"></i> Create an issue</a>
+
+        
+
+        <hr />
+
+        <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_asciidoc_linter_architecture_documentation">AsciiDoc Linter Architecture Documentation</a></li>
+<li><a href="#_introduction_and_goals">Introduction and Goals</a>
+<ul class="sectlevel2">
+<li><a href="#_requirements_overview">Requirements Overview</a></li>
+<li><a href="#_quality_goals">Quality Goals</a></li>
+<li><a href="#_stakeholders">Stakeholders</a></li>
+</ul>
+</li>
+<li><a href="#_architecture_constraints">Architecture Constraints</a>
+<ul class="sectlevel2">
+<li><a href="#_technical_constraints">Technical Constraints</a></li>
+<li><a href="#_organizational_constraints">Organizational Constraints</a></li>
+<li><a href="#_conventions">Conventions</a></li>
+</ul>
+</li>
+<li><a href="#_system_scope_and_context">System Scope and Context</a>
+<ul class="sectlevel2">
+<li><a href="#_business_context">Business Context</a></li>
+<li><a href="#_technical_context">Technical Context</a></li>
+</ul>
+</li>
+<li><a href="#_solution_strategy">Solution Strategy</a>
+<ul class="sectlevel2">
+<li><a href="#_quality_goals_and_architectural_approaches">Quality Goals and Architectural Approaches</a></li>
+<li><a href="#_technology_decisions">Technology Decisions</a></li>
+<li><a href="#_implementation_patterns">Implementation Patterns</a></li>
+</ul>
+</li>
+<li><a href="#_building_block_view">Building Block View</a>
+<ul class="sectlevel2">
+<li><a href="#_level_1_system_overview">Level 1 - System Overview</a></li>
+<li><a href="#_level_2_core_components">Level 2 - Core Components</a></li>
+<li><a href="#_level_3_rule_implementation">Level 3 - Rule Implementation</a></li>
+</ul>
+</li>
+<li><a href="#_runtime_view">Runtime View</a>
+<ul class="sectlevel2">
+<li><a href="#_document_processing_sequence">Document Processing Sequence</a></li>
+<li><a href="#_rule_loading_sequence">Rule Loading Sequence</a></li>
+<li><a href="#_error_reporting_sequence">Error Reporting Sequence</a></li>
+</ul>
+</li>
+<li><a href="#_deployment_view">Deployment View</a>
+<ul class="sectlevel2">
+<li><a href="#_infrastructure_level_1">Infrastructure Level 1</a></li>
+<li><a href="#_technical_infrastructure">Technical Infrastructure</a></li>
+<li><a href="#_security_and_access">Security and Access</a></li>
+</ul>
+</li>
+<li><a href="#_cross_cutting_concepts">Cross-cutting Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#_domain_concepts">Domain Concepts</a></li>
+<li><a href="#_security_concepts">Security Concepts</a>
+<ul class="sectlevel3">
+<li><a href="#_authentication_and_authorization">Authentication and Authorization</a></li>
+<li><a href="#_input_validation">Input Validation</a></li>
+<li><a href="#_output_sanitization">Output Sanitization</a></li>
+</ul>
+</li>
+<li><a href="#_development_concepts">Development Concepts</a>
+<ul class="sectlevel3">
+<li><a href="#_test_strategy">Test Strategy</a></li>
+<li><a href="#_release_process">Release Process</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_concepts">Configuration Concepts</a>
+<ul class="sectlevel3">
+<li><a href="#_rule_configuration">Rule Configuration</a></li>
+<li><a href="#_plugin_system">Plugin System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_architecture_decisions">Architecture Decisions</a>
+<ul class="sectlevel2">
+<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a>
+<ul class="sectlevel3">
+<li><a href="#_status">Status</a></li>
+<li><a href="#_context">Context</a></li>
+<li><a href="#_decision">Decision</a></li>
+<li><a href="#_consequences">Consequences</a></li>
+</ul>
+</li>
+<li><a href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a>
+<ul class="sectlevel3">
+<li><a href="#_status_2">Status</a></li>
+<li><a href="#_context_2">Context</a></li>
+<li><a href="#_decision_2">Decision</a></li>
+<li><a href="#_consequences_2">Consequences</a></li>
+</ul>
+</li>
+<li><a href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a>
+<ul class="sectlevel3">
+<li><a href="#_status_3">Status</a></li>
+<li><a href="#_context_3">Context</a></li>
+<li><a href="#_decision_3">Decision</a></li>
+<li><a href="#_consequences_3">Consequences</a></li>
+</ul>
+</li>
+<li><a href="#_adr_4_test_strategy">ADR 4: Test Strategy</a>
+<ul class="sectlevel3">
+<li><a href="#_status_4">Status</a></li>
+<li><a href="#_context_4">Context</a></li>
+<li><a href="#_decision_4">Decision</a></li>
+<li><a href="#_consequences_4">Consequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_quality_requirements">Quality Requirements</a>
+<ul class="sectlevel2">
+<li><a href="#_quality_scenarios">Quality Scenarios</a>
+<ul class="sectlevel3">
+<li><a href="#_performance_scenarios">Performance Scenarios</a></li>
+<li><a href="#_reliability_scenarios">Reliability Scenarios</a></li>
+<li><a href="#_usability_scenarios">Usability Scenarios</a></li>
+</ul>
+</li>
+<li><a href="#_quality_tree">Quality Tree</a></li>
+</ul>
+</li>
+<li><a href="#_technical_risks_and_technical_debt">Technical Risks and Technical Debt</a>
+<ul class="sectlevel2">
+<li><a href="#_risk_analysis">Risk Analysis</a></li>
+<li><a href="#_technical_debt">Technical Debt</a>
+<ul class="sectlevel3">
+<li><a href="#_current_technical_debt">Current Technical Debt</a></li>
+<li><a href="#_planned_improvements">Planned Improvements</a></li>
+</ul>
+</li>
+<li><a href="#_risk_matrix">Risk Matrix</a></li>
+</ul>
+</li>
+<li><a href="#_glossary">Glossary</a></li>
+</ul>
+</div>
+
+
+
+
+				</div>
+			</div>
+			<main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+				    <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+        <ol class="breadcrumb spb-1">
+            <!--li aria-current="page" class="breadcrumb-item active">
+                <a href="https://example.docsy.dev/docs/">Documentation</a>
+            </li-->
+
+        </ol>
+    </nav>
+
+
+    <div class="td-content">
+        <p>
+            
+<div class="sect1">
+<h2 id="_asciidoc_linter_architecture_documentation">AsciiDoc Linter Architecture Documentation</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction_and_goals"><a class="anchor" href="#_introduction_and_goals"></a><a class="link" href="#_introduction_and_goals">Introduction and Goals</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a><a class="link" href="#_requirements_overview">Requirements Overview</a></h3>
+<div class="paragraph">
+<p>The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents. It helps teams maintain high-quality documentation by enforcing style rules and best practices.</p>
+</div>
+<div class="paragraph">
+<p>Key requirements include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Validate AsciiDoc heading structure</p>
+</li>
+<li>
+<p>Ensure consistent formatting</p>
+</li>
+<li>
+<p>Provide clear error messages</p>
+</li>
+<li>
+<p>Easy integration into existing workflows</p>
+</li>
+<li>
+<p>Extensible rule system</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_goals"><a class="anchor" href="#_quality_goals"></a><a class="link" href="#_quality_goals">Quality Goals</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">Quality Goal</th>
+<th class="tableblock halign-left valign-top">Motivation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extensibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The system must be easily extensible with new rules to accommodate different documentation standards and requirements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reliability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The linter must provide consistent and accurate results to maintain user trust.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error messages must be clear and actionable, helping users fix documentation issues efficiently.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The linter should process documents quickly to maintain a smooth workflow.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The code must be well-structured and documented to facilitate future enhancements.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_stakeholders"><a class="anchor" href="#_stakeholders"></a><a class="link" href="#_stakeholders">Stakeholders</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role/Name</th>
+<th class="tableblock halign-left valign-top">Contact</th>
+<th class="tableblock halign-left valign-top">Expectations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation Writers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Clear error messages
+* Consistent results
+* Quick feedback</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation Maintainers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Configurable rules
+* Reliable validation
+* Integration with existing tools</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Development Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>dev team</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Extensible architecture
+* Good test coverage
+* Clear documentation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technical Writers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Support for AsciiDoc best practices
+* Customizable rule sets
+* Batch processing capabilities</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architecture_constraints"><a class="anchor" href="#_architecture_constraints"></a><a class="link" href="#_architecture_constraints">Architecture Constraints</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_technical_constraints"><a class="anchor" href="#_technical_constraints"></a><a class="link" href="#_technical_constraints">Technical Constraints</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constraint</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Background</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python 3.8+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The system must run on Python 3.8 or higher</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Need for modern language features and type hints</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform Independence</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must run on Windows, Linux, and macOS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for all major development platforms</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No External Dependencies</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core functionality should work without external libraries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Easy installation and deployment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memory Footprint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should process documents with minimal memory usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for large documentation projects</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_organizational_constraints"><a class="anchor" href="#_organizational_constraints"></a><a class="link" href="#_organizational_constraints">Organizational Constraints</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constraint</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Background</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project must be open source under MIT license</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Community involvement and transparency</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All code must be documented with docstrings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability and community contribution</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum 90% test coverage required</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quality assurance and reliability</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version Control</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Git-based development with feature branches</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collaborative development process</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_conventions"><a class="anchor" href="#_conventions"></a><a class="link" href="#_conventions">Conventions</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Convention</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Background</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code Style</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follow PEP 8 guidelines</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python community standards</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type Hints</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use type hints throughout the code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code clarity and IDE support</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commit Messages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follow conventional commits specification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear change history</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation Format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use AsciiDoc for all documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dogfooding our own tool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_system_scope_and_context"><a class="anchor" href="#_system_scope_and_context"></a><a class="link" href="#_system_scope_and_context">System Scope and Context</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_business_context"><a class="anchor" href="#_business_context"></a><a class="link" href="#_business_context">Business Context</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-bc984d68d9cd61adff15099d4a447375.png" alt="Diagram" width="660" height="888">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technical_context"><a class="anchor" href="#_technical_context"></a><a class="link" href="#_technical_context">Technical Context</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-f39681c80328280dbd4542411c3183cb.png" alt="Diagram" width="591" height="566">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solution_strategy"><a class="anchor" href="#_solution_strategy"></a><a class="link" href="#_solution_strategy">Solution Strategy</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_quality_goals_and_architectural_approaches"><a class="anchor" href="#_quality_goals_and_architectural_approaches"></a><a class="link" href="#_quality_goals_and_architectural_approaches">Quality Goals and Architectural Approaches</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Quality Goal</th>
+<th class="tableblock halign-left valign-top">Solution Approach</th>
+<th class="tableblock halign-left valign-top">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extensibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Abstract base classes
+* Plugin architecture
+* Clear interfaces</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* New rules can be added by extending base classes
+* Plugin system allows external rule packages
+* Well-defined interfaces for rule implementation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reliability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Comprehensive testing
+* Strong typing
+* Defensive programming</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* High test coverage
+* Type hints throughout the code
+* Careful input validation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Clear error messages
+* Context information
+* Configuration options</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Detailed error descriptions
+* Line and column information
+* Configurable rule severity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Efficient algorithms
+* Lazy loading
+* Caching</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Line-by-line processing
+* Rules loaded on demand
+* Cache parsing results</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Clean architecture
+* SOLID principles
+* Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Clear separation of concerns
+* Single responsibility principle
+* Comprehensive documentation</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_technology_decisions"><a class="anchor" href="#_technology_decisions"></a><a class="link" href="#_technology_decisions">Technology Decisions</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Technology</th>
+<th class="tableblock halign-left valign-top">Decision</th>
+<th class="tableblock halign-left valign-top">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary implementation language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Strong standard library
+* Great text processing capabilities
+* Wide adoption in tooling</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regular Expressions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pattern matching</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Built into Python
+* Efficient for text processing
+* Well understood by developers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YAML</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Human readable
+* Standard format
+* Good library support</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unittest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testing framework</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Part of Python standard library
+* Well known to developers
+* Good IDE support</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_implementation_patterns"><a class="anchor" href="#_implementation_patterns"></a><a class="link" href="#_implementation_patterns">Implementation Patterns</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-4cc1c998b5e9b825cc3c017f56e90ca8.png" alt="Diagram" width="1062" height="255">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_block_view"><a class="anchor" href="#_building_block_view"></a><a class="link" href="#_building_block_view">Building Block View</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_level_1_system_overview"><a class="anchor" href="#_level_1_system_overview"></a><a class="link" href="#_level_1_system_overview">Level 1 - System Overview</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-552f9905a2db14dac31e73e3335b3c4c.png" alt="Diagram" width="354" height="671">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_level_2_core_components"><a class="anchor" href="#_level_2_core_components"></a><a class="link" href="#_level_2_core_components">Level 2 - Core Components</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-bd065be43a0e3c44bc01a78df09f0481.png" alt="Diagram" width="572" height="425">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_level_3_rule_implementation"><a class="anchor" href="#_level_3_rule_implementation"></a><a class="link" href="#_level_3_rule_implementation">Level 3 - Rule Implementation</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-6631293ca460777c0096f9e9fd0c3d88.png" alt="Diagram" width="836" height="564">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_runtime_view"><a class="anchor" href="#_runtime_view"></a><a class="link" href="#_runtime_view">Runtime View</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_document_processing_sequence"><a class="anchor" href="#_document_processing_sequence"></a><a class="link" href="#_document_processing_sequence">Document Processing Sequence</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-1a698f04a440d6d0638864f48e8c3927.png" alt="Diagram" width="699" height="354">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rule_loading_sequence"><a class="anchor" href="#_rule_loading_sequence"></a><a class="link" href="#_rule_loading_sequence">Rule Loading Sequence</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-f6e92b0896ae0bf8823fe68634b0297c.png" alt="Diagram" width="562" height="354">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_reporting_sequence"><a class="anchor" href="#_error_reporting_sequence"></a><a class="link" href="#_error_reporting_sequence">Error Reporting Sequence</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-28bdcf75ad456f9c412b83c43bdb306c.png" alt="Diagram" width="550" height="338">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deployment_view"><a class="anchor" href="#_deployment_view"></a><a class="link" href="#_deployment_view">Deployment View</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_infrastructure_level_1"><a class="anchor" href="#_infrastructure_level_1"></a><a class="link" href="#_infrastructure_level_1">Infrastructure Level 1</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-64cd0742ddbe836946453973e9b80699.png" alt="Diagram" width="892" height="455">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technical_infrastructure"><a class="anchor" href="#_technical_infrastructure"></a><a class="link" href="#_technical_infrastructure">Technical Infrastructure</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-2ffe1e3c52ff7f16594896c7215c770b.png" alt="Diagram" width="607" height="785">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_security_and_access"><a class="anchor" href="#_security_and_access"></a><a class="link" href="#_security_and_access">Security and Access</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-16da950f9cb536a4f1672a05a2256a60.png" alt="Diagram" width="626" height="339">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cross_cutting_concepts"><a class="anchor" href="#_cross_cutting_concepts"></a><a class="link" href="#_cross_cutting_concepts">Cross-cutting Concepts</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_domain_concepts"><a class="anchor" href="#_domain_concepts"></a><a class="link" href="#_domain_concepts">Domain Concepts</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-e06aae0d565b6012a338ec5970310fb2.png" alt="Diagram" width="487" height="507">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_security_concepts"><a class="anchor" href="#_security_concepts"></a><a class="link" href="#_security_concepts">Security Concepts</a></h3>
+<div class="sect3">
+<h4 id="_authentication_and_authorization"><a class="anchor" href="#_authentication_and_authorization"></a><a class="link" href="#_authentication_and_authorization">Authentication and Authorization</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Package distribution secured via PyPI authentication</p>
+</li>
+<li>
+<p>Configuration files with restricted access</p>
+</li>
+<li>
+<p>Signed releases with GPG keys</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_input_validation"><a class="anchor" href="#_input_validation"></a><a class="link" href="#_input_validation">Input Validation</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Strict content validation</p>
+</li>
+<li>
+<p>Safe file handling</p>
+</li>
+<li>
+<p>Memory usage limits</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output_sanitization"><a class="anchor" href="#_output_sanitization"></a><a class="link" href="#_output_sanitization">Output Sanitization</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Escaped error messages</p>
+</li>
+<li>
+<p>Safe file paths handling</p>
+</li>
+<li>
+<p>Controlled error reporting</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_concepts"><a class="anchor" href="#_development_concepts"></a><a class="link" href="#_development_concepts">Development Concepts</a></h3>
+<div class="sect3">
+<h4 id="_test_strategy"><a class="anchor" href="#_test_strategy"></a><a class="link" href="#_test_strategy">Test Strategy</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-e2e0fdac24225f488f3f052692f69bb1.png" alt="Diagram" width="1105" height="336">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_release_process"><a class="anchor" href="#_release_process"></a><a class="link" href="#_release_process">Release Process</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-13b99389ab82f5f898c42ba0041b117f.png" alt="Diagram" width="283" height="660">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_concepts"><a class="anchor" href="#_configuration_concepts"></a><a class="link" href="#_configuration_concepts">Configuration Concepts</a></h3>
+<div class="sect3">
+<h4 id="_rule_configuration"><a class="anchor" href="#_rule_configuration"></a><a class="link" href="#_rule_configuration">Rule Configuration</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">rules:
+  heading_hierarchy:
+    enabled: true
+    severity: error
+    options:
+      max_level: 6
+
+  heading_format:
+    enabled: true
+    severity: warning
+    options:
+      require_space: true
+      require_capitalization: true</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_plugin_system"><a class="anchor" href="#_plugin_system"></a><a class="link" href="#_plugin_system">Plugin System</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-48f18fe0512af09b9b0bc5addf4343e8.png" alt="Diagram" width="218" height="442">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architecture_decisions"><a class="anchor" href="#_architecture_decisions"></a><a class="link" href="#_architecture_decisions">Architecture Decisions</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_adr_1_rule_base_class_design"><a class="anchor" href="#_adr_1_rule_base_class_design"></a><a class="link" href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a></h3>
+<div class="sect3">
+<h4 id="_status"><a class="anchor" href="#_status"></a><a class="link" href="#_status">Status</a></h4>
+<div class="paragraph">
+<p>Accepted</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context"><a class="anchor" href="#_context"></a><a class="link" href="#_context">Context</a></h4>
+<div class="paragraph">
+<p>We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision"><a class="anchor" href="#_decision"></a><a class="link" href="#_decision">Decision</a></h4>
+<div class="paragraph">
+<p>We will use an abstract base class <code>Rule</code> with a defined interface that all concrete rules must implement.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences"><a class="anchor" href="#_consequences"></a><a class="link" href="#_consequences">Consequences</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistent interface for all rules</p>
+</li>
+<li>
+<p>Easy to add new rules</p>
+</li>
+<li>
+<p>Clear separation of concerns</p>
+</li>
+<li>
+<p>Simplified testing through common interface</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Additional abstraction layer</p>
+</li>
+<li>
+<p>Slight performance overhead</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adr_2_finding_data_structure"><a class="anchor" href="#_adr_2_finding_data_structure"></a><a class="link" href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></h3>
+<div class="sect3">
+<h4 id="_status_2"><a class="anchor" href="#_status_2"></a><a class="link" href="#_status_2">Status</a></h4>
+<div class="paragraph">
+<p>Accepted</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_2"><a class="anchor" href="#_context_2"></a><a class="link" href="#_context_2">Context</a></h4>
+<div class="paragraph">
+<p>Rule violations need to be reported in a consistent and informative way.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_2"><a class="anchor" href="#_decision_2"></a><a class="link" href="#_decision_2">Decision</a></h4>
+<div class="paragraph">
+<p>We will use a <code>Finding</code> data class with fields for message, severity, position, rule ID, and context.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a><a class="link" href="#_consequences_2">Consequences</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Structured error reporting</p>
+</li>
+<li>
+<p>Rich context for violations</p>
+</li>
+<li>
+<p>Consistent error format</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More complex than simple string messages</p>
+</li>
+<li>
+<p>Requires more memory for storing findings</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adr_3_rule_implementation_strategy"><a class="anchor" href="#_adr_3_rule_implementation_strategy"></a><a class="link" href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></h3>
+<div class="sect3">
+<h4 id="_status_3"><a class="anchor" href="#_status_3"></a><a class="link" href="#_status_3">Status</a></h4>
+<div class="paragraph">
+<p>Accepted</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_3"><a class="anchor" href="#_context_3"></a><a class="link" href="#_context_3">Context</a></h4>
+<div class="paragraph">
+<p>Rules need to process AsciiDoc content and identify violations efficiently.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_3"><a class="anchor" href="#_decision_3"></a><a class="link" href="#_decision_3">Decision</a></h4>
+<div class="paragraph">
+<p>Each rule will process the content line by line, using regular expressions for pattern matching.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a><a class="link" href="#_consequences_3">Consequences</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Simple implementation</p>
+</li>
+<li>
+<p>Good performance for most cases</p>
+</li>
+<li>
+<p>Easy to understand and maintain</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Limited context awareness</p>
+</li>
+<li>
+<p>May miss some complex patterns</p>
+</li>
+<li>
+<p>Regular expressions can become complex</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adr_4_test_strategy"><a class="anchor" href="#_adr_4_test_strategy"></a><a class="link" href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></h3>
+<div class="sect3">
+<h4 id="_status_4"><a class="anchor" href="#_status_4"></a><a class="link" href="#_status_4">Status</a></h4>
+<div class="paragraph">
+<p>Accepted</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_4"><a class="anchor" href="#_context_4"></a><a class="link" href="#_context_4">Context</a></h4>
+<div class="paragraph">
+<p>Rules need to be thoroughly tested to ensure reliable operation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_4"><a class="anchor" href="#_decision_4"></a><a class="link" href="#_decision_4">Decision</a></h4>
+<div class="paragraph">
+<p>Each rule will have its own test class with multiple test methods covering various scenarios.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a><a class="link" href="#_consequences_4">Consequences</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>High test coverage</p>
+</li>
+<li>
+<p>Clear test organization</p>
+</li>
+<li>
+<p>Easy to add new test cases</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More maintenance effort</p>
+</li>
+<li>
+<p>Longer test execution time
+:jbake-status: published
+:jbake-order: 10
+:jbake-type: page_toc
+:jbake-menu: arc42
+:jbake-title: Quality Requirements</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quality_requirements"><a class="anchor" href="#_quality_requirements"></a><a class="link" href="#_quality_requirements">Quality Requirements</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_quality_scenarios"><a class="anchor" href="#_quality_scenarios"></a><a class="link" href="#_quality_scenarios">Quality Scenarios</a></h3>
+<div class="sect3">
+<h4 id="_performance_scenarios"><a class="anchor" href="#_performance_scenarios"></a><a class="link" href="#_performance_scenarios">Performance Scenarios</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fast Document Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process 1000-line document</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 1 second</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Multiple File Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process 100 documents</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 10 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memory Usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process large document (10MB)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use &lt; 100MB RAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Startup Time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Launch linter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ready in &lt; 0.5 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_reliability_scenarios"><a class="anchor" href="#_reliability_scenarios"></a><a class="link" href="#_reliability_scenarios">Reliability Scenarios</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Recovery</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid input file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear error message, continue with next file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration Error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid rule configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detailed error message, use defaults</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plugin Failure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plugin crashes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolate failure, continue with other rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource Exhaustion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System low on memory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Graceful shutdown, save progress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_usability_scenarios"><a class="anchor" href="#_usability_scenarios"></a><a class="link" href="#_usability_scenarios">Usability Scenarios</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear Error Messages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule violation found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show file, line, and actionable message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change rule settings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Take effect without restart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use in CI pipeline</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exit code reflects success/failure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Look up rule details</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Find explanation within 30 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_tree"><a class="anchor" href="#_quality_tree"></a><a class="link" href="#_quality_tree">Quality Tree</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-1b02f748ff9b61a402b0b1c9b052f0d7.png" alt="Diagram" width="1847" height="397">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_technical_risks_and_technical_debt"><a class="anchor" href="#_technical_risks_and_technical_debt"></a><a class="link" href="#_technical_risks_and_technical_debt">Technical Risks and Technical Debt</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_risk_analysis"><a class="anchor" href="#_risk_analysis"></a><a class="link" href="#_risk_analysis">Risk Analysis</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Risk</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+<th class="tableblock halign-left valign-top">Probability</th>
+<th class="tableblock halign-left valign-top">Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance Degradation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule processing becomes slow with many rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Profile rule execution
+* Implement rule caching
+* Optimize core algorithms</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memory Leaks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long-running processes accumulate memory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Regular memory profiling
+* Automated testing
+* Resource cleanup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False Positives</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rules report incorrect violations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Extensive test cases
+* User feedback system
+* Rule configuration options</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plugin Conflicts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom rules interfere with core rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Plugin isolation
+* Version compatibility checks
+* Clear plugin API</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_technical_debt"><a class="anchor" href="#_technical_debt"></a><a class="link" href="#_technical_debt">Technical Debt</a></h3>
+<div class="sect3">
+<h4 id="_current_technical_debt"><a class="anchor" href="#_current_technical_debt"></a><a class="link" href="#_current_technical_debt">Current Technical Debt</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Area</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some edge cases not covered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some advanced features poorly documented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Handling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some error cases not specifically handled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hard-coded values that should be configurable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_planned_improvements"><a class="anchor" href="#_planned_improvements"></a><a class="link" href="#_planned_improvements">Planned Improvements</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-df87a0d860b90a11bcd8ab5839300ffe.png" alt="Diagram" width="913" height="269">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_risk_matrix"><a class="anchor" href="#_risk_matrix"></a><a class="link" href="#_risk_matrix">Risk Matrix</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-3261e7de71c996ba719a864f767a7ebc.png" alt="Diagram" width="1006" height="269">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glossary"><a class="anchor" href="#_glossary"></a><a class="link" href="#_glossary">Glossary</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-left valign-top">Definition</th>
+<th class="tableblock halign-left valign-top">Additional Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AsciiDoc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lightweight markup language for documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Similar to Markdown, but with more features for technical documentation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tool that analyzes source code or text for potential errors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Focuses on style, format, and structure issues</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Individual check that validates specific aspects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can be enabled/disabled and configured</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Result of a rule check indicating a potential issue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains message, severity, and location information</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Severity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Importance level of a finding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR, WARNING, or INFO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Position</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location in a document where an issue was found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains line and optional column information</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plugin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extension that adds additional functionality</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can provide custom rules and configurations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CI/CD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continuous Integration/Continuous Deployment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automated build, test, and deployment process</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PyPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python Package Index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Central repository for Python packages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual Environment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolated Python runtime environment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages project-specific dependencies</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type Hints</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python type annotations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Helps with code understanding and static analysis</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit Test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test of individual components</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensures correct behavior of specific functions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration Test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test of component interactions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verifies system behavior as a whole</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Measure of code tested by automated tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usually expressed as percentage</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technical Debt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Development shortcuts that need future attention</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Balance between quick delivery and maintainability</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+        </p>
+
+        <style>
+.feedback--answer {
+    display: inline-block;
+}
+
+.feedback--answer-no {
+    margin-left: 1em;
+}
+
+.feedback--response {
+    display: none;
+    margin-top: 1em;
+}
+
+.feedback--response__visible {
+    display: block;
+}
+</style>
+
+<div class="d-print-none">
+    <h2 class="feedback--title">Feedback</h2>
+    <p class="feedback--question">Was this page helpful?</p>
+    <button class="feedback--answer feedback--answer-yes">Yes</button>
+    <button class="feedback--answer feedback--answer-no">No</button>
+    <p class="feedback--response feedback--response-yes">
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Architecture+Documentation%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/index.adoc">tell us
+    how we can improve</a>.
+    </p>
+    <p class="feedback--response feedback--response-no">
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Architecture+Documentation%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/index.adoc">tell
+    us how we can improve</a>.
+    </p>
+</div>
+<script>
+    const yesButton = document.querySelector('.feedback--answer-yes');
+    const noButton = document.querySelector('.feedback--answer-no');
+    const yesResponse = document.querySelector('.feedback--response-yes');
+    const noResponse = document.querySelector('.feedback--response-no');
+    const disableButtons = () => {
+        yesButton.disabled = true;
+        noButton.disabled = true;
+    };
+    const sendFeedback = (value) => {
+        if (typeof ga !== 'function') return;
+        const args = {
+            command: 'send',
+            hitType: 'event',
+            category: 'Helpful',
+            action: 'click',
+            label: window.location.pathname,
+            value: value
+        };
+        ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+    };
+    yesButton.addEventListener('click', () => {
+        yesResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(1);
+    });
+    noButton.addEventListener('click', () => {
+        noResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(0);
+    });
+</script>
+
+
+        <br>
+
+        <!--div class="text-muted mt-5 pt-3 border-top">Last modified July 3, 2019: <a
+                href="https://github.com/google/docsy-example/commit/d6aa89c8b24089d7e6741030864eff209465e896">Added
+            links to user guide repo (d6aa89c)</a>
+        </div-->
+    </div>
+
+
+			</main>
+
+		</div>
+	</div>
+
+
+	
+    <!--footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">&copy; 2020 | based on <a href="https://arc42.org">arc42 7.0</a> | mixed with <a href="http://getbootstrap.com/">Bootstrap v5.0.0-beta</a> | Baked with <a href="http://jbake.org">JBake v2.6.7</a></span>
+        </div>
+    </footer-->
+
+    <footer class="bg-dark py-5 row d-print-none">
+        <div class="container-fluid mx-sm-5">
+            <div class="row">
+                <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+
+
+                    <ul class="list-inline mb-0">
+                        
+                        <li aria-label="User mailing list" class="list-inline-item mx-2 h3" data-original-title="User mailing list" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="mailto:##footer-email##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Twitter" class="list-inline-item mx-2 h3" data-original-title="Twitter" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##twitter-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Stack Overflow" class="list-inline-item mx-2 h3" data-original-title="Stack Overflow" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Stackoverflow-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-stack-overflow"></i>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+
+                </div>
+                <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+
+
+                    <ul class="list-inline mb-0">
+
+                        
+                        <li aria-label="GitHub" class="list-inline-item mx-2 h3" data-original-title="GitHub" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Github-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </li>
+                        
+
+                        
+                        <li aria-label="Slack" class="list-inline-item mx-2 h3" data-original-title="Slack" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Slack-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-slack"></i>
+                            </a>
+                        </li>
+                        
+
+
+                    </ul>
+
+
+                </div>
+                <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+
+                        <small class="text-white">built with <a href="https://doctoolchain.org">docToolchain</a> and <a href="https://jbake.org">jBake</a> <br /> theme: <a href="https://www.docsy.dev/">docsy</a></small>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
+    <script src="../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
+    <script src="../js/blocks.js" ></script>
+    <script src="../js/prettify.js"></script>
+    <script src="../js/copy-n-paste.js"></script>
+    <script src="../js/submenucollapse.js"></script>
+
+
+</body>
+</html>

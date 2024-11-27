@@ -297,7 +297,46 @@
 
         <hr />
 
-        
+        <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_asciidoc_linter">AsciiDoc Linter</a>
+<ul class="sectlevel1">
+<li><a href="#_about">About</a></li>
+<li><a href="#_features">Features</a>
+<ul class="sectlevel2">
+<li><a href="#_implemented_rules">Implemented Rules</a></li>
+<li><a href="#_planned_rules">Planned Rules</a></li>
+</ul>
+</li>
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_usage">Usage</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_usage">Basic Usage</a></li>
+<li><a href="#_output_formats">Output Formats</a></li>
+<li><a href="#_example_output">Example Output</a></li>
+</ul>
+</li>
+<li><a href="#_development">Development</a>
+<ul class="sectlevel2">
+<li><a href="#_running_tests">Running Tests</a></li>
+<li><a href="#_project_structure">Project Structure</a></li>
+</ul>
+</li>
+<li><a href="#_contributing">Contributing</a>
+<ul class="sectlevel2">
+<li><a href="#_development_guidelines">Development Guidelines</a></li>
+</ul>
+</li>
+<li><a href="#_license">License</a></li>
+<li><a href="#_acknowledgments">Acknowledgments</a></li>
+<li><a href="#_roadmap">Roadmap</a></li>
+<li><a href="#_contact">Contact</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
 
 
 
@@ -317,8 +356,352 @@
     <div class="td-content">
         <p>
             
+<h1 id="_asciidoc_linter" class="sect0">AsciiDoc Linter</h1>
 <div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::../../README.adoc[]</p>
+<p><span class="image"><a class="image" href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a></span>
+<span class="image"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></span></p>
+</div>
+<div class="paragraph">
+<p>A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style.</p>
+</div>
+<div class="sect1">
+<h2 id="_about">About</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations. It helps maintain consistent documentation by enforcing rules for heading structure, formatting, and more.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This project was developed with the assistance of an AI language model (GPT-4) as part of an experiment in AI-assisted development. The AI helped design the architecture, implement the code, and create the documentation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features">Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_implemented_rules">Implemented Rules</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Rule ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check for proper heading incrementation (no skipping levels)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify heading format (spacing and capitalization)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR/WARNING</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect multiple top-level headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check for unterminated blocks (listing, example, sidebar, etc.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify proper spacing around blocks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_planned_rules">Planned Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>WS001: Blank lines around headers and blocks</p>
+</li>
+<li>
+<p>TABLE001: Table formatting consistency</p>
+</li>
+<li>
+<p>IMG001: Image alt text presence</p>
+</li>
+<li>
+<p>LINK001: Broken internal references</p>
+</li>
+<li>
+<p>FMT001: Markdown-compatible styles detection</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">Installation</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
+git clone https://github.com/yourusername/asciidoc-linter.git
+
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage">Usage</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_usage">Basic Usage</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
+
+# Check with specific output format
+asciidoc-lint --format json document.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_output_formats">Output Formats</h3>
+<div class="paragraph">
+<p>The linter supports three output formats:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>console</code> (default): Human-readable output</p>
+</li>
+<li>
+<p><code>json</code>: Machine-readable JSON format</p>
+</li>
+<li>
+<p><code>html</code>: HTML report format</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_output">Example Output</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>Checking file: document.adoc
+
+ERROR: Heading level skipped: found h3 after h1 (line 15)
+  === Advanced Topics
+
+WARNING: Heading should start with uppercase letter (line 23)
+  == introduction to concepts
+
+ERROR: Unterminated listing block starting (line 45)
+  ----
+
+WARNING: Block should be preceded by a blank line (line 67)
+  ----
+
+ERROR: Multiple top-level headings found (line 30)
+  First heading at line 1: 'Document Title'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development">Development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_running_tests">Running Tests</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run specific test file
+python -m unittest tests/rules/test_heading_rules.py</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project_structure">Project Structure</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>asciidoc-linter/
+├── asciidoc_linter/
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── rules.py
+│   ├── heading_rules.py
+│   ├── block_rules.py
+│   ├── parser.py
+│   └── reporter.py
+├── tests/
+│   └── rules/
+│       ├── test_heading_rules.py
+│       └── test_block_rules.py
+├── docs/
+│   ├── requirements.adoc
+│   └── block_rules.adoc
+├── README.adoc
+└── run_tests.py</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contributing">Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.</p>
+</div>
+<div class="sect2">
+<h3 id="_development_guidelines">Development Guidelines</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Write tests for new rules</p>
+</li>
+<li>
+<p>Update documentation</p>
+</li>
+<li>
+<p>Follow Python code style guidelines</p>
+</li>
+<li>
+<p>Add appropriate error messages and context</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_license">License</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acknowledgments">Acknowledgments</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>This project was developed with the assistance of GPT-4, demonstrating the potential of AI-assisted development</p>
+</li>
+<li>
+<p>Inspired by various linting tools and the need for better AsciiDoc quality control</p>
+</li>
+<li>
+<p>Thanks to the AsciiDoc community for their excellent documentation and tools</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_roadmap">Roadmap</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Phase 1 (Current)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>✅ Basic heading rules</p>
+</li>
+<li>
+<p>✅ Block structure rules</p>
+</li>
+<li>
+<p>⏳ Configuration system</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 2</p>
+<div class="ulist">
+<ul>
+<li>
+<p>🔲 Table validation</p>
+</li>
+<li>
+<p>🔲 Link checking</p>
+</li>
+<li>
+<p>🔲 Image validation</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 3</p>
+<div class="ulist">
+<ul>
+<li>
+<p>🔲 IDE integration</p>
+</li>
+<li>
+<p>🔲 Git pre-commit hooks</p>
+</li>
+<li>
+<p>🔲 Custom rule development</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contact">Contact</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Project Homepage: <a href="https://github.com/yourusername/asciidoc-linter" class="bare">https://github.com/yourusername/asciidoc-linter</a></p>
+</li>
+<li>
+<p>Issue Tracker: <a href="https://github.com/yourusername/asciidoc-linter/issues" class="bare">https://github.com/yourusername/asciidoc-linter/issues</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
         </p>
 

@@ -332,7 +332,7 @@
 <li><a href="#_testing_guide">Testing Guide</a></li>
 <li><a href="#_usage_guide">Usage Guide</a></li>
 <li><a href="#_rule_reference">Rule Reference</a></li>
-<li><a href="#_title">Title</a></li>
+<li><a href="#_code">code</a></li>
 </ul>
 </li>
 </ul>
@@ -1312,67 +1312,203 @@ asciidoc-lint --verbose document.adoc</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_planned_rules">Planned Rules</h4>
+<h4 id="_block_rules">Block Rules</h4>
 <div class="sect4">
 <h5 id="_block001_block_termination">BLOCK001: Block Termination</h5>
-<div class="paragraph planned">
-<p>Checks for properly terminated blocks.</p>
+<div class="paragraph">
+<p>Checks for properly terminated blocks in AsciiDoc files. This rule helps prevent incomplete or malformed block structures that could lead to incorrect rendering.</p>
+</div>
+<div class="ulist">
+<div class="title">Supported Block Types</div>
+<ul>
+<li>
+<p>Listing blocks (<code>----</code>)</p>
+</li>
+<li>
+<p>Example blocks (<code>====</code>)</p>
+</li>
+<li>
+<p>Sidebar blocks (<code><strong>*</strong>*</code>)</p>
+</li>
+<li>
+<p>Literal blocks (<code>&#8230;&#8203;.</code>)</p>
+</li>
+<li>
+<p>Quote blocks (<code><em>__</em></code>)</p>
+</li>
+<li>
+<p>Table blocks (<code>|===</code>)</p>
+</li>
+<li>
+<p>Comment blocks (<code>////</code>)</p>
+</li>
+<li>
+<p>Passthrough blocks (<code></code>)</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="title">Valid Example</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>def hello():
-    print("Hello")</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre></pre>
+<pre class="prettyprint highlight"><code data-lang="asciidoc">.Example Title
+====
+This is an example block.
+It has proper opening and closing delimiters.
+====</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Invalid Example</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+<pre class="prettyprint highlight"><code data-lang="asciidoc">.Example Title
+====
+This block is not properly terminated.
+More content...</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Configuration Options</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">severity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule severity level</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_block002_block_spacing">BLOCK002: Block Spacing</h5>
+<div class="paragraph">
+<p>Ensures proper spacing around blocks by checking for blank lines before and after block structures.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Rules</div>
+<ol class="arabic">
+<li>
+<p>A blank line should precede a block (except when it follows a heading)</p>
+</li>
+<li>
+<p>A blank line should follow a block (except when it&#8217;s followed by a heading)</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">Valid Example</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">Some text before the block.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>def hello():
-    print("Hello")
-# Missing block termination</p>
+<p>Block content</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>==== WS001: Whitespace
+<pre>More text after the block.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Example</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">Some text before the block.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Block content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>More text after the block.</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Configuration Options</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">severity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">warning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule severity level</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_planned_rules">Planned Rules</h4>
+<div class="sect4">
+<h5 id="_ws001_whitespace">WS001: Whitespace</h5>
+<div class="paragraph planned">
+<p>Ensures proper spacing around elements.</p>
+</div>
+<div class="listingblock">
+<div class="title">Valid Example</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Title
 
-[.planned]
-Ensures proper spacing around elements.
+=== Section
 
-.Valid Example
-[source,asciidoc]</pre>
+Some content.
+
+[source]</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_title">Title</h3>
-<div class="sect3">
-<h4 id="_section">Section</h4>
-<div class="paragraph">
-<p>Some content.</p>
-</div>
+<h3 id="_code">code</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code>code</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>=== Rule Development
+<pre>==== TABLE001: Table Formatting
+
+[.planned]
+Ensures consistent table formatting.
+
+==== IMG001: Image Attributes
+
+[.planned]
+Checks for required image attributes like alt text.
+
+==== LINK001: Link Validation
+
+[.planned]
+Validates internal and external links.
+
+=== Rule Development
 
 ==== Creating New Rules
 
@@ -1405,7 +1541,6 @@ Ensures proper spacing around elements.
 * Reference Rules (REF*)
 
 :leveloffset!:</pre>
-</div>
 </div>
 </div>
 </div>

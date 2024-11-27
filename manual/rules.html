@@ -9,7 +9,7 @@
     <meta content="jbake" name="generator">
     <meta content="INDEX, FOLLOW" name="ROBOTS">
 
-    <title>Whitespace Rules</title>
+    <title>AsciiDoc Linter Rules</title>
     <meta content="docToolchain" property="og:title">
     <meta content="build your dev docs the easy way..." property="og:description">
     <meta content="website" property="og:type">
@@ -275,6 +275,11 @@
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
+                                   href="../manual/rules.html" title="AsciiDoc Linter Rules">AsciiDoc Linter Rules</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/development.html" title="Development Guide">Development Guide</a>
                                 
@@ -294,11 +299,6 @@
                                    href="../manual/usage.html" title="Usage Guide">Usage Guide</a>
                                 
                             </li>
-                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
-                                   href="../manual/rules.html" title="Whitespace Rules">Whitespace Rules</a>
-                                
-                            </li>
                         </ul>
                       </li>
                   </ul>
@@ -315,7 +315,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Whitespace+Rules%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/manual/rules.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Rules%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/manual/rules.adoc%0A%23branch:%20main" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -324,14 +324,11 @@
 
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#_rules_adoc_documentation_of_all_linter_rules">rules.adoc - Documentation of all linter rules</a>
 <ul class="sectlevel1">
-<li><a href="#_whitespace_rules">Whitespace Rules</a>
+<li><a href="#_asciidoc_linter_rules">AsciiDoc Linter Rules</a>
 <ul class="sectlevel2">
-<li><a href="#_ws001_whitespace_usage">WS001: Whitespace Usage</a></li>
-</ul>
-</li>
+<li><a href="#_heading_rules">Heading Rules</a></li>
+<li><a href="#_block_rules">Block Rules</a></li>
 </ul>
 </li>
 </ul>
@@ -356,21 +353,252 @@
     <div class="td-content">
         <p>
             
-<h1 id="_rules_adoc_documentation_of_all_linter_rules" class="sect0">rules.adoc - Documentation of all linter rules</h1>
 <div class="sect1">
-<h2 id="_whitespace_rules">Whitespace Rules</h2>
+<h2 id="_asciidoc_linter_rules">AsciiDoc Linter Rules</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_ws001_whitespace_usage">WS001: Whitespace Usage</h3>
+<h3 id="_heading_rules">Heading Rules</h3>
+<div class="sect3">
+<h4 id="_head001_heading_hierarchy">HEAD001: Heading Hierarchy</h4>
 <div class="paragraph">
-<p>Ensures proper whitespace usage throughout the document. This rule helps maintain consistent formatting and improves readability.</p>
+<p>Ensures proper heading level incrementation (no skipped levels).</p>
+</div>
+<div class="sect4">
+<h5 id="_description">Description</h5>
+<div class="paragraph">
+<p>This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_examples">Examples</h5>
+<div class="listingblock">
+<div class="title">Valid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+=== Section (Level 2)
+
+==== Subsection (Level 3)
+
+=== Another Section (Level 2)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+==== Subsection (Level 3)  // Error: Skipped Level 2</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_checks_performed">Checks Performed</h4>
+<h4 id="_head002_heading_format">HEAD002: Heading Format</h4>
+<div class="paragraph">
+<p>Ensures proper heading format (spacing and capitalization).</p>
+</div>
+<div class="sect4">
+<h5 id="_description_2">Description</h5>
+<div class="paragraph">
+<p>This rule checks two aspects of heading format:
+1. There must be a space after the = characters
+2. The heading text should start with an uppercase letter</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_examples_2">Examples</h5>
+<div class="listingblock">
+<div class="title">Valid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title
+==== Subsection Title</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">=Document Title        // Error: No space after =
+=== section title      // Warning: Starts with lowercase</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_head003_multiple_top_level_headings">HEAD003: Multiple Top Level Headings</h4>
+<div class="paragraph">
+<p>Ensures document has only one top-level heading.</p>
+</div>
+<div class="sect4">
+<h5 id="_description_3">Description</h5>
+<div class="paragraph">
+<p>This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_examples_3">Examples</h5>
+<div class="listingblock">
+<div class="title">Valid Single Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Main Document Title
+
+=== Section One
+=== Section Two</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Multiple Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== First Title
+
+=== Section One
+
+== Second Title  // Error: Multiple top-level headings</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_block_rules">Block Rules</h3>
+<div class="sect3">
+<h4 id="_block001_unterminated_blocks">BLOCK001: Unterminated Blocks</h4>
+<div class="paragraph">
+<p>Checks for blocks that are not properly terminated.</p>
+</div>
+<div class="sect4">
+<h5 id="_description_4">Description</h5>
+<div class="paragraph">
+<p>This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_supported_block_types">Supported Block Types</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Listing blocks (----)</p>
+</li>
+<li>
+<p>Example blocks (====)</p>
+</li>
+<li>
+<p>Sidebar blocks (<strong>*</strong>*)</p>
+</li>
+<li>
+<p>Literal blocks (&#8230;&#8203;.)</p>
+</li>
+<li>
+<p>Quote blocks (<em>__</em>)</p>
+</li>
+<li>
+<p>Table blocks (|===)</p>
+</li>
+<li>
+<p>Comment blocks (////)</p>
+</li>
+<li>
+<p>Passthrough blocks ().</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_examples_4">Examples</h5>
+<div class="listingblock">
+<div class="title">Valid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Example Block
+====
+Some example content
+====</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Example Block</div>
+<div class="content">
+<div class="paragraph">
+<p>Some example content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>==== BLOCK002: Block Spacing
+
+Verifies proper spacing around blocks.
+
+===== Description
+
+This rule checks that blocks are properly separated from surrounding content with blank lines, improving readability.
+
+===== Examples
+
+.Valid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Block content</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text after the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Invalid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.
+----  // Warning: No blank line before block
+Block content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Some text after the block.  // Warning: No blank line after block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Whitespace Rules</p>
+</div>
+<div class="paragraph">
+<p>==== WS001: Whitespace Usage</p>
+</div>
+<div class="paragraph">
+<p>Ensures proper whitespace usage throughout the document.</p>
+</div>
+<div class="paragraph">
+<p>===== Checks Performed</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Consecutive Empty Lines</strong>: No more than one consecutive empty line allowed</p>
+<p><strong>Consecutive Empty Lines</strong>: No more than one consecutive empty line</p>
 </li>
 <li>
 <p><strong>List Marker Spacing</strong>: Proper space after list markers (*, -, .)</p>
@@ -389,12 +617,15 @@
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
 <div class="listingblock">
-<div class="title">Valid Examples</div>
+<div class="title">Valid Whitespace Usage</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">= Document Title
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
 
-== Section Title
+=== Section Title
 
 * List item 1
 * List item 2
@@ -405,10 +636,10 @@ Some text here.</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Invalid Examples</div>
+<div class="title">Invalid Whitespace Usage</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">= Document Title
-== Section Title     // Missing blank line before
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title     // Missing blank line before
 *Invalid list item   // Missing space after marker
 NOTE: Invalid note   // Missing blank line before
 Some text here  // Trailing spaces
@@ -418,38 +649,88 @@ Some text here  // Trailing spaces
 Extra blank line     // Too many blank lines</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Configuration Options</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Option</th>
-<th class="tableblock halign-left valign-top">Default</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable rule</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">severity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">warning</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Rule severity level</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">max_empty_lines</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of consecutive empty lines</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>=== Image Rules</p>
+</div>
+<div class="paragraph">
+<p>==== IMG001: Image Attributes</p>
+</div>
+<div class="paragraph">
+<p>Verifies image attributes and file references.</p>
+</div>
+<div class="paragraph">
+<p>===== Description</p>
+</div>
+<div class="paragraph">
+<p>This rule checks:
+1. All images have alt text
+2. Referenced local images exist
+3. Block images have titles
+4. Image attributes are properly formatted</p>
+</div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
+<div class="listingblock">
+<div class="title">Valid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Inline image with alt text
+image:icon.png[Icon]
+
+// Block image with title and alt text
+.Figure 1: System Architecture
+image::diagram.png[Architecture Diagram]
+
+// External image with alt text
+image:https://example.com/img.png[Example Image]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Missing alt text
+image:icon.png[]
+
+// Missing title for block image
+image::diagram.png[Diagram]
+
+// Non-existent local file
+image::missing.png[Missing Image]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Planned Rules</p>
+</div>
+<div class="paragraph">
+<p>==== TABLE001: Table Formatting (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check table formatting consistency:
+* Column alignment
+* Header row presence
+* Cell content formatting</p>
+</div>
+<div class="paragraph">
+<p>==== LINK001: Link Verification (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will verify:
+* Internal cross-references
+* External link validity
+* Anchor definitions</p>
+</div>
+<div class="paragraph">
+<p>==== FMT001: Format Consistency (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check:
+* Consistent emphasis style
+* List formatting
+* Admonition usage</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -481,11 +762,11 @@ Extra blank line     // Too many blank lines</code></pre>
     <button class="feedback--answer feedback--answer-yes">Yes</button>
     <button class="feedback--answer feedback--answer-no">No</button>
     <p class="feedback--response feedback--response-yes">
-        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Whitespace+Rules%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/rules.adoc">tell us
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Rules%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/rules.adoc">tell us
     how we can improve</a>.
     </p>
     <p class="feedback--response feedback--response-no">
-        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Whitespace+Rules%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/rules.adoc">tell
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Rules%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/rules.adoc">tell
     us how we can improve</a>.
     </p>
 </div>

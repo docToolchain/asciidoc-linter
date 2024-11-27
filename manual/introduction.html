@@ -276,6 +276,11 @@
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/rules.html" title="AsciiDoc Linter Rules">AsciiDoc Linter Rules</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/development.html" title="Development Guide">Development Guide</a>
                                 
                             </li>
@@ -292,11 +297,6 @@
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/usage.html" title="Usage Guide">Usage Guide</a>
-                                
-                            </li>
-                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../manual/rules.html" title="Whitespace Rules">Whitespace Rules</a>
                                 
                             </li>
                         </ul>
@@ -332,6 +332,7 @@
 <li><a href="#_project_goals">Project Goals</a></li>
 <li><a href="#_technical_overview">Technical Overview</a></li>
 <li><a href="#_getting_started">Getting Started</a></li>
+<li><a href="#_current_status">Current Status</a></li>
 </ul>
 </li>
 </ul>
@@ -364,6 +365,9 @@
 <div class="paragraph">
 <p>AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.</p>
 </div>
+<div class="paragraph">
+<p>As part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), it integrates well with existing documentation workflows.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_key_features">Key Features</h3>
@@ -371,18 +375,64 @@
 <ul>
 <li>
 <p>Heading structure validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper hierarchy (no skipped levels)</p>
 </li>
 <li>
-<p>Format checking</p>
+<p>Consistent formatting</p>
 </li>
 <li>
-<p>Style consistency enforcement</p>
+<p>Single top-level heading</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Multiple output formats</p>
+<p>Block validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper block termination</p>
 </li>
 <li>
-<p>Configurable rules</p>
+<p>Consistent spacing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Whitespace consistency</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Line spacing</p>
+</li>
+<li>
+<p>List formatting</p>
+</li>
+<li>
+<p>Tab detection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Image validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Attribute checking</p>
+</li>
+<li>
+<p>File existence verification</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
 </li>
 </ul>
 </div>
@@ -392,19 +442,22 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Improve documentation quality</p>
+<p>Improve documentation quality through automated checks</p>
 </li>
 <li>
-<p>Enforce consistent styling</p>
+<p>Enforce consistent styling across documentation</p>
 </li>
 <li>
-<p>Reduce review effort</p>
+<p>Reduce manual review effort</p>
 </li>
 <li>
-<p>Catch common mistakes early</p>
+<p>Catch common mistakes early in the documentation process</p>
 </li>
 <li>
-<p>Support documentation as code</p>
+<p>Support documentation as code practices</p>
+</li>
+<li>
+<p>Integrate with existing documentation toolchains</p>
 </li>
 </ul>
 </div>
@@ -453,27 +506,97 @@
 <p>Python 3.8 or higher</p>
 </li>
 <li>
-<p>pip (Python package manager)</p>
-</li>
-<li>
-<p>Git (for development)</p>
+<p>Git (for installation)</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_quick_start">Quick Start</h4>
+<h4 id="_installation">Installation</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Direct installation via pip is planned for future releases. Currently, installation is done via git clone.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash"># Install the package
-pip install asciidoc-linter
+<pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
+git clone https://github.com/docToolchain/asciidoc-linter.git
 
-# Run a basic check
-asciidoc-lint your-document.adoc
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_basic_usage">Basic Usage</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
 
 # Get help
 asciidoc-lint --help</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_current_status">Current Status</h3>
+<div class="sect3">
+<h4 id="_implemented_features">Implemented Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Core linting engine</p>
+</li>
+<li>
+<p>Basic rule set (headings, blocks, whitespace, images)</p>
+</li>
+<li>
+<p>Command-line interface</p>
+</li>
+<li>
+<p>Multiple output formats</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_planned_features">Planned Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+</li>
+<li>
+<p>Additional rule sets (tables, links, cross-references)</p>
+</li>
+<li>
+<p>Direct installation via pip</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git pre-commit hooks</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

@@ -275,6 +275,11 @@
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/rules.html" title="AsciiDoc Linter Rules">AsciiDoc Linter Rules</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
                                    href="../manual/development.html" title="Development Guide">Development Guide</a>
                                 
@@ -292,11 +297,6 @@
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/usage.html" title="Usage Guide">Usage Guide</a>
-                                
-                            </li>
-                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../manual/rules.html" title="Whitespace Rules">Whitespace Rules</a>
                                 
                             </li>
                         </ul>
@@ -329,10 +329,13 @@
 <ul class="sectlevel2">
 <li><a href="#_setting_up_development_environment">Setting Up Development Environment</a></li>
 <li><a href="#_project_structure">Project Structure</a></li>
+<li><a href="#_current_implementation_status">Current Implementation Status</a></li>
 <li><a href="#_adding_new_rules">Adding New Rules</a></li>
 <li><a href="#_code_style">Code Style</a></li>
+<li><a href="#_testing">Testing</a></li>
 <li><a href="#_pull_request_process">Pull Request Process</a></li>
 <li><a href="#_release_process">Release Process</a></li>
+<li><a href="#_getting_help">Getting Help</a></li>
 </ul>
 </li>
 </ul>
@@ -366,7 +369,7 @@
 <h4 id="_clone_the_repository">Clone the Repository</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">git clone https://github.com/yourusername/asciidoc-linter.git
+<pre class="prettyprint highlight"><code data-lang="bash">git clone https://github.com/docToolchain/asciidoc-linter.git
 cd asciidoc-linter</code></pre>
 </div>
 </div>
@@ -390,15 +393,92 @@ pip install -e .</code></pre>
 ├── asciidoc_linter/       # Main package
 │   ├── __init__.py
 │   ├── cli.py            # Command line interface
-│   ├── rules.py          # Base rule classes
-│   ├── heading_rules.py  # Heading-specific rules
+│   ├── rules/            # Rule implementations
+│   │   ├── __init__.py
+│   │   ├── base.py      # Base classes for rules
+│   │   ├── heading_rules.py
+│   │   ├── block_rules.py
+│   │   ├── whitespace_rules.py
+│   │   └── image_rules.py
 │   ├── parser.py         # AsciiDoc parser
 │   └── reporter.py       # Output formatters
 ├── tests/                # Test files
-│   └── rules/
-│       └── test_heading_rules.py
+│   └── rules/           # Rule-specific tests
 ├── docs/                 # Documentation
 └── README.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_current_implementation_status">Current Implementation Status</h3>
+<div class="sect3">
+<h4 id="_implemented_features">Implemented Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Core rule engine with base classes</p>
+</li>
+<li>
+<p>Rule implementations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Heading rules (hierarchy, format, multiple top-level)</p>
+</li>
+<li>
+<p>Block rules (termination, spacing)</p>
+</li>
+<li>
+<p>Whitespace rules (spacing, formatting)</p>
+</li>
+<li>
+<p>Image rules (attributes, file verification)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Basic command line interface</p>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
+</li>
+<li>
+<p>Comprehensive test suite</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_planned_features">Planned Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rule enabling/disabling</p>
+</li>
+<li>
+<p>Severity customization</p>
+</li>
+<li>
+<p>Custom rule parameters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Additional rule types</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git hooks</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -412,12 +492,17 @@ pip install -e .</code></pre>
 <p>Create a new rule class:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="python">from .rules import Rule, Finding, Severity, Position
+<pre class="prettyprint highlight"><code data-lang="python">from .base import Rule, Finding, Severity, Position
 
 class MyNewRule(Rule):
+    """
+    RULE_ID: Short description.
+    Detailed explanation of what the rule checks.
+    """
+
     def __init__(self):
         super().__init__()
-        self.id = "NEW001"
+        self.id = "RULE_ID"
 
     @property
     def description(self) -&gt; str:
@@ -431,7 +516,25 @@ class MyNewRule(Rule):
 </div>
 </li>
 <li>
-<p>Add tests for the rule</p>
+<p>Add tests for the rule:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TestMyNewRule(unittest.TestCase):
+    def setUp(self):
+        self.rule = MyNewRule()
+
+    def test_valid_case(self):
+        content = "Valid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        content = "Invalid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].rule_id, "RULE_ID")</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Register the rule in the linter</p>
@@ -458,6 +561,12 @@ class MyNewRule(Rule):
 <li>
 <p>Contextual information in findings</p>
 </li>
+<li>
+<p>Comprehensive test cases</p>
+</li>
+<li>
+<p>Documentation with examples</p>
+</li>
 </ul>
 </div>
 </div>
@@ -475,10 +584,16 @@ class MyNewRule(Rule):
 <p>Use type hints</p>
 </li>
 <li>
-<p>Write docstrings</p>
+<p>Write docstrings (Google style)</p>
 </li>
 <li>
-<p>Keep functions focused</p>
+<p>Keep functions focused and testable</p>
+</li>
+<li>
+<p>Maximum line length: 100 characters</p>
+</li>
+<li>
+<p>Use meaningful variable names</p>
 </li>
 </ul>
 </div>
@@ -491,13 +606,56 @@ class MyNewRule(Rule):
 <p>Use AsciiDoc format</p>
 </li>
 <li>
-<p>Include examples</p>
+<p>Include examples for all features</p>
 </li>
 <li>
 <p>Explain error messages</p>
 </li>
 <li>
 <p>Document configuration options</p>
+</li>
+<li>
+<p>Keep README.adoc up to date</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing">Testing</h3>
+<div class="sect3">
+<h4 id="_running_tests">Running Tests</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run specific test file
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run specific test case
+python -m unittest tests.rules.test_heading_rules.TestHeadingHierarchyRule</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_test_guidelines">Test Guidelines</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Write tests for all new features</p>
+</li>
+<li>
+<p>Include both positive and negative test cases</p>
+</li>
+<li>
+<p>Test edge cases</p>
+</li>
+<li>
+<p>Maintain high test coverage</p>
+</li>
+<li>
+<p>Use meaningful test names</p>
 </li>
 </ul>
 </div>
@@ -520,6 +678,9 @@ class MyNewRule(Rule):
 <p>Update documentation</p>
 </li>
 <li>
+<p>Run full test suite</p>
+</li>
+<li>
 <p>Submit PR</p>
 </li>
 </ol>
@@ -530,7 +691,7 @@ class MyNewRule(Rule):
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Update version number</p>
+<p>Update version number in <em>init</em>.py</p>
 </li>
 <li>
 <p>Update changelog</p>
@@ -548,6 +709,22 @@ class MyNewRule(Rule):
 <p>Build and publish</p>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_help">Getting Help</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub Issues: <a href="https://github.com/docToolchain/asciidoc-linter/issues" class="bare">https://github.com/docToolchain/asciidoc-linter/issues</a></p>
+</li>
+<li>
+<p>Project Wiki: <a href="https://github.com/docToolchain/asciidoc-linter/wiki" class="bare">https://github.com/docToolchain/asciidoc-linter/wiki</a></p>
+</li>
+<li>
+<p>docToolchain Community: <a href="https://doctoolchain.org/community" class="bare">https://doctoolchain.org/community</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>

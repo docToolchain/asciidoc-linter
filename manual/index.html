@@ -276,6 +276,11 @@
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/rules.html" title="AsciiDoc Linter Rules">AsciiDoc Linter Rules</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/development.html" title="Development Guide">Development Guide</a>
                                 
                             </li>
@@ -292,11 +297,6 @@
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
                                    href="../manual/usage.html" title="Usage Guide">Usage Guide</a>
-                                
-                            </li>
-                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../manual/rules.html" title="Whitespace Rules">Whitespace Rules</a>
                                 
                             </li>
                         </ul>
@@ -331,11 +331,7 @@
 <li><a href="#_development_guide">Development Guide</a></li>
 <li><a href="#_testing_guide">Testing Guide</a></li>
 <li><a href="#_usage_guide">Usage Guide</a></li>
-</ul>
-</li>
-<li><a href="#_rules_adoc_documentation_of_all_linter_rules">rules.adoc - Documentation of all linter rules</a>
-<ul class="sectlevel2">
-<li><a href="#_whitespace_rules">Whitespace Rules</a></li>
+<li><a href="#_asciidoc_linter_rules">AsciiDoc Linter Rules</a></li>
 </ul>
 </li>
 </ul>
@@ -370,6 +366,9 @@
 <div class="paragraph">
 <p>AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.</p>
 </div>
+<div class="paragraph">
+<p>As part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), it integrates well with existing documentation workflows.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_key_features">Key Features</h4>
@@ -377,18 +376,64 @@
 <ul>
 <li>
 <p>Heading structure validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper hierarchy (no skipped levels)</p>
 </li>
 <li>
-<p>Format checking</p>
+<p>Consistent formatting</p>
 </li>
 <li>
-<p>Style consistency enforcement</p>
+<p>Single top-level heading</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Multiple output formats</p>
+<p>Block validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper block termination</p>
 </li>
 <li>
-<p>Configurable rules</p>
+<p>Consistent spacing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Whitespace consistency</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Line spacing</p>
+</li>
+<li>
+<p>List formatting</p>
+</li>
+<li>
+<p>Tab detection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Image validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Attribute checking</p>
+</li>
+<li>
+<p>File existence verification</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
 </li>
 </ul>
 </div>
@@ -398,19 +443,22 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Improve documentation quality</p>
+<p>Improve documentation quality through automated checks</p>
 </li>
 <li>
-<p>Enforce consistent styling</p>
+<p>Enforce consistent styling across documentation</p>
 </li>
 <li>
-<p>Reduce review effort</p>
+<p>Reduce manual review effort</p>
 </li>
 <li>
-<p>Catch common mistakes early</p>
+<p>Catch common mistakes early in the documentation process</p>
 </li>
 <li>
-<p>Support documentation as code</p>
+<p>Support documentation as code practices</p>
+</li>
+<li>
+<p>Integrate with existing documentation toolchains</p>
 </li>
 </ul>
 </div>
@@ -459,27 +507,97 @@
 <p>Python 3.8 or higher</p>
 </li>
 <li>
-<p>pip (Python package manager)</p>
-</li>
-<li>
-<p>Git (for development)</p>
+<p>Git (for installation)</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_quick_start">Quick Start</h5>
+<h5 id="_installation">Installation</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Direct installation via pip is planned for future releases. Currently, installation is done via git clone.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash"># Install the package
-pip install asciidoc-linter
+<pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
+git clone https://github.com/docToolchain/asciidoc-linter.git
 
-# Run a basic check
-asciidoc-lint your-document.adoc
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_basic_usage">Basic Usage</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
 
 # Get help
 asciidoc-lint --help</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_current_status">Current Status</h4>
+<div class="sect4">
+<h5 id="_implemented_features">Implemented Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Core linting engine</p>
+</li>
+<li>
+<p>Basic rule set (headings, blocks, whitespace, images)</p>
+</li>
+<li>
+<p>Command-line interface</p>
+</li>
+<li>
+<p>Multiple output formats</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_planned_features">Planned Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+</li>
+<li>
+<p>Additional rule sets (tables, links, cross-references)</p>
+</li>
+<li>
+<p>Direct installation via pip</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git pre-commit hooks</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -492,7 +610,7 @@ asciidoc-lint --help</code></pre>
 <h5 id="_clone_the_repository">Clone the Repository</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">git clone https://github.com/yourusername/asciidoc-linter.git
+<pre class="prettyprint highlight"><code data-lang="bash">git clone https://github.com/docToolchain/asciidoc-linter.git
 cd asciidoc-linter</code></pre>
 </div>
 </div>
@@ -516,15 +634,92 @@ pip install -e .</code></pre>
 ├── asciidoc_linter/       # Main package
 │   ├── __init__.py
 │   ├── cli.py            # Command line interface
-│   ├── rules.py          # Base rule classes
-│   ├── heading_rules.py  # Heading-specific rules
+│   ├── rules/            # Rule implementations
+│   │   ├── __init__.py
+│   │   ├── base.py      # Base classes for rules
+│   │   ├── heading_rules.py
+│   │   ├── block_rules.py
+│   │   ├── whitespace_rules.py
+│   │   └── image_rules.py
 │   ├── parser.py         # AsciiDoc parser
 │   └── reporter.py       # Output formatters
 ├── tests/                # Test files
-│   └── rules/
-│       └── test_heading_rules.py
+│   └── rules/           # Rule-specific tests
 ├── docs/                 # Documentation
 └── README.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_current_implementation_status">Current Implementation Status</h4>
+<div class="sect4">
+<h5 id="_implemented_features_2">Implemented Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Core rule engine with base classes</p>
+</li>
+<li>
+<p>Rule implementations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Heading rules (hierarchy, format, multiple top-level)</p>
+</li>
+<li>
+<p>Block rules (termination, spacing)</p>
+</li>
+<li>
+<p>Whitespace rules (spacing, formatting)</p>
+</li>
+<li>
+<p>Image rules (attributes, file verification)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Basic command line interface</p>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
+</li>
+<li>
+<p>Comprehensive test suite</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_planned_features_2">Planned Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rule enabling/disabling</p>
+</li>
+<li>
+<p>Severity customization</p>
+</li>
+<li>
+<p>Custom rule parameters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Additional rule types</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git hooks</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -538,12 +733,17 @@ pip install -e .</code></pre>
 <p>Create a new rule class:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="python">from .rules import Rule, Finding, Severity, Position
+<pre class="prettyprint highlight"><code data-lang="python">from .base import Rule, Finding, Severity, Position
 
 class MyNewRule(Rule):
+    """
+    RULE_ID: Short description.
+    Detailed explanation of what the rule checks.
+    """
+
     def __init__(self):
         super().__init__()
-        self.id = "NEW001"
+        self.id = "RULE_ID"
 
     @property
     def description(self) -&gt; str:
@@ -557,7 +757,25 @@ class MyNewRule(Rule):
 </div>
 </li>
 <li>
-<p>Add tests for the rule</p>
+<p>Add tests for the rule:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TestMyNewRule(unittest.TestCase):
+    def setUp(self):
+        self.rule = MyNewRule()
+
+    def test_valid_case(self):
+        content = "Valid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        content = "Invalid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].rule_id, "RULE_ID")</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Register the rule in the linter</p>
@@ -584,6 +802,12 @@ class MyNewRule(Rule):
 <li>
 <p>Contextual information in findings</p>
 </li>
+<li>
+<p>Comprehensive test cases</p>
+</li>
+<li>
+<p>Documentation with examples</p>
+</li>
 </ul>
 </div>
 </div>
@@ -601,10 +825,16 @@ class MyNewRule(Rule):
 <p>Use type hints</p>
 </li>
 <li>
-<p>Write docstrings</p>
+<p>Write docstrings (Google style)</p>
 </li>
 <li>
-<p>Keep functions focused</p>
+<p>Keep functions focused and testable</p>
+</li>
+<li>
+<p>Maximum line length: 100 characters</p>
+</li>
+<li>
+<p>Use meaningful variable names</p>
 </li>
 </ul>
 </div>
@@ -617,13 +847,56 @@ class MyNewRule(Rule):
 <p>Use AsciiDoc format</p>
 </li>
 <li>
-<p>Include examples</p>
+<p>Include examples for all features</p>
 </li>
 <li>
 <p>Explain error messages</p>
 </li>
 <li>
 <p>Document configuration options</p>
+</li>
+<li>
+<p>Keep README.adoc up to date</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_testing">Testing</h4>
+<div class="sect4">
+<h5 id="_running_tests">Running Tests</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run specific test file
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run specific test case
+python -m unittest tests.rules.test_heading_rules.TestHeadingHierarchyRule</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_guidelines">Test Guidelines</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Write tests for all new features</p>
+</li>
+<li>
+<p>Include both positive and negative test cases</p>
+</li>
+<li>
+<p>Test edge cases</p>
+</li>
+<li>
+<p>Maintain high test coverage</p>
+</li>
+<li>
+<p>Use meaningful test names</p>
 </li>
 </ul>
 </div>
@@ -646,6 +919,9 @@ class MyNewRule(Rule):
 <p>Update documentation</p>
 </li>
 <li>
+<p>Run full test suite</p>
+</li>
+<li>
 <p>Submit PR</p>
 </li>
 </ol>
@@ -656,7 +932,7 @@ class MyNewRule(Rule):
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Update version number</p>
+<p>Update version number in <em>init</em>.py</p>
 </li>
 <li>
 <p>Update changelog</p>
@@ -676,6 +952,22 @@ class MyNewRule(Rule):
 </ol>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_getting_help">Getting Help</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub Issues: <a href="https://github.com/docToolchain/asciidoc-linter/issues" class="bare">https://github.com/docToolchain/asciidoc-linter/issues</a></p>
+</li>
+<li>
+<p>Project Wiki: <a href="https://github.com/docToolchain/asciidoc-linter/wiki" class="bare">https://github.com/docToolchain/asciidoc-linter/wiki</a></p>
+</li>
+<li>
+<p>docToolchain Community: <a href="https://doctoolchain.org/community" class="bare">https://doctoolchain.org/community</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_testing_guide">Testing Guide</h3>
@@ -686,7 +978,7 @@ class MyNewRule(Rule):
 </div>
 </div>
 <div class="sect3">
-<h4 id="_running_tests">Running Tests</h4>
+<h4 id="_running_tests_2">Running Tests</h4>
 <div class="sect4">
 <h5 id="_running_all_tests">Running All Tests</h5>
 <div class="listingblock">
@@ -758,7 +1050,7 @@ python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule.test_val
 <div class="sect3">
 <h4 id="_writing_tests">Writing Tests</h4>
 <div class="sect4">
-<h5 id="_test_guidelines">Test Guidelines</h5>
+<h5 id="_test_guidelines_2">Test Guidelines</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -892,7 +1184,7 @@ jobs:
 <div class="sect3">
 <h4 id="_command_line_interface">Command Line Interface</h4>
 <div class="sect4">
-<h5 id="_basic_usage">Basic Usage</h5>
+<h5 id="_basic_usage_2">Basic Usage</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
@@ -1158,24 +1450,251 @@ asciidoc-lint --verbose document.adoc</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_rules_adoc_documentation_of_all_linter_rules">rules.adoc - Documentation of all linter rules</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_whitespace_rules">Whitespace Rules</h3>
+<h3 id="_asciidoc_linter_rules">AsciiDoc Linter Rules</h3>
 <div class="sect3">
-<h4 id="_ws001_whitespace_usage">WS001: Whitespace Usage</h4>
+<h4 id="_heading_rules">Heading Rules</h4>
+<div class="sect4">
+<h5 id="_head001_heading_hierarchy">HEAD001: Heading Hierarchy</h5>
 <div class="paragraph">
-<p>Ensures proper whitespace usage throughout the document. This rule helps maintain consistent formatting and improves readability.</p>
+<p>Ensures proper heading level incrementation (no skipped levels).</p>
+</div>
+<div class="sect5">
+<h6 id="_description">Description</h6>
+<div class="paragraph">
+<p>This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+=== Section (Level 2)
+
+==== Subsection (Level 3)
+
+=== Another Section (Level 2)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+==== Subsection (Level 3)  // Error: Skipped Level 2</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect4">
-<h5 id="_checks_performed">Checks Performed</h5>
+<h5 id="_head002_heading_format">HEAD002: Heading Format</h5>
+<div class="paragraph">
+<p>Ensures proper heading format (spacing and capitalization).</p>
+</div>
+<div class="sect5">
+<h6 id="_description_2">Description</h6>
+<div class="paragraph">
+<p>This rule checks two aspects of heading format:
+1. There must be a space after the = characters
+2. The heading text should start with an uppercase letter</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_2">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title
+==== Subsection Title</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">=Document Title        // Error: No space after =
+=== section title      // Warning: Starts with lowercase</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_head003_multiple_top_level_headings">HEAD003: Multiple Top Level Headings</h5>
+<div class="paragraph">
+<p>Ensures document has only one top-level heading.</p>
+</div>
+<div class="sect5">
+<h6 id="_description_3">Description</h6>
+<div class="paragraph">
+<p>This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_3">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Single Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Main Document Title
+
+=== Section One
+=== Section Two</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Multiple Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== First Title
+
+=== Section One
+
+== Second Title  // Error: Multiple top-level headings</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_block_rules">Block Rules</h4>
+<div class="sect4">
+<h5 id="_block001_unterminated_blocks">BLOCK001: Unterminated Blocks</h5>
+<div class="paragraph">
+<p>Checks for blocks that are not properly terminated.</p>
+</div>
+<div class="sect5">
+<h6 id="_description_4">Description</h6>
+<div class="paragraph">
+<p>This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_supported_block_types">Supported Block Types</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Listing blocks (----)</p>
+</li>
+<li>
+<p>Example blocks (====)</p>
+</li>
+<li>
+<p>Sidebar blocks (<strong>*</strong>*)</p>
+</li>
+<li>
+<p>Literal blocks (&#8230;&#8203;.)</p>
+</li>
+<li>
+<p>Quote blocks (<em>__</em>)</p>
+</li>
+<li>
+<p>Table blocks (|===)</p>
+</li>
+<li>
+<p>Comment blocks (////)</p>
+</li>
+<li>
+<p>Passthrough blocks ().</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_4">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Example Block
+====
+Some example content
+====</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Example Block</div>
+<div class="content">
+<div class="paragraph">
+<p>Some example content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>==== BLOCK002: Block Spacing
+
+Verifies proper spacing around blocks.
+
+===== Description
+
+This rule checks that blocks are properly separated from surrounding content with blank lines, improving readability.
+
+===== Examples
+
+.Valid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Block content</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text after the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Invalid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.
+----  // Warning: No blank line before block
+Block content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Some text after the block.  // Warning: No blank line after block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Whitespace Rules</p>
+</div>
+<div class="paragraph">
+<p>==== WS001: Whitespace Usage</p>
+</div>
+<div class="paragraph">
+<p>Ensures proper whitespace usage throughout the document.</p>
+</div>
+<div class="paragraph">
+<p>===== Checks Performed</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Consecutive Empty Lines</strong>: No more than one consecutive empty line allowed</p>
+<p><strong>Consecutive Empty Lines</strong>: No more than one consecutive empty line</p>
 </li>
 <li>
 <p><strong>List Marker Spacing</strong>: Proper space after list markers (*, -, .)</p>
@@ -1194,12 +1713,15 @@ asciidoc-lint --verbose document.adoc</code></pre>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
 <div class="listingblock">
-<div class="title">Valid Examples</div>
+<div class="title">Valid Whitespace Usage</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">= Document Title
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
 
-== Section Title
+=== Section Title
 
 * List item 1
 * List item 2
@@ -1210,10 +1732,10 @@ Some text here.</code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Invalid Examples</div>
+<div class="title">Invalid Whitespace Usage</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="asciidoc">= Document Title
-== Section Title     // Missing blank line before
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title     // Missing blank line before
 *Invalid list item   // Missing space after marker
 NOTE: Invalid note   // Missing blank line before
 Some text here  // Trailing spaces
@@ -1223,38 +1745,88 @@ Some text here  // Trailing spaces
 Extra blank line     // Too many blank lines</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Configuration Options</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Option</th>
-<th class="tableblock halign-left valign-top">Default</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable rule</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">severity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">warning</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Rule severity level</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">max_empty_lines</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of consecutive empty lines</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>=== Image Rules</p>
+</div>
+<div class="paragraph">
+<p>==== IMG001: Image Attributes</p>
+</div>
+<div class="paragraph">
+<p>Verifies image attributes and file references.</p>
+</div>
+<div class="paragraph">
+<p>===== Description</p>
+</div>
+<div class="paragraph">
+<p>This rule checks:
+1. All images have alt text
+2. Referenced local images exist
+3. Block images have titles
+4. Image attributes are properly formatted</p>
+</div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
+<div class="listingblock">
+<div class="title">Valid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Inline image with alt text
+image:icon.png[Icon]
+
+// Block image with title and alt text
+.Figure 1: System Architecture
+image::diagram.png[Architecture Diagram]
+
+// External image with alt text
+image:https://example.com/img.png[Example Image]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Missing alt text
+image:icon.png[]
+
+// Missing title for block image
+image::diagram.png[Diagram]
+
+// Non-existent local file
+image::missing.png[Missing Image]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Planned Rules</p>
+</div>
+<div class="paragraph">
+<p>==== TABLE001: Table Formatting (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check table formatting consistency:
+* Column alignment
+* Header row presence
+* Cell content formatting</p>
+</div>
+<div class="paragraph">
+<p>==== LINK001: Link Verification (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will verify:
+* Internal cross-references
+* External link validity
+* Anchor definitions</p>
+</div>
+<div class="paragraph">
+<p>==== FMT001: Format Consistency (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check:
+* Consistent emphasis style
+* List formatting
+* Admonition usage</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

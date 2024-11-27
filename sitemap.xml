@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
     <url>
-    	<loc>http://jbake.org/arc42/01_introduction_and_goals.html</loc>
+    	<loc>http://jbake.org/readme/README.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/readme/README.html</loc>
+    	<loc>http://jbake.org/arc42/01_introduction_and_goals.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
@@ -17,12 +17,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
+    	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
+    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
@@ -32,12 +32,17 @@
     </url>
 
     <url>
+    	<loc>http://jbake.org/arc42/index.html</loc>
+    	<lastmod>2024-11-27</lastmod>
+    </url>
+
+    <url>
     	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/index.html</loc>
+    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
@@ -52,22 +57,17 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
-    	<lastmod>2024-11-27</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/09_architecture_decisions.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
+    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
+    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
@@ -92,17 +92,17 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/manual/rules.html</loc>
-    	<lastmod>2024-11-27</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/manual/introduction.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/manual/index.html</loc>
+    	<lastmod>2024-11-27</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/rules.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 

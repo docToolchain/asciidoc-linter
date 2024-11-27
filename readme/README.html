@@ -362,13 +362,13 @@
 <span class="image"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></span></p>
 </div>
 <div class="paragraph">
-<p>A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style.</p>
+<p>A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style. Part of the docToolchain project.</p>
 </div>
 <div class="sect1">
 <h2 id="_about">About</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations. It helps maintain consistent documentation by enforcing rules for heading structure, formatting, and more.</p>
+<p>AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations. It helps maintain consistent documentation by enforcing rules for heading structure, formatting, whitespace, and image usage.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -378,7 +378,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This project was developed with the assistance of an AI language model (GPT-4) as part of an experiment in AI-assisted development. The AI helped design the architecture, implement the code, and create the documentation.</p>
+<p>This project is part of docToolchain (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), a collection of documentation tools and best practices.</p>
 </div>
 </td>
 </tr>
@@ -407,7 +407,7 @@
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HEAD001</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check for proper heading incrementation (no skipping levels)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check for proper heading hierarchy (no skipping levels)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
 </tr>
 <tr>
@@ -430,6 +430,16 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Verify proper spacing around blocks</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WS001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check whitespace usage (blank lines, list markers, tabs)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMG001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify image attributes and file references</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -438,13 +448,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>WS001: Blank lines around headers and blocks</p>
-</li>
-<li>
 <p>TABLE001: Table formatting consistency</p>
-</li>
-<li>
-<p>IMG001: Image alt text presence</p>
 </li>
 <li>
 <p>LINK001: Broken internal references</p>
@@ -463,7 +467,7 @@
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
-git clone https://github.com/yourusername/asciidoc-linter.git
+git clone https://github.com/docToolchain/asciidoc-linter.git
 
 # Navigate to the project directory
 cd asciidoc-linter
@@ -530,7 +534,10 @@ WARNING: Block should be preceded by a blank line (line 67)
   ----
 
 ERROR: Multiple top-level headings found (line 30)
-  First heading at line 1: 'Document Title'</code></pre>
+  First heading at line 1: 'Document Title'
+
+WARNING: Missing alt text for image: diagram.png (line 80)
+  image::diagram.png[]</code></pre>
 </div>
 </div>
 </div>
@@ -559,15 +566,21 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 ├── asciidoc_linter/
 │   ├── __init__.py
 │   ├── cli.py
-│   ├── rules.py
-│   ├── heading_rules.py
-│   ├── block_rules.py
+│   ├── rules/
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── heading_rules.py
+│   │   ├── block_rules.py
+│   │   ├── whitespace_rules.py
+│   │   └── image_rules.py
 │   ├── parser.py
 │   └── reporter.py
 ├── tests/
 │   └── rules/
 │       ├── test_heading_rules.py
-│       └── test_block_rules.py
+│       ├── test_block_rules.py
+│       ├── test_whitespace_rules.py
+│       └── test_image_rules.py
 ├── docs/
 │   ├── requirements.adoc
 │   └── block_rules.adoc
@@ -619,7 +632,7 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>This project was developed with the assistance of GPT-4, demonstrating the potential of AI-assisted development</p>
+<p>Part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>)</p>
 </li>
 <li>
 <p>Inspired by various linting tools and the need for better AsciiDoc quality control</p>
@@ -647,6 +660,12 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 <p>✅ Block structure rules</p>
 </li>
 <li>
+<p>✅ Whitespace rules</p>
+</li>
+<li>
+<p>✅ Image validation</p>
+</li>
+<li>
 <p>⏳ Configuration system</p>
 </li>
 </ul>
@@ -663,7 +682,7 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 <p>🔲 Link checking</p>
 </li>
 <li>
-<p>🔲 Image validation</p>
+<p>🔲 Format rules</p>
 </li>
 </ul>
 </div>
@@ -694,10 +713,13 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Project Homepage: <a href="https://github.com/yourusername/asciidoc-linter" class="bare">https://github.com/yourusername/asciidoc-linter</a></p>
+<p>Project Homepage: <a href="https://github.com/docToolchain/asciidoc-linter" class="bare">https://github.com/docToolchain/asciidoc-linter</a></p>
 </li>
 <li>
-<p>Issue Tracker: <a href="https://github.com/yourusername/asciidoc-linter/issues" class="bare">https://github.com/yourusername/asciidoc-linter/issues</a></p>
+<p>Issue Tracker: <a href="https://github.com/docToolchain/asciidoc-linter/issues" class="bare">https://github.com/docToolchain/asciidoc-linter/issues</a></p>
+</li>
+<li>
+<p>docToolchain Homepage: <a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a></p>
 </li>
 </ul>
 </div>

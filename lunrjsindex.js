@@ -10,6 +10,14 @@ var documents = [
 
 {
     "id": 1,
+    "uri": "readme/README.html",
+    "menu": "readme",
+    "title": "README.adoc",
+    "text": " Unresolved directive in &lt;stdin&gt; - include::../../README.adoc[] "
+},
+
+{
+    "id": 2,
     "uri": "arc42/08_concepts.html",
     "menu": "arc42",
     "title": "Cross-cutting Concepts",
@@ -17,7 +25,7 @@ var documents = [
 },
 
 {
-    "id": 2,
+    "id": 3,
     "uri": "arc42/07_deployment_view.html",
     "menu": "arc42",
     "title": "Deployment View",
@@ -25,7 +33,7 @@ var documents = [
 },
 
 {
-    "id": 3,
+    "id": 4,
     "uri": "arc42/11_technical_risks.html",
     "menu": "arc42",
     "title": "Technical Risks and Technical Debt",
@@ -33,19 +41,11 @@ var documents = [
 },
 
 {
-    "id": 4,
+    "id": 5,
     "uri": "arc42/05_building_block_view.html",
     "menu": "arc42",
     "title": "Building Block View",
     "text": " Table of Contents Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation "
-},
-
-{
-    "id": 5,
-    "uri": "arc42/10_quality_requirements.html",
-    "menu": "arc42",
-    "title": "Quality Requirements",
-    "text": " Table of Contents Quality Requirements Quality Scenarios Quality Tree Quality Requirements Quality Scenarios Performance Scenarios Scenario Stimulus Response Priority Fast Document Processing Process 1000-line document Complete in &lt; 1 second High Multiple File Processing Process 100 documents Complete in &lt; 10 seconds Medium Memory Usage Process large document (10MB) Use &lt; 100MB RAM High Startup Time Launch linter Ready in &lt; 0.5 seconds Medium Reliability Scenarios Scenario Stimulus Response Priority Error Recovery Invalid input file Clear error message, continue with next file High Configuration Error Invalid rule configuration Detailed error message, use defaults High Plugin Failure Plugin crashes Isolate failure, continue with other rules Medium Resource Exhaustion System low on memory Graceful shutdown, save progress Medium Usability Scenarios Scenario Stimulus Response Priority Clear Error Messages Rule violation found Show file, line, and actionable message High Configuration Change rule settings Take effect without restart Medium Integration Use in CI pipeline Exit code reflects success/failure High Documentation Look up rule details Find explanation within 30 seconds Medium Quality Tree "
 },
 
 {
@@ -58,22 +58,14 @@ var documents = [
 
 {
     "id": 7,
-    "uri": "arc42/04_solution_strategy.html",
+    "uri": "arc42/10_quality_requirements.html",
     "menu": "arc42",
-    "title": "Solution Strategy",
-    "text": " Table of Contents Solution Strategy Quality Goals and Architectural Approaches Technology Decisions Implementation Patterns Solution Strategy Quality Goals and Architectural Approaches Quality Goal Solution Approach Details Extensibility * Abstract base classes * Plugin architecture * Clear interfaces * New rules can be added by extending base classes * Plugin system allows external rule packages * Well-defined interfaces for rule implementation Reliability * Comprehensive testing * Strong typing * Defensive programming * High test coverage * Type hints throughout the code * Careful input validation Usability * Clear error messages * Context information * Configuration options * Detailed error descriptions * Line and column information * Configurable rule severity Performance * Efficient algorithms * Lazy loading * Caching * Line-by-line processing * Rules loaded on demand * Cache parsing results Maintainability * Clean architecture * SOLID principles * Documentation * Clear separation of concerns * Single responsibility principle * Comprehensive documentation Technology Decisions Technology Decision Rationale Python Primary implementation language * Strong standard library * Great text processing capabilities * Wide adoption in tooling Regular Expressions Pattern matching * Built into Python * Efficient for text processing * Well understood by developers YAML Configuration format * Human readable * Standard format * Good library support unittest Testing framework * Part of Python standard library * Well known to developers * Good IDE support Implementation Patterns "
+    "title": "Quality Requirements",
+    "text": " Table of Contents Quality Requirements Quality Scenarios Quality Tree Quality Requirements Quality Scenarios Performance Scenarios Scenario Stimulus Response Priority Fast Document Processing Process 1000-line document Complete in &lt; 1 second High Multiple File Processing Process 100 documents Complete in &lt; 10 seconds Medium Memory Usage Process large document (10MB) Use &lt; 100MB RAM High Startup Time Launch linter Ready in &lt; 0.5 seconds Medium Reliability Scenarios Scenario Stimulus Response Priority Error Recovery Invalid input file Clear error message, continue with next file High Configuration Error Invalid rule configuration Detailed error message, use defaults High Plugin Failure Plugin crashes Isolate failure, continue with other rules Medium Resource Exhaustion System low on memory Graceful shutdown, save progress Medium Usability Scenarios Scenario Stimulus Response Priority Clear Error Messages Rule violation found Show file, line, and actionable message High Configuration Change rule settings Take effect without restart Medium Integration Use in CI pipeline Exit code reflects success/failure High Documentation Look up rule details Find explanation within 30 seconds Medium Quality Tree "
 },
 
 {
     "id": 8,
-    "uri": "arc42/03_system_scope_and_context.html",
-    "menu": "arc42",
-    "title": "System Scope and Context",
-    "text": " Table of Contents System Scope and Context Business Context Technical Context System Scope and Context Business Context Technical Context "
-},
-
-{
-    "id": 9,
     "uri": "arc42/12_glossary.html",
     "menu": "arc42",
     "title": "Glossary",
@@ -81,7 +73,23 @@ var documents = [
 },
 
 {
+    "id": 9,
+    "uri": "arc42/04_solution_strategy.html",
+    "menu": "arc42",
+    "title": "Solution Strategy",
+    "text": " Table of Contents Solution Strategy Quality Goals and Architectural Approaches Technology Decisions Implementation Patterns Solution Strategy Quality Goals and Architectural Approaches Quality Goal Solution Approach Details Extensibility * Abstract base classes * Plugin architecture * Clear interfaces * New rules can be added by extending base classes * Plugin system allows external rule packages * Well-defined interfaces for rule implementation Reliability * Comprehensive testing * Strong typing * Defensive programming * High test coverage * Type hints throughout the code * Careful input validation Usability * Clear error messages * Context information * Configuration options * Detailed error descriptions * Line and column information * Configurable rule severity Performance * Efficient algorithms * Lazy loading * Caching * Line-by-line processing * Rules loaded on demand * Cache parsing results Maintainability * Clean architecture * SOLID principles * Documentation * Clear separation of concerns * Single responsibility principle * Comprehensive documentation Technology Decisions Technology Decision Rationale Python Primary implementation language * Strong standard library * Great text processing capabilities * Wide adoption in tooling Regular Expressions Pattern matching * Built into Python * Efficient for text processing * Well understood by developers YAML Configuration format * Human readable * Standard format * Good library support unittest Testing framework * Part of Python standard library * Well known to developers * Good IDE support Implementation Patterns "
+},
+
+{
     "id": 10,
+    "uri": "arc42/03_system_scope_and_context.html",
+    "menu": "arc42",
+    "title": "System Scope and Context",
+    "text": " Table of Contents System Scope and Context Business Context Technical Context System Scope and Context Business Context Technical Context "
+},
+
+{
+    "id": 11,
     "uri": "arc42/09_architecture_decisions.html",
     "menu": "arc42",
     "title": "Architecture Decisions",
@@ -89,7 +97,7 @@ var documents = [
 },
 
 {
-    "id": 11,
+    "id": 12,
     "uri": "arc42/02_architecture_constraints.html",
     "menu": "arc42",
     "title": "Architecture Constraints",
@@ -97,7 +105,7 @@ var documents = [
 },
 
 {
-    "id": 12,
+    "id": 13,
     "uri": "arc42/06_runtime_view.html",
     "menu": "arc42",
     "title": "Runtime View",
@@ -105,7 +113,7 @@ var documents = [
 },
 
 {
-    "id": 13,
+    "id": 14,
     "uri": "canvas/architecture-canvas.html",
     "menu": "canvas",
     "title": "Architecture Communication Canvas: AsciiDoc Linter",
@@ -113,7 +121,7 @@ var documents = [
 },
 
 {
-    "id": 14,
+    "id": 15,
     "uri": "manual/testing.html",
     "menu": "manual",
     "title": "Testing Guide",
@@ -121,7 +129,7 @@ var documents = [
 },
 
 {
-    "id": 15,
+    "id": 16,
     "uri": "manual/development.html",
     "menu": "manual",
     "title": "Development Guide",
@@ -129,7 +137,7 @@ var documents = [
 },
 
 {
-    "id": 16,
+    "id": 17,
     "uri": "manual/usage.html",
     "menu": "manual",
     "title": "Usage Guide",
@@ -137,7 +145,7 @@ var documents = [
 },
 
 {
-    "id": 17,
+    "id": 18,
     "uri": "manual/introduction.html",
     "menu": "manual",
     "title": "Introduction",
@@ -145,7 +153,7 @@ var documents = [
 },
 
 {
-    "id": 18,
+    "id": 19,
     "uri": "manual/index.html",
     "menu": "manual",
     "title": "AsciiDoc Linter Manual",
@@ -153,7 +161,7 @@ var documents = [
 },
 
 {
-    "id": 19,
+    "id": 20,
     "uri": "manual/rules.html",
     "menu": "manual",
     "title": "Rule Reference",
@@ -161,7 +169,7 @@ var documents = [
 },
 
 {
-    "id": 20,
+    "id": 21,
     "uri": "search.html",
     "menu": "-",
     "title": "search",
@@ -169,7 +177,7 @@ var documents = [
 },
 
 {
-    "id": 21,
+    "id": 22,
     "uri": "lunrjsindex.html",
     "menu": "-",
     "title": "null",

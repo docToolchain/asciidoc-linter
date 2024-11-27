@@ -7,6 +7,11 @@
     </url>
 
     <url>
+    	<loc>http://jbake.org/readme/README.html</loc>
+    	<lastmod>2024-11-27</lastmod>
+    </url>
+
+    <url>
     	<loc>http://jbake.org/arc42/08_concepts.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
@@ -27,12 +32,17 @@
     </url>
 
     <url>
+    	<loc>http://jbake.org/arc42/index.html</loc>
+    	<lastmod>2024-11-27</lastmod>
+    </url>
+
+    <url>
     	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/index.html</loc>
+    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 
@@ -43,11 +53,6 @@
 
     <url>
     	<loc>http://jbake.org/arc42/03_system_scope_and_context.html</loc>
-    	<lastmod>2024-11-27</lastmod>
-    </url>
-
-    <url>
-    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
     	<lastmod>2024-11-27</lastmod>
     </url>
 

@@ -22,22 +22,22 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/05_building_block_view.html</loc>
-    	<lastmod>2024-12-02</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
     	<lastmod>2024-12-02</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
+    	<loc>http://jbake.org/arc42/05_building_block_view.html</loc>
     	<lastmod>2024-12-02</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/arc42/index.html</loc>
+    	<lastmod>2024-12-02</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/10_quality_requirements.html</loc>
     	<lastmod>2024-12-02</lastmod>
     </url>
 
@@ -77,12 +77,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/test-results/01-unit-tests.html</loc>
+    	<loc>http://jbake.org/test-results/02-coverage.html</loc>
     	<lastmod>2024-12-02</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/test-results/02-coverage.html</loc>
+    	<loc>http://jbake.org/test-results/01-unit-tests.html</loc>
     	<lastmod>2024-12-02</lastmod>
     </url>
 

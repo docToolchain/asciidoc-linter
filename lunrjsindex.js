@@ -26,18 +26,18 @@ var documents = [
 
 {
     "id": 3,
-    "uri": "arc42/07_deployment_view.html",
-    "menu": "arc42",
-    "title": "Deployment View",
-    "text": " Table of Contents Deployment View Infrastructure Level 1 Technical Infrastructure Security and Access Deployment View Infrastructure Level 1 Technical Infrastructure Security and Access "
-},
-
-{
-    "id": 4,
     "uri": "arc42/11_technical_risks.html",
     "menu": "arc42",
     "title": "Technical Risks and Technical Debt",
     "text": " Table of Contents Technical Risks and Technical Debt Risk Analysis Technical Debt Risk Matrix Technical Risks and Technical Debt Risk Analysis Risk Description Impact Probability Mitigation Performance Degradation Rule processing becomes slow with many rules High Medium * Profile rule execution * Implement rule caching * Optimize core algorithms Memory Leaks Long-running processes accumulate memory High Low * Regular memory profiling * Automated testing * Resource cleanup False Positives Rules report incorrect violations Medium High * Extensive test cases * User feedback system * Rule configuration options Plugin Conflicts Custom rules interfere with core rules Medium Medium * Plugin isolation * Version compatibility checks * Clear plugin API Technical Debt Current Technical Debt Area Description Impact Priority Test Coverage Some edge cases not covered Medium High Documentation Some advanced features poorly documented Medium Medium Error Handling Some error cases not specifically handled High High Configuration Hard-coded values that should be configurable Low Low Planned Improvements Risk Matrix "
+},
+
+{
+    "id": 4,
+    "uri": "arc42/07_deployment_view.html",
+    "menu": "arc42",
+    "title": "Deployment View",
+    "text": " Table of Contents Deployment View Infrastructure Level 1 Technical Infrastructure Security and Access Deployment View Infrastructure Level 1 Technical Infrastructure Security and Access "
 },
 
 {
@@ -66,6 +66,14 @@ var documents = [
 
 {
     "id": 8,
+    "uri": "arc42/12_glossary.html",
+    "menu": "arc42",
+    "title": "Glossary",
+    "text": " Table of Contents Glossary Glossary Term Definition Additional Information AsciiDoc Lightweight markup language for documentation Similar to Markdown, but with more features for technical documentation Linter Tool that analyzes source code or text for potential errors Focuses on style, format, and structure issues Rule Individual check that validates specific aspects Can be enabled/disabled and configured Finding Result of a rule check indicating a potential issue Contains message, severity, and location information Severity Importance level of a finding ERROR, WARNING, or INFO Position Location in a document where an issue was found Contains line and optional column information Plugin Extension that adds additional functionality Can provide custom rules and configurations CI/CD Continuous Integration/Continuous Deployment Automated build, test, and deployment process PyPI Python Package Index Central repository for Python packages Virtual Environment Isolated Python runtime environment Manages project-specific dependencies Type Hints Python type annotations Helps with code understanding and static analysis Unit Test Test of individual components Ensures correct behavior of specific functions Integration Test Test of component interactions Verifies system behavior as a whole Coverage Measure of code tested by automated tests Usually expressed as percentage Technical Debt Development shortcuts that need future attention Balance between quick delivery and maintainability "
+},
+
+{
+    "id": 9,
     "uri": "arc42/04_solution_strategy.html",
     "menu": "arc42",
     "title": "Solution Strategy",
@@ -73,19 +81,11 @@ var documents = [
 },
 
 {
-    "id": 9,
+    "id": 10,
     "uri": "arc42/03_system_scope_and_context.html",
     "menu": "arc42",
     "title": "System Scope and Context",
     "text": " Table of Contents System Scope and Context Business Context Technical Context System Scope and Context Business Context Technical Context "
-},
-
-{
-    "id": 10,
-    "uri": "arc42/12_glossary.html",
-    "menu": "arc42",
-    "title": "Glossary",
-    "text": " Table of Contents Glossary Glossary Term Definition Additional Information AsciiDoc Lightweight markup language for documentation Similar to Markdown, but with more features for technical documentation Linter Tool that analyzes source code or text for potential errors Focuses on style, format, and structure issues Rule Individual check that validates specific aspects Can be enabled/disabled and configured Finding Result of a rule check indicating a potential issue Contains message, severity, and location information Severity Importance level of a finding ERROR, WARNING, or INFO Position Location in a document where an issue was found Contains line and optional column information Plugin Extension that adds additional functionality Can provide custom rules and configurations CI/CD Continuous Integration/Continuous Deployment Automated build, test, and deployment process PyPI Python Package Index Central repository for Python packages Virtual Environment Isolated Python runtime environment Manages project-specific dependencies Type Hints Python type annotations Helps with code understanding and static analysis Unit Test Test of individual components Ensures correct behavior of specific functions Integration Test Test of component interactions Verifies system behavior as a whole Coverage Measure of code tested by automated tests Usually expressed as percentage Technical Debt Development shortcuts that need future attention Balance between quick delivery and maintainability "
 },
 
 {
@@ -106,18 +106,18 @@ var documents = [
 
 {
     "id": 13,
-    "uri": "canvas/architecture-canvas.html",
-    "menu": "canvas",
-    "title": "Architecture Communication Canvas: AsciiDoc Linter",
-    "text": " Table of Contents Architecture Communication Canvas: AsciiDoc Linter Architecture Communication Canvas: AsciiDoc Linter .canvas tr:nth-child(1) td:nth-child(1), .canvas tr:nth-child(1) td:nth-child(2), .canvas tr:nth-child(2) td:nth-child(1), .canvas tr:nth-child(3) td:nth-child(1), .canvas tr:nth-child(4) td:nth-child(1) { background-color: #8fe4b4; border: 1px solid black; } .canvas tr:nth-child(1) td:nth-child(3), .canvas tr:nth-child(1) td:nth-child(4), .canvas tr:nth-child(4) td:nth-child(2) { background-color: #94d7ef; border: 1px solid black; } .canvas tr:nth-child(5) td:nth-child(1) { background-color: #ffc7c6; border: 1px solid black; } Value Proposition Automated quality assurance for AsciiDoc documentation Consistent documentation style across projects Early detection of documentation issues Reduced review effort Integration with CI/CD pipelines Core Functions Lint AsciiDoc files for common issues Check heading structure and format Validate document consistency Generate detailed reports Configurable rule sets Multiple output formats (console, JSON, HTML) Git pre-commit hook integration Core Decisions - Good or Bad Good: Python as implementation language (wide adoption, great libraries) Modular rule system for easy extension Clear separation of concerns (rules, parser, reporter) Test-driven development approach AsciiDoc for documentation Bad: Limited to AsciiDoc format No real-time linting No IDE integration yet Strategic: Focus on documentation quality Extensible architecture Community-driven rule development Technologies Python 3.8+ unittest framework AsciiDoc parser YAML/JSON for configuration Git integration CI/CD tools HTML report generation Key Stakeholder Documentation writers Technical authors Development teams Documentation maintainers Open source projects Technical documentation teams Quality assurance teams Quality Requirements Performance: Fast processing for CI/CD Extensibility: Easy to add new rules Reliability: No false positives Usability: Clear error messages Configurability: Flexible rule settings Maintainability: Well-documented code Testability: Comprehensive test suite Business Context External Systems: Version Control Systems (Git) CI/CD Pipelines Documentation Build Tools IDE Plugins (planned) Issue Tracking Systems Data Flow: AsciiDoc files as input Configuration files (YAML/JSON) Lint reports as output Integration webhooks Components / Modules Core Risks and Missing Information Risks: Performance impact on large documentation sets False positives affecting user acceptance Complexity of rule configurations Integration challenges with existing tools Maintenance of rule set as AsciiDoc evolves Missing Information: Real-world usage patterns Common documentation anti-patterns IDE integration requirements Performance benchmarks User preferences for rule configuration Software Architecture Canvas by Gernot Starke, Patrick Roos and arc42 Contributors is licensed under Attribution-ShareAlike 4.0 International "
-},
-
-{
-    "id": 14,
     "uri": "arc42/06_runtime_view.html",
     "menu": "arc42",
     "title": "Runtime View",
     "text": " Table of Contents Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence "
+},
+
+{
+    "id": 14,
+    "uri": "canvas/architecture-canvas.html",
+    "menu": "canvas",
+    "title": "Architecture Communication Canvas: AsciiDoc Linter",
+    "text": " Table of Contents Architecture Communication Canvas: AsciiDoc Linter Architecture Communication Canvas: AsciiDoc Linter .canvas tr:nth-child(1) td:nth-child(1), .canvas tr:nth-child(1) td:nth-child(2), .canvas tr:nth-child(2) td:nth-child(1), .canvas tr:nth-child(3) td:nth-child(1), .canvas tr:nth-child(4) td:nth-child(1) { background-color: #8fe4b4; border: 1px solid black; } .canvas tr:nth-child(1) td:nth-child(3), .canvas tr:nth-child(1) td:nth-child(4), .canvas tr:nth-child(4) td:nth-child(2) { background-color: #94d7ef; border: 1px solid black; } .canvas tr:nth-child(5) td:nth-child(1) { background-color: #ffc7c6; border: 1px solid black; } Value Proposition Automated quality assurance for AsciiDoc documentation Consistent documentation style across projects Early detection of documentation issues Reduced review effort Integration with CI/CD pipelines Core Functions Lint AsciiDoc files for common issues Check heading structure and format Validate document consistency Generate detailed reports Configurable rule sets Multiple output formats (console, JSON, HTML) Git pre-commit hook integration Core Decisions - Good or Bad Good: Python as implementation language (wide adoption, great libraries) Modular rule system for easy extension Clear separation of concerns (rules, parser, reporter) Test-driven development approach AsciiDoc for documentation Bad: Limited to AsciiDoc format No real-time linting No IDE integration yet Strategic: Focus on documentation quality Extensible architecture Community-driven rule development Technologies Python 3.8+ unittest framework AsciiDoc parser YAML/JSON for configuration Git integration CI/CD tools HTML report generation Key Stakeholder Documentation writers Technical authors Development teams Documentation maintainers Open source projects Technical documentation teams Quality assurance teams Quality Requirements Performance: Fast processing for CI/CD Extensibility: Easy to add new rules Reliability: No false positives Usability: Clear error messages Configurability: Flexible rule settings Maintainability: Well-documented code Testability: Comprehensive test suite Business Context External Systems: Version Control Systems (Git) CI/CD Pipelines Documentation Build Tools IDE Plugins (planned) Issue Tracking Systems Data Flow: AsciiDoc files as input Configuration files (YAML/JSON) Lint reports as output Integration webhooks Components / Modules Core Risks and Missing Information Risks: Performance impact on large documentation sets False positives affecting user acceptance Complexity of rule configurations Integration challenges with existing tools Maintenance of rule set as AsciiDoc evolves Missing Information: Real-world usage patterns Common documentation anti-patterns IDE integration requirements Performance benchmarks User preferences for rule configuration Software Architecture Canvas by Gernot Starke, Patrick Roos and arc42 Contributors is licensed under Attribution-ShareAlike 4.0 International "
 },
 
 {

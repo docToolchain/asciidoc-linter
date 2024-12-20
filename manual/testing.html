@@ -9,7 +9,7 @@
     <meta content="jbake" name="generator">
     <meta content="INDEX, FOLLOW" name="ROBOTS">
 
-    <title>Testing Guide</title>
+    <title>Testing Strategy and Guide</title>
     <meta content="docToolchain" property="og:title">
     <meta content="build your dev docs the easy way..." property="og:description">
     <meta content="website" property="og:type">
@@ -295,7 +295,7 @@
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
-                                   href="../manual/testing.html" title="Testing Guide">Testing Guide</a>
+                                   href="../manual/testing.html" title="Testing Strategy and Guide">Testing Strategy and Guide</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
@@ -319,7 +319,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Guide%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/manual/testing.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Strategy+and+Guide%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/manual/testing.adoc%0A%23branch:%20main" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -329,14 +329,14 @@
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_testing_guide">Testing Guide</a>
+<li><a href="#_testing_strategy_and_guide">Testing Strategy and Guide</a>
 <ul class="sectlevel2">
-<li><a href="#_overview">Overview</a></li>
-<li><a href="#_running_tests">Running Tests</a></li>
-<li><a href="#_test_structure">Test Structure</a></li>
-<li><a href="#_writing_tests">Writing Tests</a></li>
-<li><a href="#_test_data">Test Data</a></li>
-<li><a href="#_continuous_integration">Continuous Integration</a></li>
+<li><a href="#_test_strategy">.1. Test Strategy</a></li>
+<li><a href="#_test_implementation">.2. Test Implementation</a></li>
+<li><a href="#_running_tests">.3. Running Tests</a></li>
+<li><a href="#_test_maintenance">.4. Test Maintenance</a></li>
+<li><a href="#_appendix">.5. Appendix</a></li>
+<li><a href="#_references">.6. References</a></li>
 </ul>
 </li>
 </ul>
@@ -362,213 +362,472 @@
         <p>
             
 <div class="sect1">
-<h2 id="_testing_guide">Testing Guide</h2>
+<h2 id="_testing_strategy_and_guide">Testing Strategy and Guide</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview">Overview</h3>
+<h3 id="_test_strategy">.1. Test Strategy</h3>
+<div class="sect3">
+<h4 id="_goals_and_objectives">.1.1. Goals and Objectives</h4>
 <div class="paragraph">
-<p>The AsciiDoc Linter uses Python&#8217;s unittest framework for testing. Tests are organized by rule type and functionality.</p>
+<p>The testing strategy for the AsciiDoc Linter aims to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure reliable detection of AsciiDoc formatting issues</p>
+</li>
+<li>
+<p>Prevent false positives that could frustrate users</p>
+</li>
+<li>
+<p>Maintain high code quality through comprehensive testing</p>
+</li>
+<li>
+<p>Enable safe refactoring through good test coverage</p>
+</li>
+<li>
+<p>Support rapid development through automated testing</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_test_levels">.1.2. Test Levels</h4>
+<div class="sect4">
+<h5 id="_unit_tests">Unit Tests</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test individual rules in isolation</p>
+</li>
+<li>
+<p>Verify rule logic and error detection</p>
+</li>
+<li>
+<p>Cover edge cases and special scenarios</p>
+</li>
+<li>
+<p>Test configuration options</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_integration_tests">Integration Tests</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test interaction between parser and rules</p>
+</li>
+<li>
+<p>Verify correct document processing</p>
+</li>
+<li>
+<p>Test CLI interface and options</p>
+</li>
+<li>
+<p>Test reporter output formats</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_system_tests">System Tests</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>End-to-end testing of the linter</p>
+</li>
+<li>
+<p>Test with real AsciiDoc documents</p>
+</li>
+<li>
+<p>Verify correct error reporting</p>
+</li>
+<li>
+<p>Test performance with large documents</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_test_coverage_goals">.1.3. Test Coverage Goals</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Target Coverage</th>
+<th class="tableblock halign-left valign-top">Current Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core (parser, linter)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">88%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">80%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reporter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overall</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">61%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_quality_metrics">.1.4. Quality Metrics</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Line Coverage: Minimum 90%</p>
+</li>
+<li>
+<p>Branch Coverage: Minimum 85%</p>
+</li>
+<li>
+<p>Mutation Score: Minimum 80%</p>
+</li>
+<li>
+<p>Test Success Rate: 100%</p>
+</li>
+<li>
+<p>No known bugs in production</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running_tests">Running Tests</h3>
+<h3 id="_test_implementation">.2. Test Implementation</h3>
 <div class="sect3">
-<h4 id="_running_all_tests">Running All Tests</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash"># From project root
-python run_tests.py
-
-# With coverage report
-coverage run -m unittest discover
-coverage report</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_running_specific_tests">Running Specific Tests</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash"># Run tests for heading rules
-python -m unittest tests/rules/test_heading_rules.py
-
-# Run a specific test class
-python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule
-
-# Run a specific test method
-python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule.test_valid_format</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_test_structure">Test Structure</h3>
-<div class="sect3">
-<h4 id="_test_organization">Test Organization</h4>
+<h4 id="_test_organization">.2.1. Test Organization</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code>tests/
 ├── __init__.py
-├── rules/
+├── rules/              # Rule-specific tests
 │   ├── __init__.py
 │   ├── test_heading_rules.py
-│   └── test_block_rules.py
-├── test_cli.py
-└── test_parser.py</code></pre>
+│   ├── test_block_rules.py
+│   ├── test_image_rules.py
+│   └── test_whitespace_rules.py
+├── integration/        # Integration tests
+│   ├── __init__.py
+│   ├── test_parser_rules.py
+│   └── test_cli_reporter.py
+├── system/            # System tests
+│   ├── __init__.py
+│   ├── test_large_docs.py
+│   └── test_real_projects.py
+├── test_cli.py        # CLI tests
+├── test_parser.py     # Parser tests
+├── test_reporter.py   # Reporter tests
+└── test_linter.py     # Core linter tests</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_test_classes">Test Classes</h4>
-<div class="paragraph">
-<p>Each rule has its own test class:</p>
-</div>
+<h4 id="_test_patterns">.2.2. Test Patterns</h4>
+<div class="sect4">
+<h5 id="_rule_tests">Rule Tests</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="python">class TestHeadingFormatRule(unittest.TestCase):
-    def setUp(self):
-        self.rule = HeadingFormatRule()
+<pre class="prettyprint highlight"><code data-lang="python">def test_rule_pattern(self):
+    # Given: Setup test data and context
+    content = "test content"
+    rule = TestRule(config)
 
-    def test_valid_format(self):
-        content = """
-        = Valid Heading
-        == Another Valid
-        """
-        findings = self.rule.check(content)
-        self.assertEqual(len(findings), 0)</code></pre>
+    # When: Execute the rule
+    findings = rule.check(content)
+
+    # Then: Verify results
+    assert_findings(findings)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_integration_tests_2">Integration Tests</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">def test_integration_pattern(self):
+    # Given: Setup test environment
+    doc = create_test_document()
+    linter = setup_linter()
+
+    # When: Process document
+    results = linter.process(doc)
+
+    # Then: Verify complete workflow
+    verify_results(results)</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_writing_tests">Writing Tests</h3>
 <div class="sect3">
-<h4 id="_test_guidelines">Test Guidelines</h4>
+<h4 id="_test_data_management">.2.3. Test Data Management</h4>
+<div class="sect4">
+<h5 id="_test_documents">Test Documents</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Test both valid and invalid cases</p>
+<p>Maintain a collection of test documents</p>
 </li>
 <li>
-<p>Include edge cases</p>
+<p>Include both valid and invalid examples</p>
 </li>
 <li>
-<p>Test error messages</p>
+<p>Document the purpose of each test file</p>
 </li>
 <li>
-<p>Test severity levels</p>
-</li>
-<li>
-<p>Test rule configurations</p>
+<p>Version control test data</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_test_pattern">Example Test Pattern</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Arrange: Set up test data</p>
-</li>
-<li>
-<p>Act: Execute the code</p>
-</li>
-<li>
-<p>Assert: Verify results</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="python">def test_invalid_format(self):
-    # Arrange
-    content = "=invalid heading"
-
-    # Act
-    findings = self.rule.check(content)
-
-    # Assert
-    self.assertEqual(len(findings), 2)
-    self.assertEqual(findings[0].severity, Severity.ERROR)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_test_data">Test Data</h3>
-<div class="sect3">
-<h4 id="_sample_documents">Sample Documents</h4>
+<div class="sect4">
+<h5 id="_test_fixtures">Test Fixtures</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Create realistic test documents</p>
+<p>Use pytest fixtures for common setup</p>
 </li>
 <li>
-<p>Cover various scenarios</p>
+<p>Share test data between related tests</p>
 </li>
 <li>
-<p>Include complex cases</p>
+<p>Clean up test environment after each test</p>
 </li>
 <li>
-<p>Document test case purpose</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_test_fixtures">Test Fixtures</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Use setUp and tearDown</p>
-</li>
-<li>
-<p>Share common test data</p>
-</li>
-<li>
-<p>Clean up after tests</p>
+<p>Mock external dependencies</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_continuous_integration">Continuous Integration</h3>
+<h3 id="_running_tests">.3. Running Tests</h3>
 <div class="sect3">
-<h4 id="_github_actions">GitHub Actions</h4>
+<h4 id="_local_development">.3.1. Local Development</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">name: Tests
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run with coverage
+coverage run -m pytest
+coverage report
+coverage html
+
+# Run specific test categories
+pytest tests/rules/
+pytest tests/integration/
+pytest tests/system/</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_continuous_integration">.3.2. Continuous Integration</h4>
+<div class="sect4">
+<h5 id="_github_actions_workflow">GitHub Actions Workflow</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">name: Test Suite
 on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, "3.10"]
     steps:
       - uses: actions/checkout@v2
-      - name: Run Tests
-        run: python run_tests.py</code></pre>
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          coverage run -m pytest
+          coverage report
+          coverage xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_maintenance">.4. Test Maintenance</h3>
+<div class="sect3">
+<h4 id="_regular_activities">.4.1. Regular Activities</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Review test coverage reports weekly</p>
+</li>
+<li>
+<p>Update tests for new features</p>
+</li>
+<li>
+<p>Refactor tests when needed</p>
+</li>
+<li>
+<p>Review test performance</p>
+</li>
+<li>
+<p>Update test documentation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_quality_checks">.4.2. Quality Checks</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Run mutation testing monthly</p>
+</li>
+<li>
+<p>Review test maintainability</p>
+</li>
+<li>
+<p>Check for flaky tests</p>
+</li>
+<li>
+<p>Verify test isolation</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appendix">.5. Appendix</h3>
+<div class="sect3">
+<h4 id="_test_templates">.5.1. Test Templates</h4>
+<div class="sect4">
+<h5 id="_unit_test_template">Unit Test Template</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TestRuleName(unittest.TestCase):
+    def setUp(self):
+        """Setup test environment"""
+        self.rule = RuleUnderTest()
+
+    def test_valid_case(self):
+        """Test with valid input"""
+        # Given
+        content = "valid content"
+
+        # When
+        findings = self.rule.check(content)
+
+        # Then
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        """Test with invalid input"""
+        # Given
+        content = "invalid content"
+
+        # When
+        findings = self.rule.check(content)
+
+        # Then
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].severity, Severity.ERROR)</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_coverage_requirements">Coverage Requirements</h4>
-<div class="ulist">
-<ul>
+<h4 id="_test_checklists">.5.2. Test Checklists</h4>
+<div class="sect4">
+<h5 id="_new_feature_checklist">New Feature Checklist</h5>
+<div class="ulist checklist">
+<ul class="checklist">
 <li>
-<p>Aim for 90%+ coverage</p>
+<p>&#10063; Unit tests written</p>
 </li>
 <li>
-<p>Cover all code paths</p>
+<p>&#10063; Integration tests updated</p>
 </li>
 <li>
-<p>Include error conditions</p>
+<p>&#10063; System tests verified</p>
 </li>
 <li>
-<p>Test edge cases</p>
+<p>&#10063; Coverage goals met</p>
+</li>
+<li>
+<p>&#10063; Documentation updated</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect4">
+<h5 id="_test_review_checklist">Test Review Checklist</h5>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p>&#10063; Tests follow patterns</p>
+</li>
+<li>
+<p>&#10063; Coverage adequate</p>
+</li>
+<li>
+<p>&#10063; Edge cases covered</p>
+</li>
+<li>
+<p>&#10063; Error cases tested</p>
+</li>
+<li>
+<p>&#10063; Documentation clear</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_references">.6. References</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.pytest.org/">Pytest Documentation</a></p>
+</li>
+<li>
+<p><a href="https://coverage.readthedocs.io/">Coverage.py Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/marketplace/actions/codecov">Codecov GitHub Action</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -600,11 +859,11 @@ jobs:
     <button class="feedback--answer feedback--answer-yes">Yes</button>
     <button class="feedback--answer feedback--answer-no">No</button>
     <p class="feedback--response feedback--response-yes">
-        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Guide%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/testing.adoc">tell us
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Strategy+and+Guide%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/testing.adoc">tell us
     how we can improve</a>.
     </p>
     <p class="feedback--response feedback--response-no">
-        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Guide%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/testing.adoc">tell
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Testing+Strategy+and+Guide%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/testing.adoc">tell
     us how we can improve</a>.
     </p>
 </div>

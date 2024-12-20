@@ -213,7 +213,7 @@
     <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link " href="../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -221,11 +221,11 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../test-results/01-unit-tests.html"><span>test-results</span></a>
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -354,7 +354,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Technical+Risks+and+Technical+Debt%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/11_technical_risks.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Technical+Risks+and+Technical+Debt%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/11_technical_risks.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -363,12 +363,18 @@
 
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_11_technical_risks_adoc_technical_risks">11_technical_risks.adoc - Technical Risks</a>
 <ul class="sectlevel1">
 <li><a href="#_technical_risks_and_technical_debt">Technical Risks and Technical Debt</a>
 <ul class="sectlevel2">
+<li><a href="#_current_issues_december_2024">Current Issues (December 2024)</a></li>
 <li><a href="#_risk_analysis">Risk Analysis</a></li>
 <li><a href="#_technical_debt">Technical Debt</a></li>
 <li><a href="#_risk_matrix">Risk Matrix</a></li>
+<li><a href="#_mitigation_strategy">Mitigation Strategy</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -393,9 +399,61 @@
     <div class="td-content">
         <p>
             
+<h1 id="_11_technical_risks_adoc_technical_risks" class="sect0">11_technical_risks.adoc - Technical Risks</h1>
 <div class="sect1">
 <h2 id="_technical_risks_and_technical_debt">Technical Risks and Technical Debt</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_current_issues_december_2024">Current Issues (December 2024)</h3>
+<div class="sect3">
+<h4 id="_test_failures">Test Failures</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>3 failed tests in table processing</p>
+</li>
+<li>
+<p>Issues with cell extraction and list detection</p>
+</li>
+<li>
+<p>Impact on table validation reliability</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_coverage_gaps">Coverage Gaps</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>rules.py: 0% coverage</p>
+</li>
+<li>
+<p>reporter.py: 85% coverage</p>
+</li>
+<li>
+<p>block_rules.py: 89% coverage</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementation_issues">Implementation Issues</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Inconsistent severity case handling</p>
+</li>
+<li>
+<p>Missing rule_id attribute in base class</p>
+</li>
+<li>
+<p>Table content validation problems</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_risk_analysis">Risk Analysis</h3>
 <table class="tableblock frame-all grid-all stretch">
@@ -416,6 +474,24 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing Errors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table content validation unreliable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Fix cell extraction
+* Improve list detection
+* Add comprehensive tests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage Gaps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Critical modules lack tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Add tests for rules.py
+* Improve reporter coverage
+* Document test scenarios</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance Degradation</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Rule processing becomes slow with many rules</p></td>
@@ -476,8 +552,20 @@
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cell extraction and list detection issues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Some edge cases not covered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rules.py and reporter.py need tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core Architecture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inconsistent severity handling</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
@@ -503,10 +591,61 @@
 </table>
 </div>
 <div class="sect3">
+<h4 id="_implementation_debt">Implementation Debt</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Issue</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TableContentRule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cell extraction incorrect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TableContentRule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List detection problems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule Base Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Missing rule_id attribute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Severity Handling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inconsistent case usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rules.py</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No test coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
 <h4 id="_planned_improvements">Planned Improvements</h4>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-df87a0d860b90a11bcd8ab5839300ffe.png" alt="Diagram" width="913" height="269">
+<img src="../images/diag-031437935971283d831a1becf1fcf43a.png" alt="Diagram" width="970" height="269">
 </div>
 </div>
 </div>
@@ -515,7 +654,58 @@
 <h3 id="_risk_matrix">Risk Matrix</h3>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-3261e7de71c996ba719a864f767a7ebc.png" alt="Diagram" width="1006" height="269">
+<img src="../images/diag-d55265e17a88463db896997599cab955.png" alt="Diagram" width="1247" height="369">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mitigation_strategy">Mitigation Strategy</h3>
+<div class="sect3">
+<h4 id="_phase_1_critical_issues_1_2_weeks">Phase 1: Critical Issues (1-2 weeks)</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fix table processing</p>
+</li>
+<li>
+<p>Add missing tests</p>
+</li>
+<li>
+<p>Standardize severity handling</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_phase_2_important_improvements_2_3_weeks">Phase 2: Important Improvements (2-3 weeks)</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Improve documentation</p>
+</li>
+<li>
+<p>Enhance error handling</p>
+</li>
+<li>
+<p>Add configuration options</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_phase_3_long_term_stability_3_4_weeks">Phase 3: Long-term Stability (3-4 weeks)</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Performance optimization</p>
+</li>
+<li>
+<p>Memory management</p>
+</li>
+<li>
+<p>Plugin architecture improvements</p>
+</li>
+</ol>
 </div>
 </div>
 </div>

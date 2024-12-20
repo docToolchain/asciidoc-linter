@@ -2,14 +2,14 @@
 <html lang="de">
 <head>
     
-    <!-- sourceuri: arc42/01_introduction_and_goals.html -->
+    <!-- sourceuri: arc42/decisions/ADR-005-table-processing-strategy.html -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="jbake" name="generator">
     <meta content="INDEX, FOLLOW" name="ROBOTS">
 
-    <title>Introduction and Goals</title>
+    <title>ADR 5: Table Processing Strategy</title>
     <meta content="docToolchain" property="og:title">
     <meta content="build your dev docs the easy way..." property="og:description">
     <meta content="website" property="og:type">
@@ -21,35 +21,35 @@
     <meta content="build your dev docs the easy way..." name="twitter:description">
 
     <link as="style"
-        href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        href="../../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
         rel="preload">
-    <link href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+    <link href="../../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
         integrity=""
         rel="stylesheet">
-    <link href="../css/asciidoctor.css" rel="stylesheet">
-    <link href="../css/prettify.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
 
     <!-- favicon generated with https://www.favicon-generator.org/ -->
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="apple-touch-icon" sizes="57x57" href="../apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="../apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="../apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="../apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="../apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="../apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="../apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="../apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="../apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="../android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="manifest" href="../manifest.json">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../../apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../../apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../../apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../../apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../../apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+    <link rel="manifest" href="../../manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="../ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="../../ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../../js/jquery-3.5.1.min.js"></script>
     <style>
     div.bg-light {
         background-color: rgba(127, 180, 224, 0.3) !important;
@@ -204,38 +204,38 @@
 <header>
 	
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
-    <a class="navbar-brand" href="../index.html">
-        <span class="navbar-logo"><img src="../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
+    <a class="navbar-brand" href="../../index.html">
+        <span class="navbar-logo"><img src="../../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
             class="font-weight-bold">AsciiDoc-Linter</span>
     </a>
     <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
         <ul class="navbar-nav mt-2 mt-lg-0">
-    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
+    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../test-results/report.html"><span>test-results</span></a>
+                <a class="nav-link " href="../../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../readme/README.html"><span>readme</span></a>
+                <a class="nav-link " href="../../readme/README.html"><span>readme</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link active" href="../../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link " href="../../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../manual/index.html"><span>manual</span></a>
+                <a class="nav-link " href="../../manual/index.html"><span>manual</span></a>
             </li>
 
         </ul>
     </div>
     <div class="navbar-nav d-none d-lg-block" >
-        <form action="../search.html">
+        <form action="../../search.html">
         <input aria-label="Search this site…" autocomplete="off" class="form-control td-search-input"
                placeholder=" Search this site…" type="search" name="q">
         </form>
@@ -250,7 +250,7 @@
 				<div class="td-sidebar__inner" id="td-sidebar-menu" >
 					
 
-        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../search.html">
+        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../../search.html">
 
             <input aria-label="Search this site…" name="q" autocomplete="off" class="form-control td-search-input"
                    placeholder=" Search this site…" type="search">
@@ -275,67 +275,67 @@
                         <ul class="td-sidebar-nav__section ul-0">
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/index.html" title="AsciiDoc Linter Architecture Documentation">AsciiDoc Linter Architecture Documentation</a>
-                                
-                            </li>
-                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
-                                   href="../arc42/01_introduction_and_goals.html" title="Introduction and Goals">Introduction and Goals</a>
+                                   href="../../arc42/index.html" title="AsciiDoc Linter Architecture Documentation">AsciiDoc Linter Architecture Documentation</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/02_architecture_constraints.html" title="Architecture Constraints">Architecture Constraints</a>
+                                   href="../../arc42/01_introduction_and_goals.html" title="Introduction and Goals">Introduction and Goals</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/03_system_scope_and_context.html" title="System Scope and Context">System Scope and Context</a>
+                                   href="../../arc42/02_architecture_constraints.html" title="Architecture Constraints">Architecture Constraints</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/04_solution_strategy.html" title="Solution Strategy">Solution Strategy</a>
+                                   href="../../arc42/03_system_scope_and_context.html" title="System Scope and Context">System Scope and Context</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/05_building_block_view.html" title="Building Block View">Building Block View</a>
+                                   href="../../arc42/04_solution_strategy.html" title="Solution Strategy">Solution Strategy</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/06_runtime_view.html" title="Runtime View">Runtime View</a>
+                                   href="../../arc42/05_building_block_view.html" title="Building Block View">Building Block View</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/07_deployment_view.html" title="Deployment View">Deployment View</a>
+                                   href="../../arc42/06_runtime_view.html" title="Runtime View">Runtime View</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/08_concepts.html" title="Cross-cutting Concepts">Cross-cutting Concepts</a>
+                                   href="../../arc42/07_deployment_view.html" title="Deployment View">Deployment View</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/09_architecture_decisions.html" title="Architecture Decisions">Architecture Decisions</a>
+                                   href="../../arc42/08_concepts.html" title="Cross-cutting Concepts">Cross-cutting Concepts</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/10_quality_requirements.html" title="Quality Requirements">Quality Requirements</a>
+                                   href="../../arc42/09_architecture_decisions.html" title="Architecture Decisions">Architecture Decisions</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/11_technical_risks.html" title="Technical Risks and Technical Debt">Technical Risks and Technical Debt</a>
+                                   href="../../arc42/10_quality_requirements.html" title="Quality Requirements">Quality Requirements</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../arc42/12_glossary.html" title="Glossary">Glossary</a>
+                                   href="../../arc42/11_technical_risks.html" title="Technical Risks and Technical Debt">Technical Risks and Technical Debt</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/12_glossary.html" title="Glossary">Glossary</a>
                                 
                             </li>
                         </ul>
@@ -350,11 +350,11 @@
 				<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
 					
 
-        <a href="##git-repo-url##/arc42/01_introduction_and_goals.adoc"
+        <a href="##git-repo-url##/arc42/decisions/ADR-005-table-processing-strategy.adoc"
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Introduction+and+Goals%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/01_introduction_and_goals.adoc%0A%23branch:%20-" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/decisions/ADR-005-table-processing-strategy.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -363,12 +363,21 @@
 
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a>
 <ul class="sectlevel1">
-<li><a href="#_introduction_and_goals">Introduction and Goals</a>
+<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a>
 <ul class="sectlevel2">
-<li><a href="#_requirements_overview">Requirements Overview</a></li>
-<li><a href="#_quality_goals">Quality Goals</a></li>
-<li><a href="#_stakeholders">Stakeholders</a></li>
+<li><a href="#_status">Status</a></li>
+<li><a href="#_context">Context</a></li>
+<li><a href="#_decision">Decision</a></li>
+<li><a href="#_technical_details">Technical Details</a></li>
+<li><a href="#_consequences">Consequences</a></li>
+<li><a href="#_implementation_plan">Implementation Plan</a></li>
+<li><a href="#_validation">Validation</a></li>
+<li><a href="#_related_diagrams">Related Diagrams</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -393,127 +402,263 @@
     <div class="td-content">
         <p>
             
+<h1 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision" class="sect0">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</h1>
 <div class="sect1">
-<h2 id="_introduction_and_goals">Introduction and Goals</h2>
+<h2 id="_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_requirements_overview">Requirements Overview</h3>
+<h3 id="_status">Status</h3>
 <div class="paragraph">
-<p>The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents. It helps teams maintain high-quality documentation by enforcing style rules and best practices.</p>
+<p>Proposed</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_context">Context</h3>
+<div class="paragraph">
+<p>Table processing in AsciiDoc documents requires complex parsing and validation:
+* Tables can contain various content types (text, lists, blocks)
+* Cell extraction needs to handle multi-line content
+* Column counting must be reliable
+* List detection in cells must be accurate</p>
 </div>
 <div class="paragraph">
-<p>Key requirements include:</p>
+<p>Current implementation has issues:
+* Cell extraction produces incorrect results
+* List detection generates false positives
+* Column counting is unreliable</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_decision">Decision</h3>
+<div class="paragraph">
+<p>We will implement a new table processing strategy:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Two-Pass Parsing</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Validate AsciiDoc heading structure</p>
+<p>First pass: Identify table boundaries and structure</p>
 </li>
 <li>
-<p>Ensure consistent formatting</p>
+<p>Second pass: Extract and validate cell content</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Provide clear error messages</p>
+<p><strong>Cell Content Model</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a dedicated TableCell class</p>
 </li>
 <li>
-<p>Easy integration into existing workflows</p>
+<p>Track content type (text, list, block)</p>
 </li>
 <li>
-<p>Extensible rule system</p>
+<p>Maintain line number information</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>List Detection</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use state machine for list recognition</p>
+</li>
+<li>
+<p>Track list context across cell boundaries</p>
+</li>
+<li>
+<p>Validate list markers against AsciiDoc spec</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Column Management</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Count columns based on header row</p>
+</li>
+<li>
+<p>Validate all rows against header</p>
+</li>
+<li>
+<p>Handle empty cells explicitly</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technical_details">Technical Details</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TableCell:
+    def __init__(self):
+        self.content = []
+        self.content_type = None
+        self.start_line = None
+        self.end_line = None
+        self.has_list = False
+        self.list_level = 0
+
+class TableRow:
+    def __init__(self):
+        self.cells = []
+        self.line_number = None
+        self.is_header = False
+
+class TableProcessor:
+    def first_pass(self, lines):
+        # Identify table structure
+        pass
+
+    def second_pass(self, table_lines):
+        # Extract cell content
+        pass
+
+    def detect_lists(self, cell):
+        # Use state machine for list detection
+        pass</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_consequences">Consequences</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More accurate cell extraction</p>
+</li>
+<li>
+<p>Reliable list detection</p>
+</li>
+<li>
+<p>Better error reporting</p>
+</li>
+<li>
+<p>Maintainable code structure</p>
+</li>
+<li>
+<p>Clear separation of concerns</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More complex implementation</p>
+</li>
+<li>
+<p>Slightly higher memory usage</p>
+</li>
+<li>
+<p>Additional processing overhead</p>
+</li>
+<li>
+<p>More code to maintain</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_goals">Quality Goals</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 40%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Priority</th>
-<th class="tableblock halign-left valign-top">Quality Goal</th>
-<th class="tableblock halign-left valign-top">Motivation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Extensibility</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The system must be easily extensible with new rules to accommodate different documentation standards and requirements.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Reliability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The linter must provide consistent and accurate results to maintain user trust.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error messages must be clear and actionable, helping users fix documentation issues efficiently.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The linter should process documents quickly to maintain a smooth workflow.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The code must be well-structured and documented to facilitate future enhancements.</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="_implementation_plan">Implementation Plan</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Phase 1: Core Structure</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement TableCell and TableRow classes</p>
+</li>
+<li>
+<p>Basic two-pass parsing</p>
+</li>
+<li>
+<p>Unit tests for basic functionality</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 2: Content Processing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>List detection state machine</p>
+</li>
+<li>
+<p>Content type recognition</p>
+</li>
+<li>
+<p>Error context collection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 3: Validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Column counting</p>
+</li>
+<li>
+<p>Structure validation</p>
+</li>
+<li>
+<p>Comprehensive test suite</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_stakeholders">Stakeholders</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 40%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Role/Name</th>
-<th class="tableblock halign-left valign-top">Contact</th>
-<th class="tableblock halign-left valign-top">Expectations</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation Writers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">* Clear error messages
-* Consistent results
-* Quick feedback</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation Maintainers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">* Configurable rules
-* Reliable validation
-* Integration with existing tools</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Development Team</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>dev team</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">* Extensible architecture
-* Good test coverage
-* Clear documentation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Technical Writers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>various</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">* Support for AsciiDoc best practices
-* Customizable rule sets
-* Batch processing capabilities</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="_validation">Validation</h3>
+<div class="paragraph">
+<p>Success criteria:
+* All current table-related tests pass
+* Cell extraction matches expected results
+* List detection has no false positives
+* Column counting is accurate
+* Memory usage remains within limits</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_related_diagrams">Related Diagrams</h3>
+<div class="imageblock">
+<div class="content">
+<img src="../../images/decisions/table-processing-class-diagram.png" alt="Table Processing Class Diagram">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../images/decisions/table-processing-sequence.png" alt="Table Processing Sequence">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -544,11 +689,11 @@
     <button class="feedback--answer feedback--answer-yes">Yes</button>
     <button class="feedback--answer feedback--answer-no">No</button>
     <p class="feedback--response feedback--response-yes">
-        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Introduction+and+Goals%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/01_introduction_and_goals.adoc">tell us
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell us
     how we can improve</a>.
     </p>
     <p class="feedback--response feedback--response-no">
-        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Introduction+and+Goals%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/01_introduction_and_goals.adoc">tell
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell
     us how we can improve</a>.
     </p>
 </div>
@@ -685,15 +830,15 @@
         </div>
     </footer>
 
-    <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../../js/popper.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
 
 
-    <script src="../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
-    <script src="../js/blocks.js" ></script>
-    <script src="../js/prettify.js"></script>
-    <script src="../js/copy-n-paste.js"></script>
-    <script src="../js/submenucollapse.js"></script>
+    <script src="../../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
+    <script src="../../js/blocks.js" ></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/copy-n-paste.js"></script>
+    <script src="../../js/submenucollapse.js"></script>
 
 
 </body>

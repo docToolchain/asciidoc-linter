@@ -213,7 +213,7 @@
     <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link " href="../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -221,11 +221,11 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../test-results/01-unit-tests.html"><span>test-results</span></a>
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -294,7 +294,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/readme/README.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/readme/README.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -304,6 +304,7 @@
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
+<li><a href="#_readme_adoc_project_documentation">README.adoc - Project documentation</a></li>
 <li><a href="#_asciidoc_linter">AsciiDoc Linter</a>
 <ul class="sectlevel1">
 <li><a href="#_about">About</a></li>
@@ -323,6 +324,7 @@
 </li>
 <li><a href="#_development">Development</a>
 <ul class="sectlevel2">
+<li><a href="#_current_status">Current Status</a></li>
 <li><a href="#_running_tests">Running Tests</a></li>
 <li><a href="#_project_structure">Project Structure</a></li>
 </ul>
@@ -360,10 +362,14 @@
     <div class="td-content">
         <p>
             
+<h1 id="_readme_adoc_project_documentation" class="sect0">README.adoc - Project documentation</h1>
+
 <h1 id="_asciidoc_linter" class="sect0">AsciiDoc Linter</h1>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a></span>
-<span class="image"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></span></p>
+<span class="image"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></span>
+<span class="image"><img src="https://img.shields.io/badge/test&#8212;&#8203;coverage-95%25-green.svg" alt="Test Coverage"></span>
+<span class="image"><img src="https://img.shields.io/badge/tests-97%25-green.svg" alt="Test Success Rate"></span></p>
 </div>
 <div class="paragraph">
 <p>A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style. Part of the docToolchain project.</p>
@@ -397,15 +403,17 @@
 <h3 id="_implemented_rules">Implemented Rules</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 50%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Rule ID</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Severity</th>
+<th class="tableblock halign-left valign-top">Status</th>
 </tr>
 </thead>
 <tbody>
@@ -413,36 +421,49 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">HEAD001</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check for proper heading hierarchy (no skipping levels)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HEAD002</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Verify heading format (spacing and capitalization)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ERROR/WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HEAD003</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Detect multiple top-level headers</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK001</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check for unterminated blocks (listing, example, sidebar, etc.)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK002</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Verify proper spacing around blocks</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WS001</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check whitespace usage (blank lines, list markers, tabs)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IMG001</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Verify image attributes and file references</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TABLE001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table formatting consistency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️ Beta</p></td>
 </tr>
 </tbody>
 </table>
@@ -452,7 +473,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>TABLE001: Table formatting consistency</p>
+<p>TABLE002: Table content validation</p>
 </li>
 <li>
 <p>LINK001: Broken internal references</p>
@@ -551,6 +572,35 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 <h2 id="_development">Development</h2>
 <div class="sectionbody">
 <div class="sect2">
+<h3 id="_current_status">Current Status</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Test Coverage: 95%</p>
+</li>
+<li>
+<p>Test Success Rate: 97.3% (107/110 tests passing)</p>
+</li>
+<li>
+<p>Known Issues:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Table content validation needs improvement</p>
+</li>
+<li>
+<p>Rules.py requires test coverage</p>
+</li>
+<li>
+<p>Reporter module needs additional tests</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_running_tests">Running Tests</h3>
 <div class="listingblock">
 <div class="content">
@@ -558,7 +608,10 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 python run_tests.py
 
 # Run specific test file
-python -m unittest tests/rules/test_heading_rules.py</code></pre>
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run tests with coverage
+python run_tests_html.py</code></pre>
 </div>
 </div>
 </div>
@@ -570,24 +623,36 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 ├── asciidoc_linter/
 │   ├── __init__.py
 │   ├── cli.py
-│   ├── rules/
-│   │   ├── __init__.py
-│   │   ├── base.py
-│   │   ├── heading_rules.py
-│   │   ├── block_rules.py
-│   │   ├── whitespace_rules.py
-│   │   └── image_rules.py
+│   ├── linter.py
 │   ├── parser.py
-│   └── reporter.py
-├── tests/
+│   ├── reporter.py
 │   └── rules/
-│       ├── test_heading_rules.py
+│       ├── __init__.py
+│       ├── base.py
+│       ├── base_rules.py
+│       ├── block_rules.py
+│       ├── heading_rules.py
+│       ├── image_rules.py
+│       ├── table_rules.py
+│       └── whitespace_rules.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_base.py
+│   ├── test_cli.py
+│   ├── test_linter.py
+│   ├── test_reporter.py
+│   └── rules/
 │       ├── test_block_rules.py
-│       ├── test_whitespace_rules.py
-│       └── test_image_rules.py
+│       ├── test_heading_rules.py
+│       ├── test_image_rules.py
+│       ├── test_table_rules.py
+│       └── test_whitespace_rules.py
 ├── docs/
+│   ├── arc42/
+│   ├── manual/
+│   ├── test-results/
 │   ├── requirements.adoc
-│   └── block_rules.adoc
+│   └── implementation_plan.adoc
 ├── README.adoc
 └── run_tests.py</code></pre>
 </div>
@@ -616,6 +681,9 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 </li>
 <li>
 <p>Add appropriate error messages and context</p>
+</li>
+<li>
+<p>Ensure test coverage remains above 90%</p>
 </li>
 </ol>
 </div>
@@ -670,29 +738,35 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 <p>✅ Image validation</p>
 </li>
 <li>
+<p>⚠️ Table validation</p>
+</li>
+<li>
 <p>⏳ Configuration system</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Phase 2</p>
+<p>Phase 2 (Next)</p>
 <div class="ulist">
 <ul>
 <li>
-<p>🔲 Table validation</p>
+<p>🔲 Fix table content validation</p>
 </li>
 <li>
-<p>🔲 Link checking</p>
+<p>🔲 Improve test coverage</p>
 </li>
 <li>
-<p>🔲 Format rules</p>
+<p>🔲 Add link checking</p>
+</li>
+<li>
+<p>🔲 Add format rules</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Phase 3</p>
+<p>Phase 3 (Future)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -703,6 +777,9 @@ python -m unittest tests/rules/test_heading_rules.py</code></pre>
 </li>
 <li>
 <p>🔲 Custom rule development</p>
+</li>
+<li>
+<p>🔲 Performance optimization</p>
 </li>
 </ul>
 </div>

@@ -213,7 +213,7 @@
     <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link " href="../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -221,11 +221,11 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../test-results/01-unit-tests.html"><span>test-results</span></a>
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -354,7 +354,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Quality+Requirements%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/10_quality_requirements.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Quality+Requirements%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/10_quality_requirements.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -363,11 +363,16 @@
 
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_10_quality_requirements_adoc_quality_requirements">10_quality_requirements.adoc - Quality Requirements</a>
 <ul class="sectlevel1">
 <li><a href="#_quality_requirements">Quality Requirements</a>
 <ul class="sectlevel2">
 <li><a href="#_quality_scenarios">Quality Scenarios</a></li>
 <li><a href="#_quality_tree">Quality Tree</a></li>
+<li><a href="#_quality_metrics">Quality Metrics</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -392,6 +397,7 @@
     <div class="td-content">
         <p>
             
+<h1 id="_10_quality_requirements_adoc_quality_requirements" class="sect0">10_quality_requirements.adoc - Quality Requirements</h1>
 <div class="sect1">
 <h2 id="_quality_requirements">Quality Requirements</h2>
 <div class="sectionbody">
@@ -439,6 +445,12 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ready in &lt; 0.5 seconds</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process document with 100 tables</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 2 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -483,6 +495,18 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">System low on memory</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Graceful shutdown, save progress</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Content Error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid table structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear error message with line numbers and context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List in Table</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undeclared list in table cell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect and report with context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
 </tbody>
 </table>
@@ -529,6 +553,57 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Find explanation within 30 seconds</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Error Context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table formatting error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show table context and specific cell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_test_quality_scenarios">Test Quality Scenarios</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add new feature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintain &gt;90% coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Success Rate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run test suite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;95% tests passing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Edge Case Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complex document structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All edge cases tested</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run benchmark suite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -537,7 +612,74 @@
 <h3 id="_quality_tree">Quality Tree</h3>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-1b02f748ff9b61a402b0b1c9b052f0d7.png" alt="Diagram" width="1847" height="397">
+<img src="../images/diag-af58bb91f82007927f5c0e6b8969e248.png" alt="Diagram" width="2711" height="397">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_metrics">Quality Metrics</h3>
+<div class="sect3">
+<h4 id="_test_quality">Test Quality</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Test Coverage: &gt;90% for all modules</p>
+</li>
+<li>
+<p>Test Success Rate: &gt;95%</p>
+</li>
+<li>
+<p>Edge Case Coverage: All identified edge cases have tests</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_quality">Code Quality</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Maintainability Index: &gt;80</p>
+</li>
+<li>
+<p>Cyclomatic Complexity: &lt;10 per method</p>
+</li>
+<li>
+<p>Documentation Coverage: &gt;80%</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_performance">Performance</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Processing Speed: &lt;1ms per line</p>
+</li>
+<li>
+<p>Memory Usage: &lt;100MB</p>
+</li>
+<li>
+<p>Table Processing: &lt;20ms per table</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reliability">Reliability</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>False Positive Rate: &lt;1%</p>
+</li>
+<li>
+<p>Error Recovery: 100% of known error cases</p>
+</li>
+<li>
+<p>Plugin Stability: No impact on core functionality</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

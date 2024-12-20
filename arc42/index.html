@@ -213,7 +213,7 @@
     <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link " href="../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -221,11 +221,11 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link active" href="../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../test-results/01-unit-tests.html"><span>test-results</span></a>
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -354,7 +354,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Architecture+Documentation%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/index.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Architecture+Documentation%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/index.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -437,42 +437,58 @@
 </li>
 </ul>
 </li>
+<li><a href="#_09_architecture_decisions_adoc_architecture_decisions">09_architecture_decisions.adoc - Architecture Decisions</a>
+<ul class="sectlevel1">
 <li><a href="#_architecture_decisions">Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a>
+<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a></li>
+<li><a href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a>
 <ul class="sectlevel3">
-<li><a href="#_status">Status</a></li>
-<li><a href="#_context">Context</a></li>
-<li><a href="#_decision">Decision</a></li>
-<li><a href="#_consequences">Consequences</a></li>
+<li><a href="#_adr_1_rule_base_class_design_2">ADR 1: Rule Base Class Design</a></li>
 </ul>
 </li>
-<li><a href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a>
+<li><a href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></li>
+<li><a href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a>
 <ul class="sectlevel3">
-<li><a href="#_status_2">Status</a></li>
-<li><a href="#_context_2">Context</a></li>
-<li><a href="#_decision_2">Decision</a></li>
-<li><a href="#_consequences_2">Consequences</a></li>
+<li><a href="#_adr_2_finding_data_structure_2">ADR 2: Finding Data Structure</a></li>
 </ul>
 </li>
-<li><a href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a>
+<li><a href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></li>
+<li><a href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a>
 <ul class="sectlevel3">
-<li><a href="#_status_3">Status</a></li>
-<li><a href="#_context_3">Context</a></li>
-<li><a href="#_decision_3">Decision</a></li>
-<li><a href="#_consequences_3">Consequences</a></li>
+<li><a href="#_adr_3_rule_implementation_strategy_2">ADR 3: Rule Implementation Strategy</a></li>
 </ul>
 </li>
-<li><a href="#_adr_4_test_strategy">ADR 4: Test Strategy</a>
+<li><a href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></li>
+<li><a href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a>
 <ul class="sectlevel3">
-<li><a href="#_status_4">Status</a></li>
-<li><a href="#_context_4">Context</a></li>
-<li><a href="#_decision_4">Decision</a></li>
-<li><a href="#_consequences_4">Consequences</a></li>
+<li><a href="#_adr_4_test_strategy_2">ADR 4: Test Strategy</a></li>
+</ul>
+</li>
+<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></li>
+<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a>
+<ul class="sectlevel3">
+<li><a href="#_adr_5_table_processing_strategy_2">ADR 5: Table Processing Strategy</a></li>
+</ul>
+</li>
+<li><a href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a></li>
+<li><a href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a>
+<ul class="sectlevel3">
+<li><a href="#_adr_6_severity_standardization_2">ADR 6: Severity Standardization</a></li>
+</ul>
+</li>
+<li><a href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a></li>
+<li><a href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a>
+<ul class="sectlevel3">
+<li><a href="#_adr_7_rule_registry_enhancement_2">ADR 7: Rule Registry Enhancement</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#_10_quality_requirements_adoc_quality_requirements">10_quality_requirements.adoc - Quality Requirements</a>
+<ul class="sectlevel1">
 <li><a href="#_quality_requirements">Quality Requirements</a>
 <ul class="sectlevel2">
 <li><a href="#_quality_scenarios">Quality Scenarios</a>
@@ -480,24 +496,54 @@
 <li><a href="#_performance_scenarios">Performance Scenarios</a></li>
 <li><a href="#_reliability_scenarios">Reliability Scenarios</a></li>
 <li><a href="#_usability_scenarios">Usability Scenarios</a></li>
+<li><a href="#_test_quality_scenarios">Test Quality Scenarios</a></li>
 </ul>
 </li>
 <li><a href="#_quality_tree">Quality Tree</a></li>
+<li><a href="#_quality_metrics">Quality Metrics</a>
+<ul class="sectlevel3">
+<li><a href="#_test_quality">Test Quality</a></li>
+<li><a href="#_code_quality">Code Quality</a></li>
+<li><a href="#_performance">Performance</a></li>
+<li><a href="#_reliability">Reliability</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_11_technical_risks_adoc_technical_risks">11_technical_risks.adoc - Technical Risks</a>
+<ul class="sectlevel1">
 <li><a href="#_technical_risks_and_technical_debt">Technical Risks and Technical Debt</a>
 <ul class="sectlevel2">
+<li><a href="#_current_issues_december_2024">Current Issues (December 2024)</a>
+<ul class="sectlevel3">
+<li><a href="#_test_failures">Test Failures</a></li>
+<li><a href="#_coverage_gaps">Coverage Gaps</a></li>
+<li><a href="#_implementation_issues">Implementation Issues</a></li>
+</ul>
+</li>
 <li><a href="#_risk_analysis">Risk Analysis</a></li>
 <li><a href="#_technical_debt">Technical Debt</a>
 <ul class="sectlevel3">
 <li><a href="#_current_technical_debt">Current Technical Debt</a></li>
+<li><a href="#_implementation_debt">Implementation Debt</a></li>
 <li><a href="#_planned_improvements">Planned Improvements</a></li>
 </ul>
 </li>
 <li><a href="#_risk_matrix">Risk Matrix</a></li>
+<li><a href="#_mitigation_strategy">Mitigation Strategy</a>
+<ul class="sectlevel3">
+<li><a href="#_phase_1_critical_issues_1_2_weeks">Phase 1: Critical Issues (1-2 weeks)</a></li>
+<li><a href="#_phase_2_important_improvements_2_3_weeks">Phase 2: Important Improvements (2-3 weeks)</a></li>
+<li><a href="#_phase_3_long_term_stability_3_4_weeks">Phase 3: Long-term Stability (3-4 weeks)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_glossary">Glossary</a></li>
+</ul>
+</li>
 </ul>
 </div>
 
@@ -1118,31 +1164,42 @@
 </div>
 </div>
 </div>
+<h1 id="_09_architecture_decisions_adoc_architecture_decisions" class="sect0"><a class="anchor" href="#_09_architecture_decisions_adoc_architecture_decisions"></a><a class="link" href="#_09_architecture_decisions_adoc_architecture_decisions">09_architecture_decisions.adoc - Architecture Decisions</a></h1>
 <div class="sect1">
 <h2 id="_architecture_decisions"><a class="anchor" href="#_architecture_decisions"></a><a class="link" href="#_architecture_decisions">Architecture Decisions</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This chapter contains all architecture decisions for the AsciiDoc Linter project.
+Each decision is documented in a separate file and included here.</p>
+</div>
 <div class="sect2">
 <h3 id="_adr_1_rule_base_class_design"><a class="anchor" href="#_adr_1_rule_base_class_design"></a><a class="link" href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_001_rule_base_class_adoc_rule_base_class_design_decision"><a class="anchor" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision"></a><a class="link" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a></h3>
 <div class="sect3">
-<h4 id="_status"><a class="anchor" href="#_status"></a><a class="link" href="#_status">Status</a></h4>
+<h4 id="_adr_1_rule_base_class_design_2"><a class="anchor" href="#_adr_1_rule_base_class_design_2"></a><a class="link" href="#_adr_1_rule_base_class_design_2">ADR 1: Rule Base Class Design</a></h4>
+<div class="sect4">
+<h5 id="_status"><a class="anchor" href="#_status"></a><a class="link" href="#_status">Status</a></h5>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_context"><a class="anchor" href="#_context"></a><a class="link" href="#_context">Context</a></h4>
+<div class="sect4">
+<h5 id="_context"><a class="anchor" href="#_context"></a><a class="link" href="#_context">Context</a></h5>
 <div class="paragraph">
 <p>We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_decision"><a class="anchor" href="#_decision"></a><a class="link" href="#_decision">Decision</a></h4>
+<div class="sect4">
+<h5 id="_decision"><a class="anchor" href="#_decision"></a><a class="link" href="#_decision">Decision</a></h5>
 <div class="paragraph">
 <p>We will use an abstract base class <code>Rule</code> with a defined interface that all concrete rules must implement.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_consequences"><a class="anchor" href="#_consequences"></a><a class="link" href="#_consequences">Consequences</a></h4>
+<div class="sect4">
+<h5 id="_consequences"><a class="anchor" href="#_consequences"></a><a class="link" href="#_consequences">Consequences</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1181,28 +1238,35 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_adr_2_finding_data_structure"><a class="anchor" href="#_adr_2_finding_data_structure"></a><a class="link" href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_002_finding_data_structure_adoc_finding_data_structure_decision"><a class="anchor" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision"></a><a class="link" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a></h3>
 <div class="sect3">
-<h4 id="_status_2"><a class="anchor" href="#_status_2"></a><a class="link" href="#_status_2">Status</a></h4>
+<h4 id="_adr_2_finding_data_structure_2"><a class="anchor" href="#_adr_2_finding_data_structure_2"></a><a class="link" href="#_adr_2_finding_data_structure_2">ADR 2: Finding Data Structure</a></h4>
+<div class="sect4">
+<h5 id="_status_2"><a class="anchor" href="#_status_2"></a><a class="link" href="#_status_2">Status</a></h5>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_context_2"><a class="anchor" href="#_context_2"></a><a class="link" href="#_context_2">Context</a></h4>
+<div class="sect4">
+<h5 id="_context_2"><a class="anchor" href="#_context_2"></a><a class="link" href="#_context_2">Context</a></h5>
 <div class="paragraph">
 <p>Rule violations need to be reported in a consistent and informative way.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_decision_2"><a class="anchor" href="#_decision_2"></a><a class="link" href="#_decision_2">Decision</a></h4>
+<div class="sect4">
+<h5 id="_decision_2"><a class="anchor" href="#_decision_2"></a><a class="link" href="#_decision_2">Decision</a></h5>
 <div class="paragraph">
 <p>We will use a <code>Finding</code> data class with fields for message, severity, position, rule ID, and context.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a><a class="link" href="#_consequences_2">Consequences</a></h4>
+<div class="sect4">
+<h5 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a><a class="link" href="#_consequences_2">Consequences</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1238,28 +1302,35 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_adr_3_rule_implementation_strategy"><a class="anchor" href="#_adr_3_rule_implementation_strategy"></a><a class="link" href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"><a class="anchor" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"></a><a class="link" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a></h3>
 <div class="sect3">
-<h4 id="_status_3"><a class="anchor" href="#_status_3"></a><a class="link" href="#_status_3">Status</a></h4>
+<h4 id="_adr_3_rule_implementation_strategy_2"><a class="anchor" href="#_adr_3_rule_implementation_strategy_2"></a><a class="link" href="#_adr_3_rule_implementation_strategy_2">ADR 3: Rule Implementation Strategy</a></h4>
+<div class="sect4">
+<h5 id="_status_3"><a class="anchor" href="#_status_3"></a><a class="link" href="#_status_3">Status</a></h5>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_context_3"><a class="anchor" href="#_context_3"></a><a class="link" href="#_context_3">Context</a></h4>
+<div class="sect4">
+<h5 id="_context_3"><a class="anchor" href="#_context_3"></a><a class="link" href="#_context_3">Context</a></h5>
 <div class="paragraph">
 <p>Rules need to process AsciiDoc content and identify violations efficiently.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_decision_3"><a class="anchor" href="#_decision_3"></a><a class="link" href="#_decision_3">Decision</a></h4>
+<div class="sect4">
+<h5 id="_decision_3"><a class="anchor" href="#_decision_3"></a><a class="link" href="#_decision_3">Decision</a></h5>
 <div class="paragraph">
 <p>Each rule will process the content line by line, using regular expressions for pattern matching.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a><a class="link" href="#_consequences_3">Consequences</a></h4>
+<div class="sect4">
+<h5 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a><a class="link" href="#_consequences_3">Consequences</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1298,28 +1369,35 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_adr_4_test_strategy"><a class="anchor" href="#_adr_4_test_strategy"></a><a class="link" href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_004_test_strategy_adoc_test_strategy_decision"><a class="anchor" href="#_adr_004_test_strategy_adoc_test_strategy_decision"></a><a class="link" href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a></h3>
 <div class="sect3">
-<h4 id="_status_4"><a class="anchor" href="#_status_4"></a><a class="link" href="#_status_4">Status</a></h4>
+<h4 id="_adr_4_test_strategy_2"><a class="anchor" href="#_adr_4_test_strategy_2"></a><a class="link" href="#_adr_4_test_strategy_2">ADR 4: Test Strategy</a></h4>
+<div class="sect4">
+<h5 id="_status_4"><a class="anchor" href="#_status_4"></a><a class="link" href="#_status_4">Status</a></h5>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_context_4"><a class="anchor" href="#_context_4"></a><a class="link" href="#_context_4">Context</a></h4>
+<div class="sect4">
+<h5 id="_context_4"><a class="anchor" href="#_context_4"></a><a class="link" href="#_context_4">Context</a></h5>
 <div class="paragraph">
 <p>Rules need to be thoroughly tested to ensure reliable operation.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_decision_4"><a class="anchor" href="#_decision_4"></a><a class="link" href="#_decision_4">Decision</a></h4>
+<div class="sect4">
+<h5 id="_decision_4"><a class="anchor" href="#_decision_4"></a><a class="link" href="#_decision_4">Decision</a></h5>
 <div class="paragraph">
 <p>Each rule will have its own test class with multiple test methods covering various scenarios.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a><a class="link" href="#_consequences_4">Consequences</a></h4>
+<div class="sect4">
+<h5 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a><a class="link" href="#_consequences_4">Consequences</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1346,12 +1424,7 @@
 <p>More maintenance effort</p>
 </li>
 <li>
-<p>Longer test execution time
-:jbake-status: published
-:jbake-order: 10
-:jbake-type: page_toc
-:jbake-menu: arc42
-:jbake-title: Quality Requirements</p>
+<p>Longer test execution time</p>
 </li>
 </ul>
 </div>
@@ -1361,7 +1434,533 @@
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_adr_5_table_processing_strategy"><a class="anchor" href="#_adr_5_table_processing_strategy"></a><a class="link" href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></h3>
+
 </div>
+<div class="sect2">
+<h3 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"><a class="anchor" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"></a><a class="link" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a></h3>
+<div class="sect3">
+<h4 id="_adr_5_table_processing_strategy_2"><a class="anchor" href="#_adr_5_table_processing_strategy_2"></a><a class="link" href="#_adr_5_table_processing_strategy_2">ADR 5: Table Processing Strategy</a></h4>
+<div class="sect4">
+<h5 id="_status_5"><a class="anchor" href="#_status_5"></a><a class="link" href="#_status_5">Status</a></h5>
+<div class="paragraph">
+<p>Proposed</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_context_5"><a class="anchor" href="#_context_5"></a><a class="link" href="#_context_5">Context</a></h5>
+<div class="paragraph">
+<p>Table processing in AsciiDoc documents requires complex parsing and validation:
+* Tables can contain various content types (text, lists, blocks)
+* Cell extraction needs to handle multi-line content
+* Column counting must be reliable
+* List detection in cells must be accurate</p>
+</div>
+<div class="paragraph">
+<p>Current implementation has issues:
+* Cell extraction produces incorrect results
+* List detection generates false positives
+* Column counting is unreliable</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_decision_5"><a class="anchor" href="#_decision_5"></a><a class="link" href="#_decision_5">Decision</a></h5>
+<div class="paragraph">
+<p>We will implement a new table processing strategy:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Two-Pass Parsing</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>First pass: Identify table boundaries and structure</p>
+</li>
+<li>
+<p>Second pass: Extract and validate cell content</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Cell Content Model</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a dedicated TableCell class</p>
+</li>
+<li>
+<p>Track content type (text, list, block)</p>
+</li>
+<li>
+<p>Maintain line number information</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>List Detection</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use state machine for list recognition</p>
+</li>
+<li>
+<p>Track list context across cell boundaries</p>
+</li>
+<li>
+<p>Validate list markers against AsciiDoc spec</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Column Management</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Count columns based on header row</p>
+</li>
+<li>
+<p>Validate all rows against header</p>
+</li>
+<li>
+<p>Handle empty cells explicitly</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_technical_details"><a class="anchor" href="#_technical_details"></a><a class="link" href="#_technical_details">Technical Details</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TableCell:
+    def __init__(self):
+        self.content = []
+        self.content_type = None
+        self.start_line = None
+        self.end_line = None
+        self.has_list = False
+        self.list_level = 0
+
+class TableRow:
+    def __init__(self):
+        self.cells = []
+        self.line_number = None
+        self.is_header = False
+
+class TableProcessor:
+    def first_pass(self, lines):
+        # Identify table structure
+        pass
+
+    def second_pass(self, table_lines):
+        # Extract cell content
+        pass
+
+    def detect_lists(self, cell):
+        # Use state machine for list detection
+        pass</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_consequences_5"><a class="anchor" href="#_consequences_5"></a><a class="link" href="#_consequences_5">Consequences</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More accurate cell extraction</p>
+</li>
+<li>
+<p>Reliable list detection</p>
+</li>
+<li>
+<p>Better error reporting</p>
+</li>
+<li>
+<p>Maintainable code structure</p>
+</li>
+<li>
+<p>Clear separation of concerns</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More complex implementation</p>
+</li>
+<li>
+<p>Slightly higher memory usage</p>
+</li>
+<li>
+<p>Additional processing overhead</p>
+</li>
+<li>
+<p>More code to maintain</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_implementation_plan"><a class="anchor" href="#_implementation_plan"></a><a class="link" href="#_implementation_plan">Implementation Plan</a></h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Phase 1: Core Structure</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement TableCell and TableRow classes</p>
+</li>
+<li>
+<p>Basic two-pass parsing</p>
+</li>
+<li>
+<p>Unit tests for basic functionality</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 2: Content Processing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>List detection state machine</p>
+</li>
+<li>
+<p>Content type recognition</p>
+</li>
+<li>
+<p>Error context collection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 3: Validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Column counting</p>
+</li>
+<li>
+<p>Structure validation</p>
+</li>
+<li>
+<p>Comprehensive test suite</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_validation"><a class="anchor" href="#_validation"></a><a class="link" href="#_validation">Validation</a></h5>
+<div class="paragraph">
+<p>Success criteria:
+* All current table-related tests pass
+* Cell extraction matches expected results
+* List detection has no false positives
+* Column counting is accurate
+* Memory usage remains within limits</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_related_diagrams"><a class="anchor" href="#_related_diagrams"></a><a class="link" href="#_related_diagrams">Related Diagrams</a></h5>
+<div class="imageblock">
+<div class="content">
+<img src="../images/decisions/table-processing-class-diagram.png" alt="Table Processing Class Diagram">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/decisions/table-processing-sequence.png" alt="Table Processing Sequence">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adr_6_severity_standardization"><a class="anchor" href="#_adr_6_severity_standardization"></a><a class="link" href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_006_severity_standardization_adoc_severity_standardization_decision"><a class="anchor" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision"></a><a class="link" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a></h3>
+<div class="sect3">
+<h4 id="_adr_6_severity_standardization_2"><a class="anchor" href="#_adr_6_severity_standardization_2"></a><a class="link" href="#_adr_6_severity_standardization_2">ADR 6: Severity Standardization</a></h4>
+<div class="sect4">
+<h5 id="_status_6"><a class="anchor" href="#_status_6"></a><a class="link" href="#_status_6">Status</a></h5>
+<div class="paragraph">
+<p>Proposed</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_context_6"><a class="anchor" href="#_context_6"></a><a class="link" href="#_context_6">Context</a></h5>
+<div class="paragraph">
+<p>Current implementation has inconsistent severity level handling:
+* Mixed case usage (ERROR vs error)
+* Inconsistent severity levels across rules
+* No clear guidelines for severity assignment</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_decision_6"><a class="anchor" href="#_decision_6"></a><a class="link" href="#_decision_6">Decision</a></h5>
+<div class="paragraph">
+<p>We will standardize severity handling:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Severity Levels</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>ERROR: Issues that must be fixed</p>
+</li>
+<li>
+<p>WARNING: Issues that should be reviewed</p>
+</li>
+<li>
+<p>INFO: Suggestions for improvement</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Implementation</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use lowercase for internal representation</p>
+</li>
+<li>
+<p>Provide case-sensitive display methods</p>
+</li>
+<li>
+<p>Add severity level documentation</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Migration</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Update all existing rules</p>
+</li>
+<li>
+<p>Add validation in base class</p>
+</li>
+<li>
+<p>Update tests to use new standard</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_consequences_6"><a class="anchor" href="#_consequences_6"></a><a class="link" href="#_consequences_6">Consequences</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistent severity handling</p>
+</li>
+<li>
+<p>Clear guidelines for new rules</p>
+</li>
+<li>
+<p>Better user experience</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Need to update existing code</p>
+</li>
+<li>
+<p>Potential backward compatibility issues</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_related_diagrams_2"><a class="anchor" href="#_related_diagrams_2"></a><a class="link" href="#_related_diagrams_2">Related Diagrams</a></h5>
+<div class="imageblock">
+<div class="content">
+<img src="../images/decisions/severity-state-diagram.png" alt="Severity State Diagram">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adr_7_rule_registry_enhancement"><a class="anchor" href="#_adr_7_rule_registry_enhancement"></a><a class="link" href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"><a class="anchor" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"></a><a class="link" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a></h3>
+<div class="sect3">
+<h4 id="_adr_7_rule_registry_enhancement_2"><a class="anchor" href="#_adr_7_rule_registry_enhancement_2"></a><a class="link" href="#_adr_7_rule_registry_enhancement_2">ADR 7: Rule Registry Enhancement</a></h4>
+<div class="sect4">
+<h5 id="_status_7"><a class="anchor" href="#_status_7"></a><a class="link" href="#_status_7">Status</a></h5>
+<div class="paragraph">
+<p>Proposed</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_context_7"><a class="anchor" href="#_context_7"></a><a class="link" href="#_context_7">Context</a></h5>
+<div class="paragraph">
+<p>Current rule registry implementation lacks:
+* Test coverage
+* Clear registration mechanism
+* Version handling
+* Rule dependency management</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_decision_7"><a class="anchor" href="#_decision_7"></a><a class="link" href="#_decision_7">Decision</a></h5>
+<div class="paragraph">
+<p>We will enhance the rule registry:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Registration</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add explicit registration decorator</p>
+</li>
+<li>
+<p>Support rule dependencies</p>
+</li>
+<li>
+<p>Add version information</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Management</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add rule enabling/disabling</p>
+</li>
+<li>
+<p>Support rule groups</p>
+</li>
+<li>
+<p>Add configuration validation</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Testing</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add comprehensive test suite</p>
+</li>
+<li>
+<p>Test all registration scenarios</p>
+</li>
+<li>
+<p>Test configuration handling</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_consequences_7"><a class="anchor" href="#_consequences_7"></a><a class="link" href="#_consequences_7">Consequences</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Better rule management</p>
+</li>
+<li>
+<p>Clear registration process</p>
+</li>
+<li>
+<p>Improved testability</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>More complex implementation</p>
+</li>
+<li>
+<p>Additional maintenance overhead</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_related_diagrams_3"><a class="anchor" href="#_related_diagrams_3"></a><a class="link" href="#_related_diagrams_3">Related Diagrams</a></h5>
+<div class="imageblock">
+<div class="content">
+<img src="../images/decisions/rule-registry-components.png" alt="Rule Registry Components">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/decisions/rule-registration-flow.png" alt="Rule Registration Flow">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_10_quality_requirements_adoc_quality_requirements" class="sect0"><a class="anchor" href="#_10_quality_requirements_adoc_quality_requirements"></a><a class="link" href="#_10_quality_requirements_adoc_quality_requirements">10_quality_requirements.adoc - Quality Requirements</a></h1>
 <div class="sect1">
 <h2 id="_quality_requirements"><a class="anchor" href="#_quality_requirements"></a><a class="link" href="#_quality_requirements">Quality Requirements</a></h2>
 <div class="sectionbody">
@@ -1409,6 +2008,12 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ready in &lt; 0.5 seconds</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Process document with 100 tables</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 2 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1453,6 +2058,18 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">System low on memory</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Graceful shutdown, save progress</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Content Error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid table structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear error message with line numbers and context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List in Table</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undeclared list in table cell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect and report with context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
 </tbody>
 </table>
@@ -1499,6 +2116,57 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Find explanation within 30 seconds</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Error Context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table formatting error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show table context and specific cell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_test_quality_scenarios"><a class="anchor" href="#_test_quality_scenarios"></a><a class="link" href="#_test_quality_scenarios">Test Quality Scenarios</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add new feature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintain &gt;90% coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Success Rate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run test suite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt;95% tests passing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Edge Case Coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complex document structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All edge cases tested</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run benchmark suite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Complete in &lt; 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1507,15 +2175,139 @@
 <h3 id="_quality_tree"><a class="anchor" href="#_quality_tree"></a><a class="link" href="#_quality_tree">Quality Tree</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-1b02f748ff9b61a402b0b1c9b052f0d7.png" alt="Diagram" width="1847" height="397">
+<img src="../images/diag-af58bb91f82007927f5c0e6b8969e248.png" alt="Diagram" width="2711" height="397">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_metrics"><a class="anchor" href="#_quality_metrics"></a><a class="link" href="#_quality_metrics">Quality Metrics</a></h3>
+<div class="sect3">
+<h4 id="_test_quality"><a class="anchor" href="#_test_quality"></a><a class="link" href="#_test_quality">Test Quality</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Test Coverage: &gt;90% for all modules</p>
+</li>
+<li>
+<p>Test Success Rate: &gt;95%</p>
+</li>
+<li>
+<p>Edge Case Coverage: All identified edge cases have tests</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_quality"><a class="anchor" href="#_code_quality"></a><a class="link" href="#_code_quality">Code Quality</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Maintainability Index: &gt;80</p>
+</li>
+<li>
+<p>Cyclomatic Complexity: &lt;10 per method</p>
+</li>
+<li>
+<p>Documentation Coverage: &gt;80%</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_performance"><a class="anchor" href="#_performance"></a><a class="link" href="#_performance">Performance</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Processing Speed: &lt;1ms per line</p>
+</li>
+<li>
+<p>Memory Usage: &lt;100MB</p>
+</li>
+<li>
+<p>Table Processing: &lt;20ms per table</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reliability"><a class="anchor" href="#_reliability"></a><a class="link" href="#_reliability">Reliability</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>False Positive Rate: &lt;1%</p>
+</li>
+<li>
+<p>Error Recovery: 100% of known error cases</p>
+</li>
+<li>
+<p>Plugin Stability: No impact on core functionality
+:jbake-status: published
+:jbake-order: 11
+:jbake-type: page_toc
+:jbake-menu: arc42
+:jbake-title: Technical Risks and Technical Debt</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 </div>
+<h1 id="_11_technical_risks_adoc_technical_risks" class="sect0"><a class="anchor" href="#_11_technical_risks_adoc_technical_risks"></a><a class="link" href="#_11_technical_risks_adoc_technical_risks">11_technical_risks.adoc - Technical Risks</a></h1>
 <div class="sect1">
 <h2 id="_technical_risks_and_technical_debt"><a class="anchor" href="#_technical_risks_and_technical_debt"></a><a class="link" href="#_technical_risks_and_technical_debt">Technical Risks and Technical Debt</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_current_issues_december_2024"><a class="anchor" href="#_current_issues_december_2024"></a><a class="link" href="#_current_issues_december_2024">Current Issues (December 2024)</a></h3>
+<div class="sect3">
+<h4 id="_test_failures"><a class="anchor" href="#_test_failures"></a><a class="link" href="#_test_failures">Test Failures</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>3 failed tests in table processing</p>
+</li>
+<li>
+<p>Issues with cell extraction and list detection</p>
+</li>
+<li>
+<p>Impact on table validation reliability</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_coverage_gaps"><a class="anchor" href="#_coverage_gaps"></a><a class="link" href="#_coverage_gaps">Coverage Gaps</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>rules.py: 0% coverage</p>
+</li>
+<li>
+<p>reporter.py: 85% coverage</p>
+</li>
+<li>
+<p>block_rules.py: 89% coverage</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementation_issues"><a class="anchor" href="#_implementation_issues"></a><a class="link" href="#_implementation_issues">Implementation Issues</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Inconsistent severity case handling</p>
+</li>
+<li>
+<p>Missing rule_id attribute in base class</p>
+</li>
+<li>
+<p>Table content validation problems</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_risk_analysis"><a class="anchor" href="#_risk_analysis"></a><a class="link" href="#_risk_analysis">Risk Analysis</a></h3>
 <table class="tableblock frame-all grid-all stretch">
@@ -1536,6 +2328,24 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing Errors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table content validation unreliable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Fix cell extraction
+* Improve list detection
+* Add comprehensive tests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage Gaps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Critical modules lack tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* Add tests for rules.py
+* Improve reporter coverage
+* Document test scenarios</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance Degradation</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Rule processing becomes slow with many rules</p></td>
@@ -1596,8 +2406,20 @@
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table Processing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cell extraction and list detection issues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Test Coverage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Some edge cases not covered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rules.py and reporter.py need tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core Architecture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inconsistent severity handling</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
@@ -1623,10 +2445,61 @@
 </table>
 </div>
 <div class="sect3">
+<h4 id="_implementation_debt"><a class="anchor" href="#_implementation_debt"></a><a class="link" href="#_implementation_debt">Implementation Debt</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Issue</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TableContentRule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cell extraction incorrect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TableContentRule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List detection problems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule Base Class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Missing rule_id attribute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Severity Handling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inconsistent case usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rules.py</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No test coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
 <h4 id="_planned_improvements"><a class="anchor" href="#_planned_improvements"></a><a class="link" href="#_planned_improvements">Planned Improvements</a></h4>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-df87a0d860b90a11bcd8ab5839300ffe.png" alt="Diagram" width="913" height="269">
+<img src="../images/diag-031437935971283d831a1becf1fcf43a.png" alt="Diagram" width="970" height="269">
 </div>
 </div>
 </div>
@@ -1635,7 +2508,63 @@
 <h3 id="_risk_matrix"><a class="anchor" href="#_risk_matrix"></a><a class="link" href="#_risk_matrix">Risk Matrix</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="../images/diag-3261e7de71c996ba719a864f767a7ebc.png" alt="Diagram" width="1006" height="269">
+<img src="../images/diag-d55265e17a88463db896997599cab955.png" alt="Diagram" width="1247" height="369">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mitigation_strategy"><a class="anchor" href="#_mitigation_strategy"></a><a class="link" href="#_mitigation_strategy">Mitigation Strategy</a></h3>
+<div class="sect3">
+<h4 id="_phase_1_critical_issues_1_2_weeks"><a class="anchor" href="#_phase_1_critical_issues_1_2_weeks"></a><a class="link" href="#_phase_1_critical_issues_1_2_weeks">Phase 1: Critical Issues (1-2 weeks)</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fix table processing</p>
+</li>
+<li>
+<p>Add missing tests</p>
+</li>
+<li>
+<p>Standardize severity handling</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_phase_2_important_improvements_2_3_weeks"><a class="anchor" href="#_phase_2_important_improvements_2_3_weeks"></a><a class="link" href="#_phase_2_important_improvements_2_3_weeks">Phase 2: Important Improvements (2-3 weeks)</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Improve documentation</p>
+</li>
+<li>
+<p>Enhance error handling</p>
+</li>
+<li>
+<p>Add configuration options</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_phase_3_long_term_stability_3_4_weeks"><a class="anchor" href="#_phase_3_long_term_stability_3_4_weeks"></a><a class="link" href="#_phase_3_long_term_stability_3_4_weeks">Phase 3: Long-term Stability (3-4 weeks)</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Performance optimization</p>
+</li>
+<li>
+<p>Memory management</p>
+</li>
+<li>
+<p>Plugin architecture improvements
+:jbake-status: published
+:jbake-order: 12
+:jbake-type: page_toc
+:jbake-menu: arc42
+:jbake-title: Glossary</p>
+</li>
+</ol>
 </div>
 </div>
 </div>

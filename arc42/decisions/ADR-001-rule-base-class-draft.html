@@ -2,14 +2,14 @@
 <html lang="de">
 <head>
     
-    <!-- sourceuri: test-results/02-coverage.html -->
+    <!-- sourceuri: arc42/decisions/ADR-001-rule-base-class.html -->
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="jbake" name="generator">
     <meta content="INDEX, FOLLOW" name="ROBOTS">
 
-    <title>Coverage</title>
+    <title>ADR 1: Rule Base Class Design</title>
     <meta content="docToolchain" property="og:title">
     <meta content="build your dev docs the easy way..." property="og:description">
     <meta content="website" property="og:type">
@@ -21,35 +21,35 @@
     <meta content="build your dev docs the easy way..." name="twitter:description">
 
     <link as="style"
-        href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        href="../../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
         rel="preload">
-    <link href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+    <link href="../../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
         integrity=""
         rel="stylesheet">
-    <link href="../css/asciidoctor.css" rel="stylesheet">
-    <link href="../css/prettify.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
 
     <!-- favicon generated with https://www.favicon-generator.org/ -->
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="apple-touch-icon" sizes="57x57" href="../apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="../apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="../apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="../apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="../apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="../apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="../apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="../apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="../apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="../android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="manifest" href="../manifest.json">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../../apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../../apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../../apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../../apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../../apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+    <link rel="manifest" href="../../manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="../ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="../../ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../../js/jquery-3.5.1.min.js"></script>
     <style>
     div.bg-light {
         background-color: rgba(127, 180, 224, 0.3) !important;
@@ -204,38 +204,38 @@
 <header>
 	
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
-    <a class="navbar-brand" href="../index.html">
-        <span class="navbar-logo"><img src="../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
+    <a class="navbar-brand" href="../../index.html">
+        <span class="navbar-logo"><img src="../../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
             class="font-weight-bold">AsciiDoc-Linter</span>
     </a>
     <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
         <ul class="navbar-nav mt-2 mt-lg-0">
-    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
+    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../test-results/report.html"><span>test-results</span></a>
+                <a class="nav-link " href="../../test-results/report.html"><span>test-results</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../readme/README.html"><span>readme</span></a>
+                <a class="nav-link " href="../../readme/README.html"><span>readme</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
+                <a class="nav-link active" href="../../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+                <a class="nav-link " href="../../canvas/architecture-canvas.html"><span>canvas</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../manual/index.html"><span>manual</span></a>
+                <a class="nav-link " href="../../manual/index.html"><span>manual</span></a>
             </li>
 
         </ul>
     </div>
     <div class="navbar-nav d-none d-lg-block" >
-        <form action="../search.html">
+        <form action="../../search.html">
         <input aria-label="Search this site…" autocomplete="off" class="form-control td-search-input"
                placeholder=" Search this site…" type="search" name="q">
         </form>
@@ -250,7 +250,7 @@
 				<div class="td-sidebar__inner" id="td-sidebar-menu" >
 					
 
-        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../search.html">
+        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../../search.html">
 
             <input aria-label="Search this site…" name="q" autocomplete="off" class="form-control td-search-input"
                    placeholder=" Search this site…" type="search">
@@ -266,7 +266,7 @@
 
             <ul class="td-sidebar-nav__section">
                 <li class="td-sidebar-nav__section-title">
-                    <span class="align-left pl-0 pr-2 pt-2 active td-sidebar-link td-sidebar-link__section">test-results</span>
+                    <span class="align-left pl-0 pr-2 pt-2 active td-sidebar-link td-sidebar-link__section">arc42</span>
                 </li>
                 <li>
                   <ul>
@@ -275,17 +275,67 @@
                         <ul class="td-sidebar-nav__section ul-0">
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../test-results/report.html" title="report.html">report.html</a>
+                                   href="../../arc42/index.html" title="AsciiDoc Linter Architecture Documentation">AsciiDoc Linter Architecture Documentation</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
                                 <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
-                                   href="../test-results/01-unit-tests.html" title="Unit Tests">Unit Tests</a>
+                                   href="../../arc42/01_introduction_and_goals.html" title="Introduction and Goals">Introduction and Goals</a>
                                 
                             </li>
                             <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
-                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
-                                   href="../test-results/02-coverage.html" title="Coverage">Coverage</a>
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/02_architecture_constraints.html" title="Architecture Constraints">Architecture Constraints</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/03_system_scope_and_context.html" title="System Scope and Context">System Scope and Context</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/04_solution_strategy.html" title="Solution Strategy">Solution Strategy</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/05_building_block_view.html" title="Building Block View">Building Block View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/06_runtime_view.html" title="Runtime View">Runtime View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/07_deployment_view.html" title="Deployment View">Deployment View</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/08_concepts.html" title="Cross-cutting Concepts">Cross-cutting Concepts</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/09_architecture_decisions.html" title="Architecture Decisions">Architecture Decisions</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/10_quality_requirements.html" title="Quality Requirements">Quality Requirements</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/11_technical_risks.html" title="Technical Risks and Technical Debt">Technical Risks and Technical Debt</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../../arc42/12_glossary.html" title="Glossary">Glossary</a>
                                 
                             </li>
                         </ul>
@@ -300,18 +350,35 @@
 				<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
 					
 
-        <a href="##git-repo-url##/test-results/02-coverage.adoc"
+        <a href="##git-repo-url##/arc42/decisions/ADR-001-rule-base-class.adoc"
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Coverage%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/test-results/02-coverage.adoc%0A%23branch:%20-" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+1%3A+Rule+Base+Class+Design%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/decisions/ADR-001-rule-base-class.adoc%0A%23branch:%20-" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
 
         <hr />
 
-        
+        <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a>
+<ul class="sectlevel1">
+<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a>
+<ul class="sectlevel2">
+<li><a href="#_status">Status</a></li>
+<li><a href="#_context">Context</a></li>
+<li><a href="#_decision">Decision</a></li>
+<li><a href="#_consequences">Consequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
 
 
 
@@ -331,7 +398,69 @@
     <div class="td-content">
         <p>
             
-<iframe src="coverage/index.html" style="height: 70vh; width: 100%"></iframe>
+<h1 id="_adr_001_rule_base_class_adoc_rule_base_class_design_decision" class="sect0">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</h1>
+<div class="sect1">
+<h2 id="_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_status">Status</h3>
+<div class="paragraph">
+<p>Accepted</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_context">Context</h3>
+<div class="paragraph">
+<p>We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_decision">Decision</h3>
+<div class="paragraph">
+<p>We will use an abstract base class <code>Rule</code> with a defined interface that all concrete rules must implement.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_consequences">Consequences</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Positive</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistent interface for all rules</p>
+</li>
+<li>
+<p>Easy to add new rules</p>
+</li>
+<li>
+<p>Clear separation of concerns</p>
+</li>
+<li>
+<p>Simplified testing through common interface</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Negative</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Additional abstraction layer</p>
+</li>
+<li>
+<p>Slight performance overhead</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
         </p>
 
         <style>
@@ -359,11 +488,11 @@
     <button class="feedback--answer feedback--answer-yes">Yes</button>
     <button class="feedback--answer feedback--answer-no">No</button>
     <p class="feedback--response feedback--response-yes">
-        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Coverage%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:test-results/02-coverage.adoc">tell us
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+1%3A+Rule+Base+Class+Design%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-001-rule-base-class.adoc">tell us
     how we can improve</a>.
     </p>
     <p class="feedback--response feedback--response-no">
-        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27Coverage%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:test-results/02-coverage.adoc">tell
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+1%3A+Rule+Base+Class+Design%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-001-rule-base-class.adoc">tell
     us how we can improve</a>.
     </p>
 </div>
@@ -500,15 +629,15 @@
         </div>
     </footer>
 
-    <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../../js/popper.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
 
 
-    <script src="../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
-    <script src="../js/blocks.js" ></script>
-    <script src="../js/prettify.js"></script>
-    <script src="../js/copy-n-paste.js"></script>
-    <script src="../js/submenucollapse.js"></script>
+    <script src="../../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
+    <script src="../../js/blocks.js" ></script>
+    <script src="../../js/prettify.js"></script>
+    <script src="../../js/copy-n-paste.js"></script>
+    <script src="../../js/submenucollapse.js"></script>
 
 
 </body>

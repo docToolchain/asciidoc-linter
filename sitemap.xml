@@ -2,11 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
     <url>
-    	<loc>http://jbake.org/test-results/report.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/test-results/test-report.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
@@ -27,17 +22,17 @@
     </url>
 
     <url>
+    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
+    	<lastmod>2024-12-21</lastmod>
+    </url>
+
+    <url>
     	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/arc42/05_building_block_view.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
-    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
@@ -117,12 +112,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/manual/rules.html</loc>
+    	<loc>http://jbake.org/manual/index.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/manual/index.html</loc>
+    	<loc>http://jbake.org/manual/rules.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 

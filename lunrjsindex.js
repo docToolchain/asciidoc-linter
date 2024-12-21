@@ -2,14 +2,6 @@ var documents = [
 
 {
     "id": 0,
-    "uri": "test-results/test-report.html",
-    "menu": "null",
-    "title": "null",
-    "text": " test_report_20241221_201307.html body { font-family: Helvetica, Arial, sans-serif; font-size: 12px; /* do not increase min-width as some may use split screens */ min-width: 800px; color: #999; } h1 { font-size: 24px; color: black; } h2 { font-size: 16px; color: black; } p { color: black; } a { color: #999; } table { border-collapse: collapse; } /****************************** * SUMMARY INFORMATION ******************************/ #environment td { padding: 5px; border: 1px solid #e6e6e6; vertical-align: top; } #environment tr:nth-child(odd) { background-color: #f6f6f6; } #environment ul { margin: 0; padding: 0 20px; } /****************************** * TEST RESULT COLORS ******************************/ span.passed, .passed .col-result { color: green; } span.skipped, span.xfailed, span.rerun, .skipped .col-result, .xfailed .col-result, .rerun .col-result { color: orange; } span.error, span.failed, span.xpassed, .error .col-result, .failed .col-result, .xpassed .col-result { color: red; } .col-links__extra { margin-right: 3px; } /****************************** * RESULTS TABLE * * 1. Table Layout * 2. Extra * 3. Sorting items * ******************************/ /*------------------ * 1. Table Layout *------------------*/ #results-table { border: 1px solid #e6e6e6; color: #999; font-size: 12px; width: 100%; } #results-table th, #results-table td { padding: 5px; border: 1px solid #e6e6e6; text-align: left; } #results-table th { font-weight: bold; } /*------------------ * 2. Extra *------------------*/ .logwrapper { max-height: 230px; overflow-y: scroll; background-color: #e6e6e6; } .logwrapper.expanded { max-height: none; } .logwrapper.expanded .logexpander:after { content: \"collapse [-]\"; } .logwrapper .logexpander { z-index: 1; position: sticky; top: 10px; width: max-content; border: 1px solid; border-radius: 3px; padding: 5px 7px; margin: 10px 0 10px calc(100% - 80px); cursor: pointer; background-color: #e6e6e6; } .logwrapper .logexpander:after { content: \"expand [+]\"; } .logwrapper .logexpander:hover { color: #000; border-color: #000; } .logwrapper .log { min-height: 40px; position: relative; top: -50px; height: calc(100% + 50px); border: 1px solid #e6e6e6; color: black; display: block; font-family: \"Courier New\", Courier, monospace; padding: 5px; padding-right: 80px; white-space: pre-wrap; } div.media { border: 1px solid #e6e6e6; float: right; height: 240px; margin: 0 5px; overflow: hidden; width: 320px; } .media-container { display: grid; grid-template-columns: 25px auto 25px; align-items: center; flex: 1 1; overflow: hidden; height: 200px; } .media-container--fullscreen { grid-template-columns: 0px auto 0px; } .media-container__nav--right, .media-container__nav--left { text-align: center; cursor: pointer; } .media-container__viewport { cursor: pointer; text-align: center; height: inherit; } .media-container__viewport img, .media-container__viewport video { object-fit: cover; width: 100%; max-height: 100%; } .media__name, .media__counter { display: flex; flex-direction: row; justify-content: space-around; flex: 0 0 25px; align-items: center; } .collapsible td:not(.col-links) { cursor: pointer; } .collapsible td:not(.col-links):hover::after { color: #bbb; font-style: italic; cursor: pointer; } .col-result { width: 130px; } .col-result:hover::after { content: \" (hide details)\"; } .col-result.collapsed:hover::after { content: \" (show details)\"; } #environment-header h2:hover::after { content: \" (hide details)\"; color: #bbb; font-style: italic; cursor: pointer; font-size: 12px; } #environment-header.collapsed h2:hover::after { content: \" (show details)\"; color: #bbb; font-style: italic; cursor: pointer; font-size: 12px; } /*------------------ * 3. Sorting items *------------------*/ .sortable { cursor: pointer; } .sortable.desc:after { content: \" \"; position: relative; left: 5px; bottom: -12.5px; border: 10px solid #4caf50; border-bottom: 0; border-left-color: transparent; border-right-color: transparent; } .sortable.asc:after { content: \" \"; position: relative; left: 5px; bottom: 12.5px; border: 10px solid #4caf50; border-top: 0; border-left-color: transparent; border-right-color: transparent; } .hidden, .summary__reload__button.hidden { display: none; } .summary__data { flex: 0 0 550px; } .summary__reload { flex: 1 1; display: flex; justify-content: center; } .summary__reload__button { flex: 0 0 300px; display: flex; color: white; font-weight: bold; background-color: #4caf50; text-align: center; justify-content: center; align-items: center; border-radius: 3px; cursor: pointer; } .summary__reload__button:hover { background-color: #46a049; } .summary__spacer { flex: 0 0 550px; } .controls { display: flex; justify-content: space-between; } .filters, .collapse { display: flex; align-items: center; } .filters button, .collapse button { color: #999; border: none; background: none; cursor: pointer; text-decoration: underline; } .filters button:hover, .collapse button:hover { color: #ccc; } .filter__label { margin-right: 10px; } test_report_20241221_201307.html Report generated on 21-Dec-2024 at 20:13:08 by pytest-html v4.1.1 Environment No results found. Check the filters. > Summary 136 tests took 157 ms. (Un)check the boxes to filter the results. There are still tests running. Reload this page to get the latest results! 0 Failed, 136 Passed, 0 Skipped, 0 Expected failures, 0 Unexpected passes, 0 Errors, 0 Reruns Show all details &nbsp;/&nbsp; Hide all details Result Test Duration Links (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=\"function\"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error(\"Cannot find module '\"+i+\"'\");throw a.code=\"MODULE_NOT_FOUND\",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=\"function\"==typeof require&&require,i=0;i { const collapsed = collapsedCategories.includes(test.result.toLowerCase()) const id = `test_${index}` if (collapsed) { collapsedIds.push(id) } return { ...test, id, collapsed, } }) const dataBlob = { ...data, tests } this.data = { ...dataBlob } this.renderData = { ...dataBlob } setCollapsedIds(collapsedIds) } get allData() { return { ...this.data } } resetRender() { this.renderData = { ...this.data } } setRender(data) { this.renderData.tests = [...data] } toggleCollapsedItem(id) { this.renderData.tests = this.renderData.tests.map((test) => test.id === id ? { ...test, collapsed: !test.collapsed } : test, ) } set allCollapsed(collapsed) { this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => ( { ...test, collapsed } ))] } } get testSubset() { return [...this.renderData.tests] } get environment() { return this.renderData.environment } get initialSort() { return this.data.initialSort } } module.exports = { manager: new DataManager(), } },{\"./storage.js\":8}],2:[function(require,module,exports){ const mediaViewer = require('./mediaviewer.js') const templateEnvRow = document.getElementById('template_environment_row') const templateResult = document.getElementById('template_results-table__tbody') function htmlToElements(html) { const temp = document.createElement('template') temp.innerHTML = html return temp.content.childNodes } const find = (selector, elem) => { if (!elem) { elem = document } return elem.querySelector(selector) } const findAll = (selector, elem) => { if (!elem) { elem = document } return [...elem.querySelectorAll(selector)] } const dom = { getStaticRow: (key, value) => { const envRow = templateEnvRow.content.cloneNode(true) const isObj = typeof value === 'object' && value !== null const values = isObj ? Object.keys(value).map((k) => `${k}: ${value[k]}`) : null const valuesElement = htmlToElements( values ? ` ${values.map((val) => ` ${val} `).join('')} ` : ` ${value} `)[0] const td = findAll('td', envRow) td[0].textContent = key td[1].appendChild(valuesElement) return envRow }, getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => { const resultBody = templateResult.content.cloneNode(true) resultBody.querySelector('tbody').classList.add(result.toLowerCase()) resultBody.querySelector('tbody').id = testId resultBody.querySelector('.collapsible').dataset.id = id resultsTableRow.forEach((html) => { const t = document.createElement('template') t.innerHTML = html resultBody.querySelector('.collapsible').appendChild(t.content) }) if (log) { // Wrap lines starting with \"E\" with span.error to color those lines red const wrappedLog = log.replace(/^E.*$/gm, (match) => ` ${match} `) resultBody.querySelector('.log').innerHTML = wrappedLog } else { resultBody.querySelector('.log').remove() } if (collapsed) { resultBody.querySelector('.collapsible > td')?.classList.add('collapsed') resultBody.querySelector('.extras-row').classList.add('hidden') } else { resultBody.querySelector('.collapsible > td')?.classList.remove('collapsed') } const media = [] extras?.forEach(({ name, format_type, content }) => { if (['image', 'video'].includes(format_type)) { media.push({ path: content, name, format_type }) } if (format_type === 'html') { resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', ` ${content} `) } }) mediaViewer.setup(resultBody, media) // Add custom html from the pytest_html_results_table_html hook tableHtml?.forEach((item) => { resultBody.querySelector('td[class=\"extra\"]').insertAdjacentHTML('beforeend', item) }) return resultBody }, } module.exports = { dom, htmlToElements, find, findAll, } },{\"./mediaviewer.js\":6}],3:[function(require,module,exports){ const { manager } = require('./datamanager.js') const { doSort } = require('./sort.js') const storageModule = require('./storage.js') const getFilteredSubSet = (filter) => manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase())) const doInitFilter = () => { const currentFilter = storageModule.getVisible() const filteredSubset = getFilteredSubSet(currentFilter) manager.setRender(filteredSubset) } const doFilter = (type, show) => { if (show) { storageModule.showCategory(type) } else { storageModule.hideCategory(type) } const currentFilter = storageModule.getVisible() const filteredSubset = getFilteredSubSet(currentFilter) manager.setRender(filteredSubset) const sortColumn = storageModule.getSort() doSort(sortColumn, true) } module.exports = { doFilter, doInitFilter, } },{\"./datamanager.js\":1,\"./sort.js\":7,\"./storage.js\":8}],4:[function(require,module,exports){ const { redraw, bindEvents, renderStatic } = require('./main.js') const { doInitFilter } = require('./filter.js') const { doInitSort } = require('./sort.js') const { manager } = require('./datamanager.js') const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob) function init() { manager.setManager(data) doInitFilter() doInitSort() renderStatic() redraw() bindEvents() } init() },{\"./datamanager.js\":1,\"./filter.js\":3,\"./main.js\":5,\"./sort.js\":7}],5:[function(require,module,exports){ const { dom, find, findAll } = require('./dom.js') const { manager } = require('./datamanager.js') const { doSort } = require('./sort.js') const { doFilter } = require('./filter.js') const { getVisible, getCollapsedIds, setCollapsedIds, getSort, getSortDirection, possibleFilters, } = require('./storage.js') const removeChildren = (node) => { while (node.firstChild) { node.removeChild(node.firstChild) } } const renderStatic = () => { const renderEnvironmentTable = () => { const environment = manager.environment const rows = Object.keys(environment).map((key) => dom.getStaticRow(key, environment[key])) const table = document.getElementById('environment') removeChildren(table) rows.forEach((row) => table.appendChild(row)) } renderEnvironmentTable() } const addItemToggleListener = (elem) => { elem.addEventListener('click', ({ target }) => { const id = target.parentElement.dataset.id manager.toggleCollapsedItem(id) const collapsedIds = getCollapsedIds() if (collapsedIds.includes(id)) { const updated = collapsedIds.filter((item) => item !== id) setCollapsedIds(updated) } else { collapsedIds.push(id) setCollapsedIds(collapsedIds) } redraw() }) } const renderContent = (tests) => { const sortAttr = getSort(manager.initialSort) const sortAsc = JSON.parse(getSortDirection()) const rows = tests.map(dom.getResultTBody) const table = document.getElementById('results-table') const tableHeader = document.getElementById('results-table-head') const newTable = document.createElement('table') newTable.id = 'results-table' // remove all sorting classes and set the relevant findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc')) tableHeader.querySelector(`.sortable[data-column-type=\"${sortAttr}\"]`)?.classList.add(sortAsc ? 'desc' : 'asc') newTable.appendChild(tableHeader) if (!rows.length) { const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true) newTable.appendChild(emptyTable) } else { rows.forEach((row) => { if (!!row) { findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener) find('.logexpander', row).addEventListener('click', (evt) => evt.target.parentNode.classList.toggle('expanded'), ) newTable.appendChild(row) } }) } table.replaceWith(newTable) } const renderDerived = () => { const currentFilter = getVisible() possibleFilters.forEach((result) => { const input = document.querySelector(`input[data-test-result=\"${result}\"]`) input.checked = currentFilter.includes(result) }) } const bindEvents = () => { const filterColumn = (evt) => { const { target: element } = evt const { testResult } = element.dataset doFilter(testResult, element.checked) const collapsedIds = getCollapsedIds() const updated = manager.renderData.tests.map((test) => { return { ...test, collapsed: collapsedIds.includes(test.id), } }) manager.setRender(updated) redraw() } const header = document.getElementById('environment-header') header.addEventListener('click', () => { const table = document.getElementById('environment') table.classList.toggle('hidden') header.classList.toggle('collapsed') }) findAll('input[name=\"filter_checkbox\"]').forEach((elem) => { elem.addEventListener('click', filterColumn) }) findAll('.sortable').forEach((elem) => { elem.addEventListener('click', (evt) => { const { target: element } = evt const { columnType } = element.dataset doSort(columnType) redraw() }) }) document.getElementById('show_all_details').addEventListener('click', () => { manager.allCollapsed = false setCollapsedIds([]) redraw() }) document.getElementById('hide_all_details').addEventListener('click', () => { manager.allCollapsed = true const allIds = manager.renderData.tests.map((test) => test.id) setCollapsedIds(allIds) redraw() }) } const redraw = () => { const { testSubset } = manager renderContent(testSubset) renderDerived() } module.exports = { redraw, bindEvents, renderStatic, } },{\"./datamanager.js\":1,\"./dom.js\":2,\"./filter.js\":3,\"./sort.js\":7,\"./storage.js\":8}],6:[function(require,module,exports){ class MediaViewer { constructor(assets) { this.assets = assets this.index = 0 } nextActive() { this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1 return [this.activeFile, this.index] } prevActive() { this.index = this.index === 0 ? this.assets.length - 1 : this.index -1 return [this.activeFile, this.index] } get currentIndex() { return this.index } get activeFile() { return this.assets[this.index] } } const setup = (resultBody, assets) => { if (!assets.length) { resultBody.querySelector('.media').classList.add('hidden') return } const mediaViewer = new MediaViewer(assets) const container = resultBody.querySelector('.media-container') const leftArrow = resultBody.querySelector('.media-container__nav--left') const rightArrow = resultBody.querySelector('.media-container__nav--right') const mediaName = resultBody.querySelector('.media__name') const counter = resultBody.querySelector('.media__counter') const imageEl = resultBody.querySelector('img') const sourceEl = resultBody.querySelector('source') const videoEl = resultBody.querySelector('video') const setImg = (media, index) => { if (media?.format_type === 'image') { imageEl.src = media.path imageEl.classList.remove('hidden') videoEl.classList.add('hidden') } else if (media?.format_type === 'video') { sourceEl.src = media.path videoEl.classList.remove('hidden') imageEl.classList.add('hidden') } mediaName.innerText = media?.name counter.innerText = `${index + 1} / ${assets.length}` } setImg(mediaViewer.activeFile, mediaViewer.currentIndex) const moveLeft = () => { const [media, index] = mediaViewer.prevActive() setImg(media, index) } const doRight = () => { const [media, index] = mediaViewer.nextActive() setImg(media, index) } const openImg = () => { window.open(mediaViewer.activeFile.path, '_blank') } if (assets.length === 1) { container.classList.add('media-container--fullscreen') } else { leftArrow.addEventListener('click', moveLeft) rightArrow.addEventListener('click', doRight) } imageEl.addEventListener('click', openImg) } module.exports = { setup, } },{}],7:[function(require,module,exports){ const { manager } = require('./datamanager.js') const storageModule = require('./storage.js') const genericSort = (list, key, ascending, customOrder) => { let sorted if (customOrder) { sorted = list.sort((a, b) => { const aValue = a.result.toLowerCase() const bValue = b.result.toLowerCase() const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue) const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue) // Compare the indices to determine the sort order return aIndex - bIndex }) } else { sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1) } if (ascending) { sorted.reverse() } return sorted } const durationSort = (list, ascending) => { const parseDuration = (duration) => { if (duration.includes(':')) { // If it's in the format \"HH:mm:ss\" const [hours, minutes, seconds] = duration.split(':').map(Number) return (hours * 3600 + minutes * 60 + seconds) * 1000 } else { // If it's in the format \"nnn ms\" return parseInt(duration) } } const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration'])) if (ascending) { sorted.reverse() } return sorted } const doInitSort = () => { const type = storageModule.getSort(manager.initialSort) const ascending = storageModule.getSortDirection() const list = manager.testSubset const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed'] storageModule.setSort(type) storageModule.setSortDirection(ascending) if (type?.toLowerCase() === 'original') { manager.setRender(list) } else { let sortedList switch (type) { case 'duration': sortedList = durationSort(list, ascending) break case 'result': sortedList = genericSort(list, type, ascending, initialOrder) break default: sortedList = genericSort(list, type, ascending) break } manager.setRender(sortedList) } } const doSort = (type, skipDirection) => { const newSortType = storageModule.getSort(manager.initialSort) !== type const currentAsc = storageModule.getSortDirection() let ascending if (skipDirection) { ascending = currentAsc } else { ascending = newSortType ? false : !currentAsc } storageModule.setSort(type) storageModule.setSortDirection(ascending) const list = manager.testSubset const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending) manager.setRender(sortedList) } module.exports = { doInitSort, doSort, } },{\"./datamanager.js\":1,\"./storage.js\":8}],8:[function(require,module,exports){ const possibleFilters = [ 'passed', 'skipped', 'failed', 'error', 'xfailed', 'xpassed', 'rerun', ] const getVisible = () => { const url = new URL(window.location.href) const settings = new URLSearchParams(url.search).get('visible') const lower = (item) => { const lowerItem = item.toLowerCase() if (possibleFilters.includes(lowerItem)) { return lowerItem } return null } return settings === null ? possibleFilters : [...new Set(settings?.split(',').map(lower).filter((item) => item))] } const hideCategory = (categoryToHide) => { const url = new URL(window.location.href) const visibleParams = new URLSearchParams(url.search).get('visible') const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters] const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',') url.searchParams.set('visible', settings) window.history.pushState({}, null, unescape(url.href)) } const showCategory = (categoryToShow) => { if (typeof window === 'undefined') { return } const url = new URL(window.location.href) const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) || [...possibleFilters] const settings = [...new Set([categoryToShow, ...currentVisible])] const noFilter = possibleFilters.length === settings.length || !settings.length noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(',')) window.history.pushState({}, null, unescape(url.href)) } const getSort = (initialSort) => { const url = new URL(window.location.href) let sort = new URLSearchParams(url.search).get('sort') if (!sort) { sort = initialSort || 'result' } return sort } const setSort = (type) => { const url = new URL(window.location.href) url.searchParams.set('sort', type) window.history.pushState({}, null, unescape(url.href)) } const getCollapsedCategory = (renderCollapsed) => { let categories if (typeof window !== 'undefined') { const url = new URL(window.location.href) const collapsedItems = new URLSearchParams(url.search).get('collapsed') switch (true) { case !renderCollapsed && collapsedItems === null: categories = ['passed'] break case collapsedItems?.length === 0 || /^[\"']{2}$/.test(collapsedItems): categories = [] break case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed): categories = [...possibleFilters] break default: categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed break } } else { categories = [] } return categories } const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending) const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || [] const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list)) module.exports = { getVisible, hideCategory, showCategory, getCollapsedIds, setCollapsedIds, getSort, setSort, getSortDirection, setSortDirection, getCollapsedCategory, possibleFilters, } },{}]},{},[4]); "
-},
-
-{
-    "id": 1,
     "uri": "arc42/01_introduction_and_goals.html",
     "menu": "arc42",
     "title": "Introduction and Goals",
@@ -17,7 +9,7 @@ var documents = [
 },
 
 {
-    "id": 2,
+    "id": 1,
     "uri": "readme/README.html",
     "menu": "readme",
     "title": "README.adoc",
@@ -25,7 +17,7 @@ var documents = [
 },
 
 {
-    "id": 3,
+    "id": 2,
     "uri": "arc42/08_concepts.html",
     "menu": "arc42",
     "title": "Cross-cutting Concepts",
@@ -33,15 +25,7 @@ var documents = [
 },
 
 {
-    "id": 4,
-    "uri": "arc42/11_technical_risks.html",
-    "menu": "arc42",
-    "title": "Technical Risks and Technical Debt",
-    "text": " Table of Contents 11_technical_risks.adoc - Technical Risks Technical Risks and Technical Debt Current Issues (December 2024) Risk Analysis Technical Debt Risk Matrix Mitigation Strategy 11_technical_risks.adoc - Technical Risks Technical Risks and Technical Debt Current Issues (December 2024) Test Failures 3 failed tests in table processing Issues with cell extraction and list detection Impact on table validation reliability Coverage Gaps rules.py: 0% coverage reporter.py: 85% coverage block_rules.py: 89% coverage Implementation Issues Inconsistent severity case handling Missing rule_id attribute in base class Table content validation problems Risk Analysis Risk Description Impact Probability Mitigation Table Processing Errors Table content validation unreliable High High * Fix cell extraction * Improve list detection * Add comprehensive tests Test Coverage Gaps Critical modules lack tests High Medium * Add tests for rules.py * Improve reporter coverage * Document test scenarios Performance Degradation Rule processing becomes slow with many rules High Medium * Profile rule execution * Implement rule caching * Optimize core algorithms Memory Leaks Long-running processes accumulate memory High Low * Regular memory profiling * Automated testing * Resource cleanup False Positives Rules report incorrect violations Medium High * Extensive test cases * User feedback system * Rule configuration options Plugin Conflicts Custom rules interfere with core rules Medium Medium * Plugin isolation * Version compatibility checks * Clear plugin API Technical Debt Current Technical Debt Area Description Impact Priority Table Processing Cell extraction and list detection issues High High Test Coverage rules.py and reporter.py need tests High High Core Architecture Inconsistent severity handling Medium High Documentation Some advanced features poorly documented Medium Medium Error Handling Some error cases not specifically handled High High Configuration Hard-coded values that should be configurable Low Low Implementation Debt Component Issue Impact Priority TableContentRule Cell extraction incorrect High High TableContentRule List detection problems High High Rule Base Class Missing rule_id attribute Medium High Severity Handling Inconsistent case usage Medium High rules.py No test coverage High High Planned Improvements Risk Matrix Mitigation Strategy Phase 1: Critical Issues (1-2 weeks) Fix table processing Add missing tests Standardize severity handling Phase 2: Important Improvements (2-3 weeks) Improve documentation Enhance error handling Add configuration options Phase 3: Long-term Stability (3-4 weeks) Performance optimization Memory management Plugin architecture improvements "
-},
-
-{
-    "id": 5,
+    "id": 3,
     "uri": "arc42/07_deployment_view.html",
     "menu": "arc42",
     "title": "Deployment View",
@@ -49,7 +33,7 @@ var documents = [
 },
 
 {
-    "id": 6,
+    "id": 4,
     "uri": "arc42/05_building_block_view.html",
     "menu": "arc42",
     "title": "Building Block View",
@@ -57,7 +41,15 @@ var documents = [
 },
 
 {
-    "id": 7,
+    "id": 5,
+    "uri": "arc42/11_technical_risks.html",
+    "menu": "arc42",
+    "title": "Technical Risks and Technical Debt",
+    "text": " Table of Contents 11_technical_risks.adoc - Technical Risks Technical Risks and Technical Debt Current Issues (December 2024) Risk Analysis Technical Debt Risk Matrix Mitigation Strategy 11_technical_risks.adoc - Technical Risks Technical Risks and Technical Debt Current Issues (December 2024) Test Failures 3 failed tests in table processing Issues with cell extraction and list detection Impact on table validation reliability Coverage Gaps rules.py: 0% coverage reporter.py: 85% coverage block_rules.py: 89% coverage Implementation Issues Inconsistent severity case handling Missing rule_id attribute in base class Table content validation problems Risk Analysis Risk Description Impact Probability Mitigation Table Processing Errors Table content validation unreliable High High * Fix cell extraction * Improve list detection * Add comprehensive tests Test Coverage Gaps Critical modules lack tests High Medium * Add tests for rules.py * Improve reporter coverage * Document test scenarios Performance Degradation Rule processing becomes slow with many rules High Medium * Profile rule execution * Implement rule caching * Optimize core algorithms Memory Leaks Long-running processes accumulate memory High Low * Regular memory profiling * Automated testing * Resource cleanup False Positives Rules report incorrect violations Medium High * Extensive test cases * User feedback system * Rule configuration options Plugin Conflicts Custom rules interfere with core rules Medium Medium * Plugin isolation * Version compatibility checks * Clear plugin API Technical Debt Current Technical Debt Area Description Impact Priority Table Processing Cell extraction and list detection issues High High Test Coverage rules.py and reporter.py need tests High High Core Architecture Inconsistent severity handling Medium High Documentation Some advanced features poorly documented Medium Medium Error Handling Some error cases not specifically handled High High Configuration Hard-coded values that should be configurable Low Low Implementation Debt Component Issue Impact Priority TableContentRule Cell extraction incorrect High High TableContentRule List detection problems High High Rule Base Class Missing rule_id attribute Medium High Severity Handling Inconsistent case usage Medium High rules.py No test coverage High High Planned Improvements Risk Matrix Mitigation Strategy Phase 1: Critical Issues (1-2 weeks) Fix table processing Add missing tests Standardize severity handling Phase 2: Important Improvements (2-3 weeks) Improve documentation Enhance error handling Add configuration options Phase 3: Long-term Stability (3-4 weeks) Performance optimization Memory management Plugin architecture improvements "
+},
+
+{
+    "id": 6,
     "uri": "arc42/10_quality_requirements.html",
     "menu": "arc42",
     "title": "Quality Requirements",
@@ -65,7 +57,7 @@ var documents = [
 },
 
 {
-    "id": 8,
+    "id": 7,
     "uri": "arc42/index.html",
     "menu": "arc42",
     "title": "AsciiDoc Linter Architecture Documentation",
@@ -73,15 +65,7 @@ var documents = [
 },
 
 {
-    "id": 9,
-    "uri": "arc42/04_solution_strategy.html",
-    "menu": "arc42",
-    "title": "Solution Strategy",
-    "text": " Table of Contents Solution Strategy Quality Goals and Architectural Approaches Technology Decisions Implementation Patterns Solution Strategy Quality Goals and Architectural Approaches Quality Goal Solution Approach Details Extensibility * Abstract base classes * Plugin architecture * Clear interfaces * New rules can be added by extending base classes * Plugin system allows external rule packages * Well-defined interfaces for rule implementation Reliability * Comprehensive testing * Strong typing * Defensive programming * High test coverage * Type hints throughout the code * Careful input validation Usability * Clear error messages * Context information * Configuration options * Detailed error descriptions * Line and column information * Configurable rule severity Performance * Efficient algorithms * Lazy loading * Caching * Line-by-line processing * Rules loaded on demand * Cache parsing results Maintainability * Clean architecture * SOLID principles * Documentation * Clear separation of concerns * Single responsibility principle * Comprehensive documentation Technology Decisions Technology Decision Rationale Python Primary implementation language * Strong standard library * Great text processing capabilities * Wide adoption in tooling Regular Expressions Pattern matching * Built into Python * Efficient for text processing * Well understood by developers YAML Configuration format * Human readable * Standard format * Good library support unittest Testing framework * Part of Python standard library * Well known to developers * Good IDE support Implementation Patterns "
-},
-
-{
-    "id": 10,
+    "id": 8,
     "uri": "arc42/03_system_scope_and_context.html",
     "menu": "arc42",
     "title": "System Scope and Context",
@@ -89,7 +73,7 @@ var documents = [
 },
 
 {
-    "id": 11,
+    "id": 9,
     "uri": "arc42/12_glossary.html",
     "menu": "arc42",
     "title": "Glossary",
@@ -97,7 +81,15 @@ var documents = [
 },
 
 {
-    "id": 12,
+    "id": 10,
+    "uri": "arc42/04_solution_strategy.html",
+    "menu": "arc42",
+    "title": "Solution Strategy",
+    "text": " Table of Contents Solution Strategy Quality Goals and Architectural Approaches Technology Decisions Implementation Patterns Solution Strategy Quality Goals and Architectural Approaches Quality Goal Solution Approach Details Extensibility * Abstract base classes * Plugin architecture * Clear interfaces * New rules can be added by extending base classes * Plugin system allows external rule packages * Well-defined interfaces for rule implementation Reliability * Comprehensive testing * Strong typing * Defensive programming * High test coverage * Type hints throughout the code * Careful input validation Usability * Clear error messages * Context information * Configuration options * Detailed error descriptions * Line and column information * Configurable rule severity Performance * Efficient algorithms * Lazy loading * Caching * Line-by-line processing * Rules loaded on demand * Cache parsing results Maintainability * Clean architecture * SOLID principles * Documentation * Clear separation of concerns * Single responsibility principle * Comprehensive documentation Technology Decisions Technology Decision Rationale Python Primary implementation language * Strong standard library * Great text processing capabilities * Wide adoption in tooling Regular Expressions Pattern matching * Built into Python * Efficient for text processing * Well understood by developers YAML Configuration format * Human readable * Standard format * Good library support unittest Testing framework * Part of Python standard library * Well known to developers * Good IDE support Implementation Patterns "
+},
+
+{
+    "id": 11,
     "uri": "arc42/09_architecture_decisions.html",
     "menu": "arc42",
     "title": "Architecture Decisions",
@@ -105,11 +97,19 @@ var documents = [
 },
 
 {
-    "id": 13,
+    "id": 12,
     "uri": "arc42/02_architecture_constraints.html",
     "menu": "arc42",
     "title": "Architecture Constraints",
     "text": " Table of Contents Architecture Constraints Technical Constraints Organizational Constraints Conventions Architecture Constraints Technical Constraints Constraint Description Background Python 3.8+ The system must run on Python 3.8 or higher Need for modern language features and type hints Platform Independence Must run on Windows, Linux, and macOS Support for all major development platforms No External Dependencies Core functionality should work without external libraries Easy installation and deployment Memory Footprint Should process documents with minimal memory usage Support for large documentation projects Organizational Constraints Constraint Description Background Open Source Project must be open source under MIT license Community involvement and transparency Documentation All code must be documented with docstrings Maintainability and community contribution Test Coverage Minimum 90% test coverage required Quality assurance and reliability Version Control Git-based development with feature branches Collaborative development process Conventions Convention Description Background Code Style Follow PEP 8 guidelines Python community standards Type Hints Use type hints throughout the code Code clarity and IDE support Commit Messages Follow conventional commits specification Clear change history Documentation Format Use AsciiDoc for all documentation Dogfooding our own tool "
+},
+
+{
+    "id": 13,
+    "uri": "arc42/06_runtime_view.html",
+    "menu": "arc42",
+    "title": "Runtime View",
+    "text": " Table of Contents Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence "
 },
 
 {
@@ -122,14 +122,6 @@ var documents = [
 
 {
     "id": 15,
-    "uri": "arc42/06_runtime_view.html",
-    "menu": "arc42",
-    "title": "Runtime View",
-    "text": " Table of Contents Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence Runtime View Document Processing Sequence Rule Loading Sequence Error Reporting Sequence "
-},
-
-{
-    "id": 16,
     "uri": "test-results/01-unit-tests.html",
     "menu": "test-results",
     "title": "Unit Tests",
@@ -137,7 +129,7 @@ var documents = [
 },
 
 {
-    "id": 17,
+    "id": 16,
     "uri": "test-results/02-coverage.html",
     "menu": "test-results",
     "title": "Coverage",
@@ -145,7 +137,7 @@ var documents = [
 },
 
 {
-    "id": 18,
+    "id": 17,
     "uri": "manual/testing.html",
     "menu": "manual",
     "title": "Testing Strategy and Guide",
@@ -153,7 +145,7 @@ var documents = [
 },
 
 {
-    "id": 19,
+    "id": 18,
     "uri": "manual/development.html",
     "menu": "manual",
     "title": "Development Guide",
@@ -161,7 +153,7 @@ var documents = [
 },
 
 {
-    "id": 20,
+    "id": 19,
     "uri": "manual/usage.html",
     "menu": "manual",
     "title": "Usage Guide",
@@ -169,7 +161,7 @@ var documents = [
 },
 
 {
-    "id": 21,
+    "id": 20,
     "uri": "manual/introduction.html",
     "menu": "manual",
     "title": "Introduction",
@@ -177,7 +169,7 @@ var documents = [
 },
 
 {
-    "id": 22,
+    "id": 21,
     "uri": "manual/index.html",
     "menu": "manual",
     "title": "AsciiDoc Linter Manual",
@@ -185,7 +177,7 @@ var documents = [
 },
 
 {
-    "id": 23,
+    "id": 22,
     "uri": "manual/rules.html",
     "menu": "manual",
     "title": "AsciiDoc Linter Rules",
@@ -193,7 +185,7 @@ var documents = [
 },
 
 {
-    "id": 24,
+    "id": 23,
     "uri": "search.html",
     "menu": "-",
     "title": "search",
@@ -201,7 +193,7 @@ var documents = [
 },
 
 {
-    "id": 25,
+    "id": 24,
     "uri": "lunrjsindex.html",
     "menu": "-",
     "title": "null",

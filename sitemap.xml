@@ -2,11 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
     <url>
-    	<loc>http://jbake.org/test-results/test-report.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/01_introduction_and_goals.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
@@ -22,17 +17,17 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/arc42/05_building_block_view.html</loc>
+    	<lastmod>2024-12-21</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
@@ -47,17 +42,17 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/04_solution_strategy.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/03_system_scope_and_context.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/arc42/12_glossary.html</loc>
+    	<lastmod>2024-12-21</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/04_solution_strategy.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
@@ -72,12 +67,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/canvas/architecture-canvas.html</loc>
+    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
+    	<loc>http://jbake.org/canvas/architecture-canvas.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 

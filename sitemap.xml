@@ -72,17 +72,17 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
-    	<lastmod>2024-12-21</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/canvas/architecture-canvas.html</loc>
+    	<lastmod>2024-12-21</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
     	<lastmod>2024-12-21</lastmod>
     </url>
 

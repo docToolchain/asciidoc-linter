@@ -50,7 +50,7 @@ class ConsoleReporter(Reporter):
             
         output = []
         for error in report.errors:
-            location = f"\033[36mline {error.line}\033[0m"
+            location = f"\033[36mline {error.position.line}\033[0m"
             if error.file:
                 location = f"\033[36m{error.file}:{location}\033[0m"
             

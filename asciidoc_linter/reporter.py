@@ -3,40 +3,48 @@
 Different output formatters for lint results
 """
 
+from collections import defaultdict
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Dict, Optional
 import json
 
-@dataclass
-class LintError:
-    """Represents a single lint error"""
-    file: Optional[str]
-    line: int
-    message: str
+from .rules.base import Finding
 
 @dataclass
 class LintReport:
-    """Contains all lint errors for a document"""
-    errors: List[LintError]
+    """Contains all lint findings for a document"""
+    findings: List[Finding]
+
+    def grouped_findings(self) -> Dict[str, List[Finding]]:
+        grouped = defaultdict(list)
+        for finding in self.findings:
+            grouped[finding.file].append(finding)
+        return grouped
+
+    @property
+    def exit_code(self) -> int:
+        return 1 if self.findings else 0
 
     def __bool__(self):
-        return bool(self.errors)
+        return bool(self.findings)
 
     def __len__(self):
-        return len(self.errors)
+        return len(self.findings)
 
 class Reporter:
     """Base class for formatting lint reports"""
     
     def format_report(self, report: LintReport) -> str:
         """Format the report as string"""
+        if not report:
+            return "✓ No issues found"
+
         output = []
-        for error in report.errors:
-            location = f"line {error.line}"
-            if error.file:
-                location = f"{error.file}:{location}"
-            
-            output.append(f"{location}: {error.message}")
+        for file, findings in report.grouped_findings().items():
+            output.append(f"Results for {file}:")
+            for finding in findings:
+                output.append(f"{finding.location}: {finding.message}")
+            output.append("\n")
         
         return "\n".join(output)
 
@@ -45,16 +53,15 @@ class ConsoleReporter(Reporter):
     
     def format_report(self, report: LintReport) -> str:
         """Format the report with ANSI colors"""
-        if not report.errors:
+        if not report:
             return "\033[32m✓ No issues found\033[0m"
             
         output = []
-        for error in report.errors:
-            location = f"\033[36mline {error.line}\033[0m"
-            if error.file:
-                location = f"\033[36m{error.file}:{location}\033[0m"
-            
-            output.append(f"\033[31m✗\033[0m {location}: {error.message}")
+        for file, findings in report.grouped_findings().items():
+            output.append(f"Results for {file}:")
+            for finding in findings:
+                output.append(f"\033[31m✗\033[0m {finding.location}: {finding.message}")
+            output.append("\n")
         
         return "\n".join(output)
 
@@ -63,12 +70,8 @@ class JsonReporter(Reporter):
     
     def format_report(self, report: LintReport) -> str:
         return json.dumps([
-            {
-                'file': error.file,
-                'line': error.line,
-                'message': error.message
-            }
-            for error in report.errors
+            finding.to_json_object()
+            for finding in report.findings
         ], indent=2)
 
 class HtmlReporter(Reporter):
@@ -76,15 +79,13 @@ class HtmlReporter(Reporter):
     
     def format_report(self, report: LintReport) -> str:
         rows = []
-        for error in report.errors:
-            location = f"Line {error.line}"
-            if error.file:
-                location = f"{error.file}:{location}"
-            
+        for finding in report.findings:
             rows.append(
                 f'<tr>'
-                f'<td>{location}</td>'
-                f'<td>{error.message}</td>'
+                f'<td>{finding.severity}</td>'
+                f'<td>{finding.rule_id or ""}</td>'
+                f'<td>{finding.location}</td>'
+                f'<td>{finding.message}</td>'
                 f'</tr>'
             )
         
@@ -105,6 +106,8 @@ class HtmlReporter(Reporter):
     <h1>AsciiDoc Lint Results</h1>
     <table>
         <tr>
+            <th>Severity</th>
+            <th>Rule ID</th>
             <th>Location</th>
             <th>Message</th>
         </tr>

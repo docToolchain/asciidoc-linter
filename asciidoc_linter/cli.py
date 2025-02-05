@@ -39,40 +39,18 @@ def main(args: Optional[List[str]] = None) -> int:
     
     parser = create_parser()
     parsed_args = parser.parse_args(args)
-    
-    # Create linter instance
-    linter = AsciiDocLinter()
-    
+
+    report = AsciiDocLinter().lint(parsed_args.files)
+
     # Set reporter based on format argument
+    reporter = ConsoleReporter()
     if parsed_args.format == 'json':
-        linter.set_reporter(JsonReporter())
+        reporter = JsonReporter()
     elif parsed_args.format == 'html':
-        linter.set_reporter(HtmlReporter())
-    
-    exit_code = 0
-    
-    # Process each file
-    for file_path in parsed_args.files:
-        path = Path(file_path)
-        if not path.exists():
-            print(f"Error: File not found: {file_path}", file=sys.stderr)
-            exit_code = 1
-            continue
-        
-        try:
-            content = path.read_text()
-            results = linter.lint(content)
-            
-            # Print results
-            if results:
-                print(f"\nResults for {file_path}:")
-                print(results)
-                exit_code = 1
-        except Exception as e:
-            print(f"Error processing {file_path}: {e}", file=sys.stderr)
-            exit_code = 1
-    
-    return exit_code
+        reporter = HtmlReporter()
+    print(reporter.format_report(report))
+
+    return report.exit_code
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -46,14 +46,41 @@ class Finding:
     """Represents a rule violation finding"""
     message: str
     severity: Severity
-    position: Position
+    position: Optional[Position] = None
     rule_id: Optional[str] = None
-    context: Optional[Dict[str, Any]] = None
+    context: Optional[Any] = None
+    file: Optional[str] = None
     
     @property
     def line_number(self) -> int:
         """Backward compatibility for line number access"""
         return self.position.line
+
+    @property
+    def location(self) -> str:
+        """A string representation of the finding's location."""
+        if not self.position:
+            return self.file or ""
+        l = str(self.position)
+        if self.file:
+            l = f"{self.file}, {l}"
+        return l
+
+    def to_json_object(self) -> Dict[str, Any]:
+        """An object which can be serialised to JSON."""
+        return {
+            'file': self.file,
+            'line': self.position.line if self.position else None,
+            'column': self.position.column if self.position else None,
+            'message': self.message,
+            'severity': str(self.severity),
+            'rule_id': self.rule_id,
+            'context': self.context,
+        }
+
+    def set_file(self, file: str) -> 'Finding':
+        self.file = file
+        return self
     
     def __post_init__(self):
         """

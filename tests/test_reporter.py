@@ -5,10 +5,10 @@ Tests for the reporter module that handles formatting of lint results
 
 import json
 import pytest
+from asciidoc_linter.rules.base import Finding, Severity, Position
 from asciidoc_linter.reporter import (
-    LintError,
     LintReport,
-    Reporter,
+    ConsoleReporter,
     JsonReporter,
     HtmlReporter
 )
@@ -16,113 +16,130 @@ from asciidoc_linter.reporter import (
 # Test Data
 
 @pytest.fixture
-def sample_error():
+def sample_finding():
     """Create a sample lint error"""
-    return LintError(
+    return Finding(
+        message="Test error message",
+        severity=Severity.ERROR,
         file="test.adoc",
-        line=42,
-        message="Test error message"
+        position=Position(
+            line=42,
+            column=3,
+        ),
+        rule_id="TEST001",
+        context="context",
     )
 
 @pytest.fixture
-def sample_report(sample_error):
-    """Create a sample report with one error"""
-    return LintReport([sample_error])
+def empty_report():
+    """Create a sample report with no errors"""
+    return LintReport([])
 
 @pytest.fixture
-def complex_report():
-    """Create a more complex report with multiple errors"""
+def sample_report(sample_finding):
+    """Create a report with errors"""
     return LintReport([
-        LintError("doc1.adoc", 1, "First error"),
-        LintError("doc1.adoc", 5, "Second error"),
-        LintError("doc2.adoc", 10, "Error in another file"),
-        LintError(None, 15, "Error without file")
+        sample_finding,
+        Finding(message="Minimal finding", severity=Severity.WARNING, file="test.adoc"),
+        Finding(message="Minimal finding without file", severity=Severity.WARNING),
     ])
-
-# Test LintError
-
-def test_lint_error_creation():
-    """Test creating a LintError"""
-    error = LintError("test.adoc", 42, "Test message")
-    assert error.file == "test.adoc"
-    assert error.line == 42
-    assert error.message == "Test message"
 
 # Test LintReport
 
-def test_lint_report_creation(sample_error):
+def test_lint_report_creation(sample_finding):
     """Test creating a LintReport"""
-    report = LintReport([sample_error])
-    assert len(report.errors) == 1
-    assert report.errors[0] == sample_error
+    report = LintReport([sample_finding])
+    assert len(report.findings) == 1
+    assert report.findings[0] == sample_finding
 
-def test_lint_report_bool(sample_report):
+def test_lint_report_bool(sample_report, empty_report):
     """Test boolean evaluation of LintReport"""
     assert bool(sample_report) is True
-    assert bool(LintReport([])) is False
+    assert bool(empty_report) is False
 
-def test_lint_report_len(complex_report):
+def test_lint_report_len(sample_report, empty_report):
     """Test len() on LintReport"""
-    assert len(complex_report) == 4
+    assert len(sample_report) == 3
+    assert len(empty_report) == 0
 
-# Test Base Reporter
+def test_lint_report_exit_code(sample_report, empty_report):
+    """Test LintReport.exit_code"""
+    assert sample_report.exit_code == 1
+    assert empty_report.exit_code == 0
 
-def test_base_reporter_format(sample_report):
-    """Test the base reporter's format_report method"""
-    reporter = Reporter()
-    output = reporter.format_report(sample_report)
-    assert "test.adoc:line 42: Test error message" in output
+def test_lint_report_grouped_findings(sample_report, sample_finding, empty_report):
+    """Test LintReport.grouped_findings"""
+    grouped = sample_report.grouped_findings()
+    assert len(grouped) == 2
+    assert len(grouped["test.adoc"]) == 2
+    assert grouped["test.adoc"][0] == sample_finding
+    assert len(grouped[None]) == 1
 
-def test_base_reporter_multiple_errors(complex_report):
+    assert len(empty_report.grouped_findings()) == 0
+
+# Test Console Reporter
+
+def test_console_reporter(sample_report):
     """Test formatting multiple errors"""
-    reporter = Reporter()
-    output = reporter.format_report(complex_report)
-    assert "doc1.adoc:line 1: First error" in output
-    assert "doc1.adoc:line 5: Second error" in output
-    assert "doc2.adoc:line 10: Error in another file" in output
-    assert "line 15: Error without file" in output
+    reporter = ConsoleReporter(enable_color=False)
+    lines = reporter.format_report(sample_report).split("\n")
+    assert "Results for test.adoc:" in lines
+    assert "✗ test.adoc, line 42, column 3: Test error message" in lines
+    assert "✗ test.adoc: Minimal finding" in lines
+    assert "Results without file:" in lines
+    assert "✗ Minimal finding without file" in lines
+
+def test_console_reporter_empty(empty_report):
+    """Test formatting no findings"""
+    reporter = ConsoleReporter(enable_color=False)
+    output = reporter.format_report(empty_report)
+    assert output == "✓ No issues found"
+
+def test_console_reporter_colored(sample_report):
+    """Test formatting multiple errors"""
+    reporter = ConsoleReporter(enable_color=True)
+    lines = reporter.format_report(sample_report).split("\n")
+    assert "Results for test.adoc:" in lines
+    assert "\033[31m✗\033[0m test.adoc, line 42, column 3: Test error message" in lines
+    assert "\033[31m✗\033[0m test.adoc: Minimal finding" in lines
+    assert "Results without file:" in lines
+    assert "\033[31m✗\033[0m Minimal finding without file" in lines
+
+def test_console_reporter_empty_colored(empty_report):
+    """Test formatting no findings"""
+    reporter = ConsoleReporter(enable_color=True)
+    output = reporter.format_report(empty_report)
+    assert output == "\033[32m✓ No issues found\033[0m"
 
 # Test JSON Reporter
 
-def test_json_reporter_format(sample_report):
+def test_json_reporter(sample_report):
     """Test JSON formatting of a report"""
     reporter = JsonReporter()
     output = reporter.format_report(sample_report)
     data = json.loads(output)
-    assert isinstance(data, list)
-    assert len(data) == 1
-    assert data[0]["file"] == "test.adoc"
-    assert data[0]["line"] == 42
-    assert data[0]["message"] == "Test error message"
-
-def test_json_reporter_complex(complex_report):
-    """Test JSON formatting of a complex report"""
-    reporter = JsonReporter()
-    output = reporter.format_report(complex_report)
-    data = json.loads(output)
-    assert len(data) == 4
-    assert data[0]["file"] == "doc1.adoc"
-    assert data[3]["file"] is None
+    assert len(data["findings"]) == 3
+    assert data["findings"][0]["file"] == "test.adoc"
+    assert data["findings"][0]["line"] == 42
+    assert data["findings"][0]["column"] == 3
+    assert data["findings"][0]["message"] == "Test error message"
+    assert data["findings"][0]["severity"] == "error"
+    assert data["findings"][0]["rule_id"] == "TEST001"
+    assert data["findings"][0]["context"] == "context"
+    assert data["findings"][2]["file"] is None
+    assert data["findings"][2]["line"] is None
+    assert data["findings"][2]["column"] is None
 
 # Test HTML Reporter
 
-def test_html_reporter_format(sample_report):
+def test_html_reporter(sample_report):
     """Test HTML formatting of a report"""
     reporter = HtmlReporter()
-    output = reporter.format_report(sample_report)
-    assert "<!DOCTYPE html>" in output
-    assert "<table>" in output
-    assert "test.adoc:Line 42" in output
-    assert "Test error message" in output
-
-def test_html_reporter_complex(complex_report):
-    """Test HTML formatting of a complex report"""
-    reporter = HtmlReporter()
-    output = reporter.format_report(complex_report)
-    assert "doc1.adoc:Line 1" in output
-    assert "First error" in output
-    assert "doc2.adoc:Line 10" in output
-    assert "Error without file" in output
+    lines = reporter.format_report(sample_report).split('\n')
+    assert "<td>error</td>" in lines
+    assert "<td>TEST001</td>" in lines
+    assert "<td>test.adoc, line 42, column 3</td>" in lines
+    assert "<td>Test error message</td>" in lines
 
 def test_html_reporter_styling(sample_report):
     """Test that HTML output includes CSS styling"""

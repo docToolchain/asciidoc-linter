@@ -110,7 +110,8 @@ asciidoc-lint --format json document.adoc
 
 The linter supports three output formats:
 
-* `console` (default): Human-readable output
+* `console` (default): Human-readable output with color
+* `plain`: Human-readable output without color
 * `json`: Machine-readable JSON format
 * `html`: HTML report format
 
@@ -143,8 +144,8 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 
 === Current Status
 
-* Test Coverage: 95%
-* Test Success Rate: 97.3% (107/110 tests passing)
+* Test Coverage: 94%
+* Test Success Rate: 100% (127/127 tests passing)
 * Known Issues:
 ** Table content validation needs improvement
 ** Rules.py requires test coverage
@@ -155,10 +156,10 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 [source,bash]
 ----
 # Run all tests
-python run_tests.py
+python -m pytest
 
 # Run specific test file
-python -m unittest tests/rules/test_heading_rules.py
+python -m pytest tests/rules/test_heading_rules.py
 
 # Run tests with coverage
 python run_tests_html.py

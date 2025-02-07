@@ -6,9 +6,8 @@ Command line interface for the AsciiDoc linter
 import argparse
 import sys
 from typing import List, Optional
-from pathlib import Path
 from .linter import AsciiDocLinter
-from .reporter import ConsoleReporter, JsonReporter, HtmlReporter
+from .reporter import ConsoleReporter, JsonReporter, HtmlReporter, Reporter
 
 def create_parser() -> argparse.ArgumentParser:
     """Create the command line parser"""
@@ -26,29 +25,35 @@ def create_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         '--format',
-        choices=['console', 'json', 'html'],
+        choices=['console', 'plain', 'json', 'html'],
         default='console',
         help='Output format (default: console)'
     )
     return parser
 
+def get_reporter(format: str) -> Reporter:
+    if format == 'json':
+        return JsonReporter()
+    if format == 'html':
+        return HtmlReporter()
+    if format == 'plain':
+        return ConsoleReporter(enable_color=False)
+    if format == 'console':
+        return ConsoleReporter(enable_color=True)
+    raise ValueError(f"Unrecognised format {format}")
+
 def main(args: Optional[List[str]] = None) -> int:
     """Main entry point for the linter"""
     if args is None:
         args = sys.argv[1:]
-    
+
     parser = create_parser()
     parsed_args = parser.parse_args(args)
 
     report = AsciiDocLinter().lint(parsed_args.files)
 
     # Set reporter based on format argument
-    reporter = ConsoleReporter()
-    if parsed_args.format == 'json':
-        reporter = JsonReporter()
-    elif parsed_args.format == 'html':
-        reporter = HtmlReporter()
-    print(reporter.format_report(report))
+    print(get_reporter(parsed_args.format).format_report(report))
 
     return report.exit_code
 

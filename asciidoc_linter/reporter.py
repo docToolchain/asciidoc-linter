@@ -3,6 +3,7 @@
 Different output formatters for lint results
 """
 
+from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import List, Dict, Optional
@@ -31,36 +32,47 @@ class LintReport:
     def __len__(self):
         return len(self.findings)
 
-class Reporter:
+class Reporter(ABC):
+    """Base class for lint report formatters."""
+
+    @abstractmethod
+    def format_report(self, report: LintReport) -> str:
+        pass
+
+class ConsoleReporter(Reporter):
     """Base class for formatting lint reports"""
+
+    def __init__(self, enable_color):
+        self.enable_color = enable_color
+
+    def _green(self, text):
+        if not self.enable_color:
+            return text
+        return f"\033[32m{text}\033[0m"
+
+    def _red(self, text):
+        if not self.enable_color:
+            return text
+        return f"\033[31m{text}\033[0m"
     
     def format_report(self, report: LintReport) -> str:
         """Format the report as string"""
         if not report:
-            return "✓ No issues found"
+            return self._green("✓ No issues found")
 
         output = []
         for file, findings in report.grouped_findings().items():
-            output.append(f"Results for {file}:")
-            for finding in findings:
-                output.append(f"{finding.location}: {finding.message}")
-            output.append("\n")
-        
-        return "\n".join(output)
+            if file:
+                output.append(f"Results for {file}:")
+            else:
+                output.append(f"Results without file:")
 
-class ConsoleReporter(Reporter):
-    """Reports findings in console format with colors"""
-    
-    def format_report(self, report: LintReport) -> str:
-        """Format the report with ANSI colors"""
-        if not report:
-            return "\033[32m✓ No issues found\033[0m"
-            
-        output = []
-        for file, findings in report.grouped_findings().items():
-            output.append(f"Results for {file}:")
             for finding in findings:
-                output.append(f"\033[31m✗\033[0m {finding.location}: {finding.message}")
+                location = finding.location
+                if location:
+                    output.append(f"{self._red('✗')} {finding.location}: {finding.message}")
+                else:
+                    output.append(f"{self._red('✗')} {finding.message}")
             output.append("\n")
         
         return "\n".join(output)
@@ -69,10 +81,12 @@ class JsonReporter(Reporter):
     """Reports findings in JSON format"""
     
     def format_report(self, report: LintReport) -> str:
-        return json.dumps([
-            finding.to_json_object()
-            for finding in report.findings
-        ], indent=2)
+        return json.dumps({
+            "findings": [
+                finding.to_json_object()
+                for finding in report.findings
+            ],
+        }, indent=2)
 
 class HtmlReporter(Reporter):
     """Reports findings in HTML format"""
@@ -80,14 +94,16 @@ class HtmlReporter(Reporter):
     def format_report(self, report: LintReport) -> str:
         rows = []
         for finding in report.findings:
-            rows.append(
-                f'<tr>'
-                f'<td>{finding.severity}</td>'
-                f'<td>{finding.rule_id or ""}</td>'
-                f'<td>{finding.location}</td>'
-                f'<td>{finding.message}</td>'
-                f'</tr>'
-            )
+            rows.extend([
+                f'<tr>',
+                f'<td>{finding.severity}</td>',
+                f'<td>{finding.rule_id or ""}</td>',
+                f'<td>{finding.location}</td>',
+                f'<td>{finding.message}</td>',
+                f'</tr>',
+            ])
+
+        rows = "\n".join(rows)
         
         return f"""<!DOCTYPE html>
 <html>
@@ -111,7 +127,7 @@ class HtmlReporter(Reporter):
             <th>Location</th>
             <th>Message</th>
         </tr>
-        {"".join(rows)}
+        {rows}
     </table>
 </body>
 </html>"""

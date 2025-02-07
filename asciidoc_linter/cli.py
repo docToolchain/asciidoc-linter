@@ -9,38 +9,34 @@ from typing import List, Optional
 from .linter import AsciiDocLinter
 from .reporter import ConsoleReporter, JsonReporter, HtmlReporter, Reporter
 
+
 def create_parser() -> argparse.ArgumentParser:
     """Create the command line parser"""
     parser = argparse.ArgumentParser(
-        description='Lint AsciiDoc files for common issues and style violations'
+        description="Lint AsciiDoc files for common issues and style violations"
     )
+    parser.add_argument("files", nargs="+", help="One or more AsciiDoc files to check")
+    parser.add_argument("--config", help="Path to configuration file")
     parser.add_argument(
-        'files',
-        nargs='+',
-        help='One or more AsciiDoc files to check'
-    )
-    parser.add_argument(
-        '--config',
-        help='Path to configuration file'
-    )
-    parser.add_argument(
-        '--format',
-        choices=['console', 'plain', 'json', 'html'],
-        default='console',
-        help='Output format (default: console)'
+        "--format",
+        choices=["console", "plain", "json", "html"],
+        default="console",
+        help="Output format (default: console)",
     )
     return parser
 
+
 def get_reporter(format: str) -> Reporter:
-    if format == 'json':
+    if format == "json":
         return JsonReporter()
-    if format == 'html':
+    if format == "html":
         return HtmlReporter()
-    if format == 'plain':
+    if format == "plain":
         return ConsoleReporter(enable_color=False)
-    if format == 'console':
+    if format == "console":
         return ConsoleReporter(enable_color=True)
     raise ValueError(f"Unrecognised format {format}")
+
 
 def main(args: Optional[List[str]] = None) -> int:
     """Main entry point for the linter"""
@@ -57,5 +53,6 @@ def main(args: Optional[List[str]] = None) -> int:
 
     return report.exit_code
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     sys.exit(main())

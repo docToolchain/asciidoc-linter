@@ -10,16 +10,14 @@ from .rules.base import Finding, Severity
 from .rules.heading_rules import (
     HeadingFormatRule,
     HeadingHierarchyRule,
-    MultipleTopLevelHeadingsRule
+    MultipleTopLevelHeadingsRule,
 )
-from .rules.block_rules import (
-    UnterminatedBlockRule,
-    BlockSpacingRule
-)
+from .rules.block_rules import UnterminatedBlockRule, BlockSpacingRule
 from .rules.whitespace_rules import WhitespaceRule
 from .rules.image_rules import ImageAttributesRule
 from .parser import AsciiDocParser
 from .reporter import LintReport
+
 
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
@@ -33,7 +31,7 @@ class AsciiDocLinter:
             UnterminatedBlockRule(),
             BlockSpacingRule(),
             WhitespaceRule(),
-            ImageAttributesRule()
+            ImageAttributesRule(),
         ]
 
     def lint(self, file_paths: List[str]) -> LintReport:
@@ -59,7 +57,8 @@ class AsciiDocLinter:
                 Finding(
                     message=f"Error linting file: {e}",
                     severity=Severity.ERROR,
-                    file=str(file_path))
+                    file=str(file_path),
+                )
             ]
 
     def lint_string(self, content: str) -> List[Finding]:

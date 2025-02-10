@@ -10,10 +10,10 @@ from .whitespace_rules import WhitespaceRule
 from .image_rules import ImageAttributesRule
 
 __all__ = [
-    'HeadingHierarchyRule',
-    'HeadingFormatRule',
-    'UnterminatedBlockRule',
-    'BlockSpacingRule',
-    'WhitespaceRule',
-    'ImageAttributesRule'
+    "HeadingHierarchyRule",
+    "HeadingFormatRule",
+    "UnterminatedBlockRule",
+    "BlockSpacingRule",
+    "WhitespaceRule",
+    "ImageAttributesRule",
 ]

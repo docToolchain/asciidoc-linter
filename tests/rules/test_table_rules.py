@@ -7,7 +7,12 @@ Tests for all table-related rules including:
 """
 
 import unittest
-from asciidoc_linter.rules.table_rules import TableFormatRule, TableStructureRule, TableContentRule
+from asciidoc_linter.rules.table_rules import (
+    TableFormatRule,
+    TableStructureRule,
+    TableContentRule,
+)
+
 
 class TestTableFormatRule(unittest.TestCase):
     """Tests for TableFormatRule.
@@ -16,7 +21,7 @@ class TestTableFormatRule(unittest.TestCase):
     - Header row is properly marked
     - Cells are properly aligned
     """
-    
+
     def setUp(self):
         """
         Given a TableFormatRule instance
@@ -35,14 +40,13 @@ class TestTableFormatRule(unittest.TestCase):
             "",
             "|Cell 1.1 |Cell 1.2 |Cell 1.3",
             "|Cell 2.1 |Cell 2.2 |Cell 2.3",
-            "|==="
+            "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 0,
-            "Well-formatted table should not produce findings"
+            len(findings), 0, "Well-formatted table should not produce findings"
         )
 
     def test_misaligned_columns(self):
@@ -59,16 +63,15 @@ class TestTableFormatRule(unittest.TestCase):
             "|Cell 1.1 |Cell 1.2|Cell 1.3",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 1,
-            "Misaligned columns should produce one finding"
+            len(findings), 1, "Misaligned columns should produce one finding"
         )
         self.assertTrue(
             "alignment" in findings[0].message.lower(),
-            "Finding should mention column alignment"
+            "Finding should mention column alignment",
         )
 
     def test_missing_header_separator(self):
@@ -84,17 +87,17 @@ class TestTableFormatRule(unittest.TestCase):
             "|Cell 1.1 |Cell 1.2 |Cell 1.3",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 1,
-            "Missing header separator should produce one finding"
+            len(findings), 1, "Missing header separator should produce one finding"
         )
         self.assertTrue(
             "header" in findings[0].message.lower(),
-            "Finding should mention header separator"
+            "Finding should mention header separator",
         )
+
 
 class TestTableStructureRule(unittest.TestCase):
     """Tests for TableStructureRule.
@@ -103,7 +106,7 @@ class TestTableStructureRule(unittest.TestCase):
     - No empty tables
     - No missing cells
     """
-    
+
     def setUp(self):
         """
         Given a TableStructureRule instance
@@ -124,12 +127,13 @@ class TestTableStructureRule(unittest.TestCase):
             "|Cell 2.1 |Cell 2.2 |Cell 2.3",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 0,
-            "Table with consistent columns should not produce findings"
+            len(findings),
+            0,
+            "Table with consistent columns should not produce findings",
         )
 
     def test_inconsistent_columns(self):
@@ -147,16 +151,15 @@ class TestTableStructureRule(unittest.TestCase):
             "|Cell 2.1 |Cell 2.2 |Cell 2.3",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 1,
-            "Inconsistent column count should produce one finding"
+            len(findings), 1, "Inconsistent column count should produce one finding"
         )
         self.assertTrue(
             "column" in findings[0].message.lower(),
-            "Finding should mention column count"
+            "Finding should mention column count",
         )
 
     def test_empty_table(self):
@@ -170,17 +173,14 @@ class TestTableStructureRule(unittest.TestCase):
             "|===",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
-        self.assertEqual(
-            len(findings), 1,
-            "Empty table should produce one finding"
-        )
+
+        self.assertEqual(len(findings), 1, "Empty table should produce one finding")
         self.assertTrue(
-            "empty" in findings[0].message.lower(),
-            "Finding should mention empty table"
+            "empty" in findings[0].message.lower(), "Finding should mention empty table"
         )
+
 
 class TestTableContentRule(unittest.TestCase):
     """Tests for TableContentRule.
@@ -190,7 +190,7 @@ class TestTableContentRule(unittest.TestCase):
     - Code blocks in cells
     - Nested tables
     """
-    
+
     def setUp(self):
         """
         Given a TableContentRule instance
@@ -210,12 +210,11 @@ class TestTableContentRule(unittest.TestCase):
             "|Simple text |More text",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 0,
-            "Simple cell content should not produce findings"
+            len(findings), 0, "Simple cell content should not produce findings"
         )
 
     def test_undeclared_list(self):
@@ -233,18 +232,17 @@ class TestTableContentRule(unittest.TestCase):
             "|* List item 2 |",
             "|===",
         ]
-        
+
         findings = self.rule.check(content)
-        
+
         self.assertEqual(
-            len(findings), 1,
-            "Undeclared list in cell should produce one finding"
+            len(findings), 1, "Undeclared list in cell should produce one finding"
         )
         self.assertTrue(
             "list" in findings[0].message.lower(),
-            "Finding should mention list declaration"
+            "Finding should mention list declaration",
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

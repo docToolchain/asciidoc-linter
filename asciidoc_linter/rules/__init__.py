@@ -6,10 +6,4 @@ For concrete rule implementations, import from .concrete_rules
 
 from .base import Rule, Finding, Severity, Position, RuleRegistry
 
-__all__ = [
-    'Rule',
-    'Finding',
-    'Severity',
-    'Position',
-    'RuleRegistry'
-]
+__all__ = ["Rule", "Finding", "Severity", "Position", "RuleRegistry"]

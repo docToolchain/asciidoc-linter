@@ -10,28 +10,28 @@ setup(
         "pyyaml>=5.1",
     ],
     extras_require={
-        'test': [
-            'pytest',
-            'pytest-cov',
-            'black',
-            'isort',
-            'flake8',
+        "test": [
+            "pytest",
+            "pytest-cov",
+            "black",
+            "isort",
+            "flake8",
         ],
-        'docs': [
-            'sphinx',
-            'sphinx-rtd-theme',
-            'sphinx-autodoc-typehints',
+        "docs": [
+            "sphinx",
+            "sphinx-rtd-theme",
+            "sphinx-autodoc-typehints",
         ],
     },
     entry_points={
-        'console_scripts': [
-            'asciidoc-lint=asciidoc_linter.cli:main',
+        "console_scripts": [
+            "asciidoc-lint=asciidoc_linter.cli:main",
         ],
     },
     author="Your Name",
     author_email="your.email@example.com",
     description="A linter for AsciiDoc files",
-    long_description=open('README.adoc').read(),
+    long_description=open("README.adoc").read(),
     long_description_content_type="text/x-asciidoc",
     keywords="asciidoc, linter, documentation",
     url="https://github.com/yourusername/asciidoc-linter",

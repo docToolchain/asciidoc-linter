@@ -3,10 +3,12 @@ import sys
 import subprocess
 import pkg_resources
 
+
 def print_section(title):
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(title)
-    print("="*50)
+    print("=" * 50)
+
 
 def run_command(cmd):
     try:
@@ -20,12 +22,15 @@ def run_command(cmd):
     except Exception as e:
         print(f"Error running command: {e}")
 
+
 print_section("Python Information")
 print(f"Python Version: {sys.version}")
 print(f"Python Executable: {sys.executable}")
 
 print_section("Installed Packages")
-installed_packages = [f"{dist.key} {dist.version}" for dist in pkg_resources.working_set]
+installed_packages = [
+    f"{dist.key} {dist.version}" for dist in pkg_resources.working_set
+]
 print("\n".join(sorted(installed_packages)))
 
 print_section("Pytest Version Check")

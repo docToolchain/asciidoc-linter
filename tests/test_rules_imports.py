@@ -7,15 +7,17 @@ from asciidoc_linter.rules.base import (
     Position as BasePosition,
     Finding as BaseFinding,
     Rule as BaseRule,
-    RuleRegistry as BaseRuleRegistry
+    RuleRegistry as BaseRuleRegistry,
 )
+
 
 def test_severity_import():
     """Test that Severity is correctly imported"""
     assert rules.Severity is BaseSeverity
-    assert hasattr(rules.Severity, 'ERROR')
-    assert hasattr(rules.Severity, 'WARNING')
-    assert hasattr(rules.Severity, 'INFO')
+    assert hasattr(rules.Severity, "ERROR")
+    assert hasattr(rules.Severity, "WARNING")
+    assert hasattr(rules.Severity, "INFO")
+
 
 def test_position_import():
     """Test that Position is correctly imported"""
@@ -25,6 +27,7 @@ def test_position_import():
     assert pos.line == 1
     assert pos.column == 2
 
+
 def test_finding_import():
     """Test that Finding is correctly imported"""
     assert rules.Finding is BaseFinding
@@ -33,25 +36,28 @@ def test_finding_import():
         rule_id="test",
         message="test message",
         position=rules.Position(1),
-        severity=rules.Severity.WARNING
+        severity=rules.Severity.WARNING,
     )
     assert finding.rule_id == "test"
     assert finding.message == "test message"
+
 
 def test_rule_import():
     """Test that Rule is correctly imported"""
     assert rules.Rule is BaseRule
     # Verify it's the abstract base class
-    assert hasattr(rules.Rule, 'check')
+    assert hasattr(rules.Rule, "check")
+
 
 def test_rule_registry_import():
     """Test that RuleRegistry is correctly imported"""
     assert rules.RuleRegistry is BaseRuleRegistry
     # Verify basic functionality
-    assert hasattr(rules.RuleRegistry, 'register_rule')
-    assert hasattr(rules.RuleRegistry, 'get_rule')
+    assert hasattr(rules.RuleRegistry, "register_rule")
+    assert hasattr(rules.RuleRegistry, "get_rule")
+
 
 def test_all_variable():
     """Test that __all__ contains all expected names"""
-    expected = {'Severity', 'Position', 'Finding', 'Rule', 'RuleRegistry'}
+    expected = {"Severity", "Position", "Finding", "Rule", "RuleRegistry"}
     assert set(rules.__all__) == expected

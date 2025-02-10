@@ -22,5 +22,5 @@ class TestImports(unittest.TestCase):
         self.assertIsNotNone(RuleRegistry)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

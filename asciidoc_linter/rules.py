@@ -4,13 +4,7 @@ Base classes and interfaces for AsciiDoc linting rules
 """
 
 # Import only the base classes and types
-from .rules.base import (
-    Severity,
-    Position,
-    Finding,
-    Rule,
-    RuleRegistry
-)
+from .rules.base import Severity, Position, Finding, Rule, RuleRegistry
 
 # Only export the base classes and types
-__all__ = ['Severity', 'Position', 'Finding', 'Rule', 'RuleRegistry']
+__all__ = ["Severity", "Position", "Finding", "Rule", "RuleRegistry"]

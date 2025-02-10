@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main  # Set a branch name to trigger deployment
-  pull_request:
   workflow_dispatch: {}
 
 jobs:
@@ -38,7 +37,7 @@ jobs:
       # Run tests and generate reports
       - name: Run tests with coverage
         run: python run_tests_html.py
-        
+
       - name: copyToPublic
         run: cp -r ./build/microsite/output ./public
 

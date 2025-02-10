@@ -7,7 +7,7 @@ Tests for all heading-related rules including:
 """
 
 import unittest
-from asciidoc_linter.rules import Finding, Severity, Position
+from asciidoc_linter.rules import Severity
 from asciidoc_linter.rules.heading_rules import (
     HeadingHierarchyRule,
     HeadingFormatRule,

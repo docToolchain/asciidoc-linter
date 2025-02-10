@@ -78,7 +78,7 @@ if __name__ == "__main__":
                     "build/microsite/output/test-results"
                 )  # Changed path to match project structure
                 final_test, final_cov = copy_reports(test_report, docs_dir)
-                print(f"\nReports copied to docs:")
+                print("\nReports copied to docs:")
                 print(f"Test report: {final_test}")
                 print(f"Coverage report: {final_cov}/index.html")
             except Exception as e:

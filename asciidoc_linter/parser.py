@@ -4,7 +4,7 @@ Parser for AsciiDoc content that creates an internal representation
 for rule checking
 """
 
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 from dataclasses import dataclass
 
 

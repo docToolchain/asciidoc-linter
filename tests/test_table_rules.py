@@ -2,13 +2,11 @@
 """Tests for the table rules module"""
 
 import unittest
-from typing import List, Tuple
 from asciidoc_linter.rules.table_rules import (
     TableFormatRule,
     TableStructureRule,
     TableContentRule,
 )
-from asciidoc_linter.rules.base import Finding, Severity
 
 
 class TestTableFormatRule(unittest.TestCase):

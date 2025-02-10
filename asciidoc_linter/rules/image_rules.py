@@ -2,7 +2,7 @@
 
 import os
 import re
-from typing import List, Dict, Optional, Tuple, Any, Union
+from typing import List, Dict, Any, Union
 from .base import Rule, Finding, Severity, Position
 
 

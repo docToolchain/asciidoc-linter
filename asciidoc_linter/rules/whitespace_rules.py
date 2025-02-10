@@ -57,7 +57,6 @@ class WhitespaceRule(Rule):
         # Check for proper list marker spacing
         if line_content.lstrip().startswith(("*", "-", ".")):
             marker = line_content.lstrip()[0]
-            indent = len(line_content) - len(line_content.lstrip())
             content = line_content.lstrip()[1:]
 
             if not content.startswith(" "):

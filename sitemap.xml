@@ -37,12 +37,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
+    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/12_glossary.html</loc>
+    	<loc>http://jbake.org/arc42/07_deployment_view.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
@@ -62,22 +62,22 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
-    	<lastmod>2025-02-10</lastmod>
-    </url>
-
-    <url>
-    	<loc>http://jbake.org/manual/testing.html</loc>
-    	<lastmod>2025-02-10</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/manual/index.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
     <url>
     	<loc>http://jbake.org/arc42/09_architecture_decisions.html</loc>
+    	<lastmod>2025-02-10</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/02_architecture_constraints.html</loc>
+    	<lastmod>2025-02-10</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/testing.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
@@ -107,12 +107,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/readme/README.html</loc>
+    	<loc>http://jbake.org/test-results/02-coverage.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/test-results/02-coverage.html</loc>
+    	<loc>http://jbake.org/readme/README.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 

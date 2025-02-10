@@ -221,7 +221,7 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../readme/README.html"><span>readme</span></a>
+                <a class="nav-link " href="../manual/index.html"><span>manual</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -229,7 +229,7 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link " href="../manual/index.html"><span>manual</span></a>
+                <a class="nav-link active" href="../readme/README.html"><span>readme</span></a>
             </li>
 
         </ul>
@@ -294,7 +294,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/readme/README.adoc%0A%23branch:%20-" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/readme/README.adoc%0A%23branch:%20main" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -529,7 +529,10 @@ asciidoc-lint --format json document.adoc</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>console</code> (default): Human-readable output</p>
+<p><code>console</code> (default): Human-readable output with color</p>
+</li>
+<li>
+<p><code>plain</code>: Human-readable output without color</p>
 </li>
 <li>
 <p><code>json</code>: Machine-readable JSON format</p>
@@ -576,10 +579,10 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 <div class="ulist">
 <ul>
 <li>
-<p>Test Coverage: 95%</p>
+<p>Test Coverage: 94%</p>
 </li>
 <li>
-<p>Test Success Rate: 97.3% (107/110 tests passing)</p>
+<p>Test Success Rate: 100% (127/127 tests passing)</p>
 </li>
 <li>
 <p>Known Issues:</p>
@@ -605,10 +608,10 @@ WARNING: Missing alt text for image: diagram.png (line 80)
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
-python run_tests.py
+python -m pytest
 
 # Run specific test file
-python -m unittest tests/rules/test_heading_rules.py
+python -m pytest tests/rules/test_heading_rules.py
 
 # Run tests with coverage
 python run_tests_html.py</code></pre>

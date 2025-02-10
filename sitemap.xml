@@ -12,12 +12,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
+    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/06_runtime_view.html</loc>
+    	<loc>http://jbake.org/arc42/11_technical_risks.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
@@ -57,17 +57,12 @@
     </url>
 
     <url>
-    	<loc>http://jbake.org/arc42/04_solution_strategy.html</loc>
-    	<lastmod>2025-02-10</lastmod>
-    </url>
-
-    <url>
-    	<loc>http://jbake.org/manual/index.html</loc>
-    	<lastmod>2025-02-10</lastmod>
-    </url>
-
-    <url>
     	<loc>http://jbake.org/arc42/09_architecture_decisions.html</loc>
+    	<lastmod>2025-02-10</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/arc42/04_solution_strategy.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 
@@ -78,6 +73,11 @@
 
     <url>
     	<loc>http://jbake.org/manual/testing.html</loc>
+    	<lastmod>2025-02-10</lastmod>
+    </url>
+
+    <url>
+    	<loc>http://jbake.org/manual/index.html</loc>
     	<lastmod>2025-02-10</lastmod>
     </url>
 

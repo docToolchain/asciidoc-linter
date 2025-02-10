@@ -27,3 +27,5 @@ dist/*
 venv/*
 
 .coverage
+
+asciidoc_linter.egg-info

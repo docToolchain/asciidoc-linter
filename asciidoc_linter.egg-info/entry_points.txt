@@ -1,2 +1,0 @@
-[console_scripts]
-asciidoc-linter = asciidoc_linter.cli:main

@@ -5,16 +5,13 @@ setup(
     name="asciidoc-linter",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=[
-        "click>=8.0.0",
-        "pyyaml>=5.1",
-    ],
     extras_require={
         "test": [
             "pytest",
             "pytest-cov",
+            "pytest-html",
+            "pytest-metadata",
             "black",
-            "isort",
             "flake8",
         ],
         "docs": [

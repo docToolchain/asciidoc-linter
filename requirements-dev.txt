@@ -1,0 +1,7 @@
+# requirements-dev.txt - Development requirements
+-e .[dev]
+pytest>=7.0
+pytest-cov>=4.0
+pyyaml>=6.0
+black>=22.0
+flake8>=4.0

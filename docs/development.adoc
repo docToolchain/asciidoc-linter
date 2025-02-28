@@ -1,0 +1,126 @@
+# development.adoc - Development setup instructions
+== Development
+
+=== Setting Up Development Environment
+
+1. Clone the repository:
++
+[source,bash]
+----
+git clone https://github.com/docToolchain/asciidoc-linter.git
+cd asciidoc-linter
+----
+
+2. Create and activate a virtual environment:
++
+[source,bash]
+----
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+----
+
+3. Install development dependencies:
++
+[source,bash]
+----
+pip install -r requirements-dev.txt
+----
+
+=== Running Tests
+
+Run all tests:
+[source,bash]
+----
+pytest tests/
+----
+
+Run specific test file:
+[source,bash]
+----
+pytest tests/test_specific.py
+----
+
+Run tests with coverage:
+[source,bash]
+----
+pytest tests/ --cov=asciidoc_linter --cov-report=html
+----
+
+=== Code Style
+
+This project uses:
+
+* black for code formatting
+* flake8 for style checking
+
+Format code:
+[source,bash]
+----
+black asciidoc_linter tests
+----
+
+Check style:
+[source,bash]
+----
+flake8 asciidoc_linter tests
+----
+
+=== Making Changes
+
+1. Create a new branch:
++
+[source,bash]
+----
+git checkout -b feature/your-feature-name
+----
+
+2. Make your changes
+
+3. Run tests:
++
+[source,bash]
+----
+pytest tests/
+----
+
+4. Format code:
++
+[source,bash]
+----
+black asciidoc_linter tests
+----
+
+5. Check style:
++
+[source,bash]
+----
+flake8 asciidoc_linter tests
+----
+
+6. Commit your changes:
++
+[source,bash]
+----
+git add .
+git commit -m "Description of your changes"
+----
+
+7. Push your changes:
++
+[source,bash]
+----
+git push origin feature/your-feature-name
+----
+
+8. Create a Pull Request
+
+=== CI/CD Pipeline
+
+The CI/CD pipeline will:
+
+1. Run tests on multiple Python versions
+2. Generate coverage reports
+3. Check code style
+4. Upload coverage to Codecov
+
+Make sure all checks pass before merging.

@@ -1,42 +1,49 @@
-# pyproject.toml - Project configuration file
+# pyproject.toml - Project configuration for modern Python packaging
+
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "asciidoc-linter"
 version = "0.1.0"
 description = "A linter for AsciiDoc files"
-readme = {file = "README.adoc", content-type = "text/asciidoc"}
-authors = [
-    {name = "Project Author", email = "author@example.com"}
-]
-license = {text = "MIT"}
+readme = "README.adoc"
 requires-python = ">=3.8"
-keywords = ["asciidoc", "linter", "documentation"]
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Documentation",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License"
+license = {text = "MIT"}
+dependencies = [
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
-test = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "coverage>=7.0.0",
-    "pytest-html>=4.1.1",
-    "pytest-metadata>=3.1.1"
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=22.0",
+    "flake8>=4.0",
 ]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[project.scripts]
+asciidoc-lint = "asciidoc_linter.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=asciidoc_linter --cov-report=html --cov-report=term-missing -v"
+python_files = ["test_*.py"]
+addopts = "--cov=asciidoc_linter --cov-report=xml --cov-report=term-missing"
 
-[project.scripts]
-asciidoc-linter = "asciidoc_linter.cli:main"
+[tool.coverage.run]
+source = ["asciidoc_linter"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+]

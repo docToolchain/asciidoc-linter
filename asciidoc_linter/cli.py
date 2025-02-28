@@ -23,6 +23,16 @@ def create_parser() -> argparse.ArgumentParser:
         default="console",
         help="Output format (default: console)",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Enable verbose output",
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug output",
+    )
     return parser
 
 
@@ -46,7 +56,8 @@ def main(args: Optional[List[str]] = None) -> int:
     parser = create_parser()
     parsed_args = parser.parse_args(args)
 
-    report = AsciiDocLinter().lint(parsed_args.files)
+    linter = AsciiDocLinter(config_path=parsed_args.config)
+    report = linter.lint(parsed_args.files)
 
     # Set reporter based on format argument
     print(get_reporter(parsed_args.format).format_report(report))

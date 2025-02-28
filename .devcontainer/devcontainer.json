@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "test": "./setup_test_environment.sh && python -m pytest"
+  }
+}

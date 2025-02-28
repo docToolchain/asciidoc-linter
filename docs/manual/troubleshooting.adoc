@@ -1,0 +1,133 @@
+# troubleshooting.adoc - Troubleshooting guide for AsciiDoc Linter
+== Troubleshooting
+
+=== Common Issues
+
+==== Configuration Issues
+
+===== Configuration File Not Found
+
+*Problem*: The linter can't find your configuration file.
+
+*Solution*:
+1. Check file location
+2. Check file name (.asciidoc-lint.yml)
+3. Use absolute path with --config
+4. Check file permissions
+
+===== Rules Not Being Applied
+
+*Problem*: Your rule configurations aren't taking effect.
+
+*Solution*:
+1. Validate YAML syntax
+2. Check rule IDs
+3. Use --verbose flag
+4. Check configuration format
+
+==== Rule Issues
+
+===== False Positives
+
+*Problem*: Rules report issues that shouldn't be issues.
+
+*Solution*:
+1. Check rule documentation
+2. Adjust rule configuration
+3. Disable rule if necessary
+4. Report issue if bug
+
+===== Missing Issues
+
+*Problem*: Rules don't catch issues they should catch.
+
+*Solution*:
+1. Check rule is enabled
+2. Check severity level
+3. Use --verbose flag
+4. Report issue if bug
+
+==== Integration Issues
+
+===== Git Hook Issues
+
+*Problem*: Pre-commit hook not working.
+
+*Solution*:
+1. Check hook permissions
+2. Check hook script
+3. Test hook manually
+4. Check git configuration
+
+===== CI/CD Issues
+
+*Problem*: Linter fails in CI/CD pipeline.
+
+*Solution*:
+1. Check configuration path
+2. Use absolute paths
+3. Check environment variables
+4. Check permissions
+
+=== Debug Mode
+
+Use the --verbose flag for detailed output:
+
+[source,bash]
+----
+asciidoc-lint --verbose document.adoc
+----
+
+=== Error Messages
+
+==== Parse Errors
+
+[source]
+----
+Error parsing file: Invalid syntax at line 10
+----
+
+*Solution*:
+1. Check AsciiDoc syntax
+2. Check file encoding
+3. Check for special characters
+
+==== Configuration Errors
+
+[source]
+----
+Error loading configuration: Invalid YAML syntax
+----
+
+*Solution*:
+1. Validate YAML syntax
+2. Check indentation
+3. Check for special characters
+
+=== Getting Help
+
+1. Check documentation
+2. Search issue tracker
+3. Create new issue with:
+   * Error message
+   * Configuration file
+   * Sample document
+   * Steps to reproduce
+
+=== Reporting Bugs
+
+When reporting bugs:
+
+1. Use --verbose output
+2. Provide minimal example
+3. Include configuration
+4. Describe expected behavior
+5. Describe actual behavior
+
+=== Best Practices
+
+1. Start with default configuration
+2. Enable rules gradually
+3. Document customizations
+4. Use version control
+5. Regular updates

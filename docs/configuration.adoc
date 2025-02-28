@@ -1,0 +1,238 @@
+# configuration.adoc - Configuration documentation
+= AsciiDoc Linter Configuration
+:toc: left
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+This document describes the configuration options for the AsciiDoc Linter.
+
+== Configuration File
+
+The linter uses a YAML configuration file to customize its behavior. By default, it looks for `.asciidoc-lint.yml` in the current directory, but you can specify a different file using the `--config` option.
+
+== File Format
+
+The configuration file uses YAML format and has the following structure:
+
+[source,yaml]
+----
+rules:
+  RULE_ID:
+    enabled: true|false
+    severity: error|warning
+----
+
+== Rule Configuration
+
+Each rule can be configured with the following options:
+
+enabled:: Boolean value (true/false) to enable or disable the rule
+severity:: String value ("error" or "warning") to set the rule's severity level
+
+== Default Configuration
+
+All rules are enabled by default with their predefined severity levels:
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: true
+    severity: warning
+  HEAD001:
+    enabled: true
+    severity: error
+  HEAD002:
+    enabled: true
+    severity: error
+  HEAD003:
+    enabled: true
+    severity: error
+  BLOCK001:
+    enabled: true
+    severity: error
+  BLOCK002:
+    enabled: true
+    severity: warning
+  IMG001:
+    enabled: true
+    severity: warning
+  TABLE001:
+    enabled: true
+    severity: warning
+----
+
+== Example Configurations
+
+=== Disable a Single Rule
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: false
+----
+
+=== Change Rule Severity
+
+[source,yaml]
+----
+rules:
+  HEAD001:
+    severity: warning
+----
+
+=== Configure Multiple Rules
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: false
+  HEAD001:
+    severity: warning
+  HEAD002:
+    enabled: true
+    severity: error
+----
+
+== Rule Descriptions
+
+=== WS001: Whitespace Check
+* Checks for proper whitespace usage
+* Default severity: warning
+* Checks:
+** Blank lines around headings
+** List marker spacing
+** Trailing whitespace
+** Tab usage
+
+=== HEAD001: Heading Format
+* Checks for proper heading format
+* Default severity: error
+* Checks:
+** Proper spacing after = characters
+** Proper capitalization
+** Consistent formatting
+
+=== HEAD002: Heading Hierarchy
+* Checks for proper heading hierarchy
+* Default severity: error
+* Checks:
+** No skipped levels
+** First heading is level 1
+** Consistent nesting
+
+=== HEAD003: Multiple Top-Level Headings
+* Checks for multiple top-level headings
+* Default severity: error
+* Checks:
+** Only one level 1 heading per document
+
+=== BLOCK001: Unterminated Block
+* Checks for unterminated blocks
+* Default severity: error
+* Checks:
+** All blocks are properly terminated
+** Source blocks have delimiters
+
+=== BLOCK002: Block Spacing
+* Checks for proper block spacing
+* Default severity: warning
+* Checks:
+** Blank lines around blocks
+** Consistent spacing
+
+=== IMG001: Image Attributes
+* Checks image attributes and references
+* Default severity: warning
+* Checks:
+** Alt text presence
+** Valid file extensions
+** Width/height attributes
+
+=== TABLE001: Table Format
+* Checks table formatting
+* Default severity: warning
+* Checks:
+** Consistent column count
+** Table termination
+** Basic formatting
+
+== Command Line Usage
+
+You can specify a configuration file using the `--config` option:
+
+[source,bash]
+----
+asciidoc-lint --config my-config.yml document.adoc
+----
+
+If no configuration file is specified, the linter will look for `.asciidoc-lint.yml` in the current directory.
+
+== Integration with CI/CD
+
+For CI/CD pipelines, you can create different configuration files for different environments or stages:
+
+.ci-strict.yml
+[source,yaml]
+----
+rules:
+  # All rules as errors for CI
+  WS001:
+    severity: error
+  HEAD001:
+    severity: error
+  HEAD002:
+    severity: error
+----
+
+.development.yml
+[source,yaml]
+----
+rules:
+  # More lenient for development
+  WS001:
+    severity: warning
+  HEAD001:
+    severity: warning
+  HEAD002:
+    enabled: false
+----
+
+== Best Practices
+
+1. Start with the default configuration
+2. Adjust rule severities based on your team's needs
+3. Disable rules only if they don't fit your workflow
+4. Document any rule customizations in your project
+5. Use different configurations for different environments
+
+== Troubleshooting
+
+=== Common Issues
+
+1. Configuration file not found:
+* Check file path
+* Check file permissions
+* Use absolute paths in CI/CD
+
+2. Rules not being applied:
+* Check YAML syntax
+* Check rule IDs
+* Check configuration file format
+
+3. Unexpected rule behavior:
+* Check rule documentation
+* Check for rule updates
+* Check for configuration conflicts
+
+=== Debug Mode
+
+Use the `--verbose` flag for detailed output:
+
+[source,bash]
+----
+asciidoc-lint --verbose --config my-config.yml document.adoc
+----

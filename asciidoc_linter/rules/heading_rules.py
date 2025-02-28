@@ -1,183 +1,138 @@
-# heading_rules.py - Implementation of heading rules
-"""
-This module contains rules for checking AsciiDoc heading structure and format.
-"""
+# heading_rules.py - Rules for checking headings in AsciiDoc files
 
-from typing import List, Optional, Tuple, Dict, Any, Union
+from typing import List, Union, Dict
 from .base import Rule, Finding, Severity, Position
-import re
-
 
 class HeadingFormatRule(Rule):
-    """
-    HEAD002: Check heading format.
-    Ensures that headings follow AsciiDoc conventions:
-    - Space after = characters
-    - Proper capitalization
-    """
+    """Rule to check heading format"""
+    id = "HEAD001"
+    name = "Heading Format"
+    description = "Checks for proper heading format"
+    severity = Severity.ERROR
 
-    def __init__(self):
-        super().__init__()
-        self.id = "HEAD002"
-        self.heading_pattern = re.compile(r"^(=+)(\s*)(.*)$")
-
-    @property
-    def description(self) -> str:
-        return "Ensures proper heading format (spacing and capitalization)"
-
-    def check_line(self, line: str, line_num: int) -> List[Finding]:
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        if not self.enabled:
+            return []
+            
         findings = []
-        match = self.heading_pattern.match(line)
-
-        if match:
-            equals, space, text = match.groups()
-            level = len(equals)
-
-            # Check for space after = characters
-            if not space:
-                findings.append(
-                    Finding(
-                        rule_id=self.id,
-                        message=f"Missing space after {'=' * level}",
-                        severity=Severity.ERROR,
-                        position=Position(line=line_num + 1),
-                        context=line,
-                    )
-                )
-
-            # Check if heading starts with lowercase (only if we have text)
-            if text:
-                # Split into words and check first word
-                words = text.strip().split()
-                if words and words[0][0].islower():
+        for line_number, line in enumerate(document):
+            line_content = str(line).strip()
+            if line_content.startswith('='):
+                # Check for proper spacing after = characters
+                level = 0
+                for char in line_content:
+                    if char != '=':
+                        break
+                    level += 1
+                
+                # Missing space after = characters
+                if len(line_content) > level and line_content[level] != ' ':
                     findings.append(
                         Finding(
                             rule_id=self.id,
-                            message="Heading should start with uppercase letter",
-                            severity=Severity.WARNING,
-                            position=Position(line=line_num + 1),
-                            context=line,
+                            position=Position(line=line_number + 1),
+                            message=f"Missing space after {'=' * level}",
+                            severity=self.severity,
+                            context=line_content,
                         )
                     )
-
+                    continue  # Skip further checks for this line
+                
+                # Check for proper capitalization if we have content
+                if len(line_content) > level + 1:
+                    title = line_content[level + 1:].strip()
+                    if title and title[0].islower():
+                        findings.append(
+                            Finding(
+                                rule_id=self.id,
+                                position=Position(line=line_number + 1),
+                                message="Heading should start with uppercase letter",
+                                severity=self.severity,
+                                context=line_content,
+                            )
+                        )
+        
         return findings
-
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
-        findings = []
-
-        # Convert document to lines if it's not already
-        if isinstance(document, dict):
-            lines = document.get("content", "").splitlines()
-        elif isinstance(document, str):
-            lines = document.splitlines()
-        else:
-            lines = document
-
-        for line_num, line in enumerate(lines):
-            if isinstance(line, str):
-                findings.extend(self.check_line(line, line_num))
-
-        return findings
-
 
 class HeadingHierarchyRule(Rule):
-    """
-    HEAD001: Check for proper heading incrementation.
-    Ensures that heading levels are not skipped (e.g., h1 -> h3).
-    """
+    """Rule to check heading hierarchy"""
+    id = "HEAD002"
+    name = "Heading Hierarchy"
+    description = "Checks for proper heading hierarchy"
+    severity = Severity.ERROR
 
-    def __init__(self):
-        super().__init__()
-        self.id = "HEAD001"
-        self.heading_pattern = re.compile(r"^(=+)\s")
-
-    @property
-    def description(self) -> str:
-        return "Ensures proper heading level incrementation (no skipped levels)"
-
-    def get_heading_levels(self, document: List[str]) -> List[Tuple[int, int, str]]:
-        """Extract heading levels with line numbers."""
-        headings = []
-        for line_num, line in enumerate(document):
-            if isinstance(line, str):
-                match = self.heading_pattern.match(line)
-                if match:
-                    level = len(match.group(1))
-                    headings.append((level, line_num, line))
-        return headings
-
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        if not self.enabled:
+            return []
+            
         findings = []
-
-        # Convert document to lines if it's not already
-        if isinstance(document, dict):
-            lines = document.get("content", "").splitlines()
-        elif isinstance(document, str):
-            lines = document.splitlines()
-        else:
-            lines = document
-
-        headings = self.get_heading_levels(lines)
-        if not headings:
-            return findings
-
-        current_level = headings[0][0]
-        for level, line_num, line in headings[1:]:
-            if level > current_level + 1:
-                findings.append(
-                    Finding(
-                        rule_id=self.id,
-                        message=f"Heading level skipped: found h{level} after h{current_level}",
-                        severity=Severity.ERROR,
-                        position=Position(line=line_num + 1),
-                        context=line,
-                    )
-                )
-            current_level = level
-
-        return findings
-
-
-class MultipleTopLevelHeadingsRule(Rule):
-    """
-    HEAD003: Check for multiple top-level headings.
-    Ensures that a document has only one top-level (=) heading.
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.id = "HEAD003"
-        self.heading_pattern = re.compile(r"^=\s")
-
-    @property
-    def description(self) -> str:
-        return "Ensures document has only one top-level heading"
-
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
-        findings = []
-        first_top_level: Optional[Tuple[int, str]] = None
-
-        # Convert document to lines if it's not already
-        if isinstance(document, dict):
-            lines = document.get("content", "").splitlines()
-        elif isinstance(document, str):
-            lines = document.splitlines()
-        else:
-            lines = document
-
-        for line_num, line in enumerate(lines):
-            if isinstance(line, str) and self.heading_pattern.match(line):
-                if first_top_level is None:
-                    first_top_level = (line_num + 1, line.strip())
-                else:
+        current_level = 0
+        
+        for line_number, line in enumerate(document):
+            line_content = str(line).strip()
+            if line_content.startswith('='):
+                level = 0
+                for char in line_content:
+                    if char != '=':
+                        break
+                    level += 1
+                
+                # First heading must be level 1
+                if current_level == 0 and level != 1:
                     findings.append(
                         Finding(
                             rule_id=self.id,
-                            message=f"Multiple top-level headings found. First heading at line {first_top_level[0]}: '{first_top_level[1]}'",
-                            severity=Severity.ERROR,
-                            position=Position(line=line_num + 1),
-                            context=line,
+                            position=Position(line=line_number + 1),
+                            message="First heading must be level 1",
+                            severity=self.severity,
+                            context=line_content,
                         )
                     )
+                
+                # Can't skip levels
+                elif level > current_level + 1:
+                    findings.append(
+                        Finding(
+                            rule_id=self.id,
+                            position=Position(line=line_number + 1),
+                            message=f"Heading level skipped: found h{level} after h{current_level}",
+                            severity=self.severity,
+                            context=line_content,
+                        )
+                    )
+                
+                current_level = level
+        
+        return findings
 
+class MultipleTopLevelHeadingsRule(Rule):
+    """Rule to check for multiple top-level headings"""
+    id = "HEAD003"
+    name = "Multiple Top-Level Headings"
+    description = "Checks for multiple top-level headings"
+    severity = Severity.ERROR
+
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        if not self.enabled:
+            return []
+            
+        findings = []
+        first_h1_line = None
+        
+        for line_number, line in enumerate(document):
+            line_content = str(line).strip()
+            if line_content.startswith('= '):  # Level 1 heading
+                if first_h1_line is not None:
+                    findings.append(
+                        Finding(
+                            rule_id=self.id,
+                            position=Position(line=line_number + 1),
+                            message=f"Multiple top-level headings found (first at line {first_h1_line + 1})",
+                            severity=self.severity,
+                            context=line_content,
+                        )
+                    )
+                else:
+                    first_h1_line = line_number
+        
         return findings

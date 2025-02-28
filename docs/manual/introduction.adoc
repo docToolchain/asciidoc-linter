@@ -1,112 +1,28 @@
-// introduction.adoc - Project introduction
-= Introduction
+# introduction.adoc - Introduction to AsciiDoc Linter
+== Introduction
 
-== About the Project
+AsciiDoc Linter is a command-line tool that helps maintain consistent documentation quality by checking AsciiDoc files for common issues and style violations.
 
-AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.
+=== Features
 
-As part of the docToolchain project (https://doctoolchain.org), it integrates well with existing documentation workflows.
+* Check heading structure and formatting
+* Verify whitespace usage
+* Validate block structures
+* Check image references and attributes
+* Verify table formatting
+* Configurable rules and severity levels
 
-== Key Features
+=== Who Should Use This Tool?
 
-* Heading structure validation
-** Proper hierarchy (no skipped levels)
-** Consistent formatting
-** Single top-level heading
-* Block validation
-** Proper block termination
-** Consistent spacing
-* Whitespace consistency
-** Line spacing
-** List formatting
-** Tab detection
-* Image validation
-** Attribute checking
-** File existence verification
-* Multiple output formats (console, JSON, HTML)
+* Technical writers maintaining documentation
+* Developers writing technical documentation
+* Teams working on documentation projects
+* Anyone who wants to ensure consistent AsciiDoc formatting
 
-== Project Goals
+=== Benefits
 
-* Improve documentation quality through automated checks
-* Enforce consistent styling across documentation
-* Reduce manual review effort
-* Catch common mistakes early in the documentation process
-* Support documentation as code practices
-* Integrate with existing documentation toolchains
-
-== Technical Overview
-
-.Technology Stack
-[cols="1,4"]
-|===
-|Component |Description
-
-|Language
-|Python 3.8+
-
-|Testing
-|unittest framework
-
-|Documentation
-|AsciiDoc
-
-|Configuration
-|YAML/JSON (planned)
-|===
-
-== Getting Started
-
-=== Prerequisites
-
-* Python 3.8 or higher
-* Git (for installation)
-
-=== Installation
-
-[NOTE]
-====
-Direct installation via pip is planned for future releases. Currently, installation is done via git clone.
-====
-
-[source,bash]
-----
-# Clone the repository
-git clone https://github.com/docToolchain/asciidoc-linter.git
-
-# Navigate to the project directory
-cd asciidoc-linter
-
-# Install the package
-pip install .
-----
-
-=== Basic Usage
-
-[source,bash]
-----
-# Check a single file
-asciidoc-lint document.adoc
-
-# Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
-
-# Get help
-asciidoc-lint --help
-----
-
-== Current Status
-
-=== Implemented Features
-
-* Core linting engine
-* Basic rule set (headings, blocks, whitespace, images)
-* Command-line interface
-* Multiple output formats
-
-=== Planned Features
-
-* Configuration system (YAML/JSON)
-* Additional rule sets (tables, links, cross-references)
-* Direct installation via pip
-* IDE integration
-* Git pre-commit hooks
+* Maintain consistent documentation style
+* Catch common formatting errors
+* Automate documentation quality checks
+* Integrate with CI/CD pipelines
+* Customize rules to match your style guide

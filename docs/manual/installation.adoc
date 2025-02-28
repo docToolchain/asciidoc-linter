@@ -1,0 +1,58 @@
+# installation.adoc - Installation instructions for AsciiDoc Linter
+== Installation
+
+=== Requirements
+
+* Python 3.8 or higher
+* pip (Python package installer)
+* Git (for installation from source)
+
+=== Installation Methods
+
+==== From PyPI
+
+[source,bash]
+----
+pip install asciidoc-linter
+----
+
+==== From Source
+
+[source,bash]
+----
+# Clone the repository
+git clone https://github.com/docToolchain/asciidoc-linter.git
+
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .
+----
+
+=== Verifying Installation
+
+After installation, verify that the tool is working:
+
+[source,bash]
+----
+asciidoc-lint --version
+----
+
+=== Upgrading
+
+To upgrade to the latest version:
+
+[source,bash]
+----
+pip install --upgrade asciidoc-linter
+----
+
+=== Development Installation
+
+For development work, install in editable mode:
+
+[source,bash]
+----
+pip install -e .[dev]
+----

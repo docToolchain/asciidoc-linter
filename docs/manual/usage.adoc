@@ -1,179 +1,139 @@
-// usage.adoc - Usage guide
-= Usage Guide
-
-== Command Line Interface
+# usage.adoc - Usage instructions for AsciiDoc Linter
+== Usage
 
 === Basic Usage
 
+Check a single file:
+
 [source,bash]
 ----
-# Check a single file
 asciidoc-lint document.adoc
+----
 
-# Check multiple files
+Check multiple files:
+
+[source,bash]
+----
 asciidoc-lint doc1.adoc doc2.adoc
-
-# Check with specific output format
-asciidoc-lint --format json document.adoc
-
-# Use specific configuration
-asciidoc-lint --config my-config.yml document.adoc
 ----
 
-=== Command Line Options
+=== Output Formats
 
-[cols="1,1,2"]
-|===
-|Option |Default |Description
+==== Console Output (Default)
 
-|--format
-|console
-|Output format (console, json, html)
-
-|--config
-|None
-|Path to configuration file
-
-|--verbose
-|False
-|Enable verbose output
-
-|--quiet
-|False
-|Suppress non-error output
-|===
-
-== Configuration
-
-=== Configuration File
-
-[source,yaml]
+[source,bash]
 ----
-# .asciidoc-lint.yml
-rules:
-  HEAD001:
-    enabled: true
-    severity: error
-  HEAD002:
-    enabled: true
-    severity: warning
+asciidoc-lint document.adoc
 ----
 
-=== Rule Configuration
-
-* Enable/disable rules
-* Set severity levels
-* Configure rule-specific options
-* Set file patterns
-
-== Output Formats
-
-=== Console Output
-
+Example output:
 [source]
 ----
-document.adoc:15 ERROR: Heading level skipped
-document.adoc:23 WARNING: Heading should start with uppercase
+Checking file: document.adoc
+
+ERROR: Heading level skipped: found h3 after h1 (line 15)
+  === Advanced Topics
+
+WARNING: Heading should start with uppercase letter (line 23)
+  == introduction to concepts
 ----
 
-=== JSON Output
+==== Plain Text Output
 
+[source,bash]
+----
+asciidoc-lint --format plain document.adoc
+----
+
+==== JSON Output
+
+[source,bash]
+----
+asciidoc-lint --format json document.adoc
+----
+
+Example output:
 [source,json]
 ----
 {
   "findings": [
     {
-      "rule": "HEAD001",
+      "file": "document.adoc",
+      "line": 15,
+      "message": "Heading level skipped: found h3 after h1",
       "severity": "error",
-      "message": "Heading level skipped",
-      "line": 15
+      "rule_id": "HEAD002"
     }
   ]
 }
 ----
 
-=== HTML Report
+==== HTML Output
 
-Generates a detailed HTML report with:
+[source,bash]
+----
+asciidoc-lint --format html document.adoc
+----
 
-* Summary statistics
-* Detailed findings
-* Source context
-* Rule explanations
+=== Command Line Options
 
-== Integration
+--config FILE::
+  Path to configuration file (default: .asciidoc-lint.yml)
+
+--format FORMAT::
+  Output format: console, plain, json, or html (default: console)
+
+--verbose::
+  Enable verbose output
+
+--version::
+  Show version information
+
+=== Exit Codes
+
+* 0: No issues found
+* 1: Issues found
+* 2: Error running linter
+
+=== Integration with Text Editors
+
+==== VS Code
+
+Install the AsciiDoc extension and add to settings.json:
+
+[source,json]
+----
+{
+  "asciidoc.linter.command": "asciidoc-lint",
+  "asciidoc.linter.run": "onSave"
+}
+----
+
+==== Vim/Neovim
+
+Add to your configuration:
+
+[source,vim]
+----
+autocmd BufWritePost *.adoc !asciidoc-lint %
+----
 
 === Git Pre-commit Hook
+
+Create .git/hooks/pre-commit:
 
 [source,bash]
 ----
 #!/bin/sh
-files=$(git diff --cached --name-only --diff-filter=ACM | grep '.adoc$')
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.adoc$')
 if [ -n "$files" ]; then
-    asciidoc-lint $files
+  asciidoc-lint $files
 fi
 ----
 
-=== CI/CD Integration
-
-.GitHub Actions Example
-[source,yaml]
-----
-name: Lint AsciiDoc
-on: [push, pull_request]
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Lint Documentation
-        run: |
-          pip install asciidoc-linter
-          asciidoc-lint docs/
-----
-
-== Best Practices
-
-=== Document Organization
-
-* Use consistent heading levels
-* Add blank lines around blocks
-* Use proper formatting
-* Include alt text for images
-
-=== Error Resolution
-
-.Common Issues and Solutions
-[cols="1,2"]
-|===
-|Issue |Solution
-
-|Skipped heading level
-|Ensure heading levels increment by one
-
-|Missing space after =
-|Add space after heading markers
-
-|Multiple top-level headings
-|Use only one level-1 heading per document
-|===
-
-== Troubleshooting
-
-=== Common Problems
-
-* Configuration file not found
-* Rule conflicts
-* Performance issues
-* False positives
-
-=== Debug Mode
+Make it executable:
 
 [source,bash]
 ----
-# Enable debug output
-asciidoc-lint --debug document.adoc
-
-# Show rule processing details
-asciidoc-lint --verbose document.adoc
+chmod +x .git/hooks/pre-commit
 ----

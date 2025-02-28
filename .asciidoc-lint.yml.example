@@ -1,0 +1,43 @@
+# Example configuration file for AsciiDoc Linter
+# Copy this file to .asciidoc-lint.yml and adjust as needed
+
+rules:
+  # Whitespace rules
+  WS001:
+    enabled: true     # Enable/disable whitespace checks
+    severity: warning # Set to 'error' for stricter checking
+
+  # Heading format rules
+  HEAD001:
+    enabled: true   # Enable/disable heading format checks
+    severity: error # Heading format issues are treated as errors
+
+  # Heading hierarchy rules
+  HEAD002:
+    enabled: true   # Enable/disable heading hierarchy checks
+    severity: error # Hierarchy issues are treated as errors
+
+  # Multiple top-level headings rule
+  HEAD003:
+    enabled: true   # Enable/disable multiple top-level heading checks
+    severity: error # Multiple top-level headings are treated as errors
+
+  # Block termination rules
+  BLOCK001:
+    enabled: true   # Enable/disable block termination checks
+    severity: error # Unterminated blocks are treated as errors
+
+  # Block spacing rules
+  BLOCK002:
+    enabled: true     # Enable/disable block spacing checks
+    severity: warning # Set to 'error' for stricter checking
+
+  # Image attribute rules
+  IMG001:
+    enabled: true     # Enable/disable image attribute checks
+    severity: warning # Set to 'error' for stricter checking
+
+  # Table format rules
+  TABLE001:
+    enabled: true     # Enable/disable table format checks
+    severity: warning # Set to 'error' for stricter checking

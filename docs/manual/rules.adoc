@@ -1,288 +1,239 @@
-// rules.adoc - Documentation of all linter rules
-= AsciiDoc Linter Rules
+# rules.adoc - Documentation of all linter rules
+== Rules
 
-== Heading Rules
+=== Whitespace Rules
 
-=== HEAD001: Heading Hierarchy
+==== WS001: Whitespace Check
 
-Ensures proper heading level incrementation (no skipped levels).
+Checks proper whitespace usage in documents.
 
-==== Description
+Default severity:: warning
 
-This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.
+Checks::
+* Blank lines around headings
+* List marker spacing
+* Trailing whitespace
+* Tab usage
 
-==== Examples
-
-.Valid Heading Hierarchy
+Examples of violations:
 [source,asciidoc]
 ----
-= Document Title (Level 1)
-
-== Section (Level 2)
-
-=== Subsection (Level 3)
-
-== Another Section (Level 2)
+=Heading without space
+* List item without space
+Line with trailing whitespace  
+Line with	tab
 ----
 
-.Invalid Heading Hierarchy
+Correct usage:
 [source,asciidoc]
 ----
-= Document Title (Level 1)
+= Heading with space
 
-=== Subsection (Level 3)  // Error: Skipped Level 2
+* List item with space
+Line without trailing whitespace
+Line without tabs
 ----
 
-=== HEAD002: Heading Format
+=== Heading Rules
 
-Ensures proper heading format (spacing and capitalization).
+==== HEAD001: Heading Format
 
-==== Description
+Checks proper heading format.
 
-This rule checks two aspects of heading format:
-1. There must be a space after the = characters
-2. The heading text should start with an uppercase letter
+Default severity:: error
 
-==== Examples
+Checks::
+* Space after = characters
+* Proper capitalization
+* Consistent formatting
 
-.Valid Heading Format
+Examples of violations:
 [source,asciidoc]
 ----
-= Document Title
-== Section Title
-=== Subsection Title
+=Heading without space
+== heading not capitalized
 ----
 
-.Invalid Heading Format
+Correct usage:
 [source,asciidoc]
 ----
-=Document Title        // Error: No space after =
-== section title      // Warning: Starts with lowercase
+= Heading with space
+== Properly Capitalized
 ----
 
-=== HEAD003: Multiple Top Level Headings
+==== HEAD002: Heading Hierarchy
 
-Ensures document has only one top-level heading.
+Checks proper heading hierarchy.
 
-==== Description
+Default severity:: error
 
-This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.
+Checks::
+* No skipped levels
+* First heading is level 1
+* Consistent nesting
 
-==== Examples
-
-.Valid Single Top Level
+Examples of violations:
 [source,asciidoc]
 ----
-= Main Document Title
+== Level 2 first
+==== Skipped level 3
+----
 
+Correct usage:
+[source,asciidoc]
+----
+= Level 1
+== Level 2
+=== Level 3
+----
+
+==== HEAD003: Multiple Top-Level Headings
+
+Checks for multiple top-level headings.
+
+Default severity:: error
+
+Checks::
+* Only one level 1 heading per document
+
+Examples of violations:
+[source,asciidoc]
+----
+= First Title
+Some content
+= Second Title
+----
+
+Correct usage:
+[source,asciidoc]
+----
+= Main Title
 == Section One
 == Section Two
 ----
 
-.Invalid Multiple Top Level
+=== Block Rules
+
+==== BLOCK001: Unterminated Block
+
+Checks for unterminated blocks.
+
+Default severity:: error
+
+Checks::
+* All blocks are properly terminated
+* Source blocks have delimiters
+
+Examples of violations:
 [source,asciidoc]
 ----
-= First Title
+----
+Code block not terminated
 
-== Section One
-
-= Second Title  // Error: Multiple top-level headings
+[source,python]
+Code without delimiters
 ----
 
-== Block Rules
-
-=== BLOCK001: Unterminated Blocks
-
-Checks for blocks that are not properly terminated.
-
-==== Description
-
-This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.
-
-==== Supported Block Types
-
-* Listing blocks (----)
-* Example blocks (====)
-* Sidebar blocks (\****)
-* Literal blocks (....)
-* Quote blocks (\__\__)
-* Table blocks (|===)
-* Comment blocks (////)
-* Passthrough blocks (\+++\+++).
-
-==== Examples
-
-.Valid Block Termination
+Correct usage:
 [source,asciidoc]
 ----
+----
+Code block properly terminated
+----
+
 [source,python]
 ----
-def hello():
-    print("Hello, World!")
+Code with proper delimiters
+----
 ----
 
-.Example Block
-====
-Some example content
-====
-----
+==== BLOCK002: Block Spacing
 
-.Invalid Block Termination
+Checks proper block spacing.
+
+Default severity:: warning
+
+Checks::
+* Blank lines around blocks
+* Consistent spacing
+
+Examples of violations:
 [source,asciidoc]
 ----
-[source,python]
+Some text
 ----
-def hello():
-    print("Hello, World!")
-// Error: Missing closing ----
-
-.Example Block
-====
-Some example content
-// Error: Missing closing ====
+Code block
+----
+More text
 ----
 
-=== BLOCK002: Block Spacing
-
-Verifies proper spacing around blocks.
-
-==== Description
-
-This rule checks that blocks are properly separated from surrounding content with blank lines, improving readability.
-
-==== Examples
-
-.Valid Block Spacing
+Correct usage:
 [source,asciidoc]
 ----
-Some text before the block.
+Some text
 
 ----
-Block content
+Code block
 ----
 
-Some text after the block.
+More text
 ----
 
-.Invalid Block Spacing
+=== Image Rules
+
+==== IMG001: Image Attributes
+
+Checks image attributes and references.
+
+Default severity:: warning
+
+Checks::
+* Alt text presence
+* Valid file extensions
+* Width/height attributes
+
+Examples of violations:
 [source,asciidoc]
 ----
-Some text before the block.
-----  // Warning: No blank line before block
-Block content
-----
-Some text after the block.  // Warning: No blank line after block
+image::diagram.doc[]
+image::photo.jpg[]
 ----
 
-== Whitespace Rules
-
-=== WS001: Whitespace Usage
-
-Ensures proper whitespace usage throughout the document.
-
-==== Checks Performed
-
-1. *Consecutive Empty Lines*: No more than one consecutive empty line
-2. *List Marker Spacing*: Proper space after list markers (*, -, .)
-3. *Admonition Block Spacing*: Blank line before admonition blocks
-4. *Trailing Whitespace*: No trailing spaces at end of lines
-5. *Tab Usage*: No tabs (use spaces instead)
-6. *Section Title Spacing*: Blank lines around section titles
-
-==== Examples
-
-.Valid Whitespace Usage
+Correct usage:
 [source,asciidoc]
 ----
-= Document Title
-
-== Section Title
-
-* List item 1
-* List item 2
-
-NOTE: This is a note.
-
-Some text here.
+image::diagram.png[Diagram, width=800]
+image::photo.jpg[Beautiful photo, height=400]
 ----
 
-.Invalid Whitespace Usage
+=== Table Rules
+
+==== TABLE001: Table Format
+
+Checks table formatting.
+
+Default severity:: warning
+
+Checks::
+* Consistent column count
+* Table termination
+* Basic formatting
+
+Examples of violations:
 [source,asciidoc]
 ----
-= Document Title
-== Section Title     // Missing blank line before
-*Invalid list item   // Missing space after marker
-NOTE: Invalid note   // Missing blank line before
-Some text here  // Trailing spaces
-	Tabbed line      // Tab instead of spaces
-
-
-Extra blank line     // Too many blank lines
+|===
+| Col 1 | Col 2
+| Data | Data | Extra
+|===
 ----
 
-== Image Rules
-
-=== IMG001: Image Attributes
-
-Verifies image attributes and file references.
-
-==== Description
-
-This rule checks:
-1. All images have alt text
-2. Referenced local images exist
-3. Block images have titles
-4. Image attributes are properly formatted
-
-==== Examples
-
-.Valid Image Usage
+Correct usage:
 [source,asciidoc]
 ----
-// Inline image with alt text
-image:icon.png[Icon]
-
-// Block image with title and alt text
-.Figure 1: System Architecture
-image::diagram.png[Architecture Diagram]
-
-// External image with alt text
-image:https://example.com/img.png[Example Image]
+|===
+| Col 1 | Col 2
+| Data 1 | Data 2
+| Data 3 | Data 4
+|===
 ----
-
-.Invalid Image Usage
-[source,asciidoc]
-----
-// Missing alt text
-image:icon.png[]
-
-// Missing title for block image
-image::diagram.png[Diagram]
-
-// Non-existent local file
-image::missing.png[Missing Image]
-----
-
-== Planned Rules
-
-=== TABLE001: Table Formatting (Planned)
-
-Will check table formatting consistency:
-* Column alignment
-* Header row presence
-* Cell content formatting
-
-=== LINK001: Link Verification (Planned)
-
-Will verify:
-* Internal cross-references
-* External link validity
-* Anchor definitions
-
-=== FMT001: Format Consistency (Planned)
-
-Will check:
-* Consistent emphasis style
-* List formatting
-* Admonition usage
-

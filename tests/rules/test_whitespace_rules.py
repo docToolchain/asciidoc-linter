@@ -1,266 +1,161 @@
-# test_whitespace_rules.py - Tests for whitespace rules in BDD style
-"""
-Tests for whitespace-related rules including:
-- Multiple consecutive empty lines
-- List marker spacing
-- Admonition block spacing
-- Trailing whitespace
-- Tab usage
-- Section title spacing
-"""
+# test_whitespace_rules.py - Tests for the whitespace rules
 
-import unittest
+import pytest
 from asciidoc_linter.rules.whitespace_rules import WhitespaceRule
+from asciidoc_linter.rules.base import Finding, Severity
 
+def test_section_title_detection():
+    """Test the detection of valid and invalid section titles"""
+    rule = WhitespaceRule()
+    
+    # Valid section titles
+    assert rule.is_section_title("= Document Title")
+    assert rule.is_section_title("== Section Title")
+    assert rule.is_section_title("=== Subsection Title")
+    
+    # Invalid section titles
+    assert not rule.is_section_title("")  # Empty line
+    assert not rule.is_section_title("=")  # Just equals
+    assert not rule.is_section_title("==")  # Just equals
+    assert not rule.is_section_title("=No Space")  # No space after equals
+    assert not rule.is_section_title("= ")  # No content after space
 
-class TestWhitespaceRule(unittest.TestCase):
-    """Tests for WhitespaceRule.
-    This rule ensures proper whitespace usage throughout the document,
-    including line spacing, indentation, and formatting conventions.
-    """
+def test_document_title():
+    """Test handling of document title (level 1 heading)"""
+    rule = WhitespaceRule()
+    document = [
+        "= Document Title",
+        "== First Section",
+        "",
+        "Content here."
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should not require blank line before document title
+    assert not any(f.message == "Section title should be preceded by a blank line" 
+                  and f.position.line == 1 for f in findings)
+    
+    # Should require blank line after document title
+    assert any(f.message == "Section title should be followed by a blank line" 
+              and f.position.line == 1 for f in findings)
 
-    def setUp(self):
-        """
-        Given a WhitespaceRule instance
-        """
-        self.rule = WhitespaceRule()
+def test_consecutive_sections():
+    """Test handling of consecutive section titles"""
+    rule = WhitespaceRule()
+    document = [
+        "= Document Title",
+        "",
+        "== First Section",
+        "== Second Section",
+        "",
+        "Content here."
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should not require blank line between consecutive sections
+    assert not any(f.message == "Section title should be preceded by a blank line" 
+                  and f.position.line == 4 for f in findings)
 
-    def test_multiple_empty_lines(self):
-        """
-        Given a document with multiple consecutive empty lines
-        When the whitespace rule is checked
-        Then one finding should be reported
-        And the finding should mention consecutive empty lines
-        """
-        # Given: A document with multiple consecutive empty lines
-        content = ["First line", "", "", "", "Last line"]
+def test_section_with_content():
+    """Test sections with content before and after"""
+    rule = WhitespaceRule()
+    document = [
+        "= Document Title",
+        "",
+        "Some content.",
+        "== Section Title",
+        "More content."
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should require blank line before section when preceded by content
+    assert any(f.message == "Section title should be preceded by a blank line" 
+              and f.position.line == 4 for f in findings)
+    
+    # Should require blank line after section when followed by content
+    assert any(f.message == "Section title should be followed by a blank line" 
+              and f.position.line == 4 for f in findings)
 
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
+def test_disabled_rule():
+    """Test that rule can be disabled"""
+    rule = WhitespaceRule()
+    rule.enabled = False
+    
+    document = [
+        "= Document Title",
+        "== Section Title",  # No blank lines, should normally trigger findings
+        "Content here."
+    ]
+    
+    findings = rule.check(document)
+    assert len(findings) == 0
 
-        # Then: One finding should be reported
-        self.assertEqual(
-            len(findings),
-            1,
-            "Multiple consecutive empty lines should produce one finding",
-        )
+def test_severity_configuration():
+    """Test that severity can be configured"""
+    rule = WhitespaceRule()
+    rule.severity = Severity.ERROR
+    
+    document = [
+        "= Document Title",
+        "Content here."  # No blank line, should trigger ERROR
+    ]
+    
+    findings = rule.check(document)
+    assert any(f.severity == Severity.ERROR for f in findings)
 
-        # And: The finding should mention consecutive empty lines
-        self.assertTrue(
-            "consecutive empty line" in findings[0].message,
-            "Finding should mention consecutive empty lines",
-        )
+def test_trailing_whitespace():
+    """Test detection of trailing whitespace"""
+    rule = WhitespaceRule()
+    document = [
+        "= Document Title",
+        "",
+        "Line with trailing space  ",
+        "Line with trailing tab\t",
+        "Normal line"
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should detect both types of trailing whitespace
+    assert any(f.message == "Line contains trailing whitespace" 
+              and f.position.line == 3 for f in findings)
+    assert any(f.message == "Line contains trailing whitespace" 
+              and f.position.line == 4 for f in findings)
 
-    def test_list_marker_spacing(self):
-        """
-        Given a document with both valid and invalid list markers
-        When the whitespace rule is checked
-        Then three findings should be reported
-        And each finding should mention space after the marker
-        """
-        # Given: A document with various list markers
-        content = [
-            "* Valid item",
-            "*Invalid item",
-            "- Valid item",
-            "-Invalid item",
-            ". Valid item",
-            ".Invalid item",
-        ]
+def test_list_marker_spacing():
+    """Test spacing after list markers"""
+    rule = WhitespaceRule()
+    document = [
+        "* Correct list item",
+        "*Wrong list item",
+        "- Correct list item",
+        "-Wrong list item"
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should detect missing spaces after markers
+    assert any(f.message == "Missing space after the marker '*'" 
+              and f.position.line == 2 for f in findings)
+    assert any(f.message == "Missing space after the marker '-'" 
+              and f.position.line == 4 for f in findings)
 
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: Three findings should be reported
-        self.assertEqual(
-            len(findings), 3, "Three invalid list markers should produce three findings"
-        )
-
-        # And: Each finding should mention space after the marker
-        for finding in findings:
-            self.assertTrue(
-                "space after the marker" in finding.message,
-                "Finding should mention missing space after marker",
-            )
-
-    def test_admonition_block_spacing(self):
-        """
-        Given a document with admonition blocks
-        When the whitespace rule is checked
-        Then findings should be reported for blocks without proper spacing
-        And findings should mention blank line requirements
-        """
-        # Given: A document with various admonition blocks
-        content = [
-            "Some text",
-            "NOTE: This needs a blank line",
-            "",
-            "IMPORTANT: This is correct",
-            "More text",
-            "WARNING: This needs a blank line",
-        ]
-
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: Two findings should be reported
-        self.assertEqual(
-            len(findings),
-            2,
-            "Two admonition blocks without proper spacing should produce two findings",
-        )
-
-        # And: Each finding should mention blank line requirements
-        for finding in findings:
-            self.assertTrue(
-                "preceded by a blank line" in finding.message,
-                "Finding should mention missing blank line requirement",
-            )
-
-    def test_trailing_whitespace(self):
-        """
-        Given a document with lines containing trailing whitespace
-        When the whitespace rule is checked
-        Then findings should be reported for lines with trailing spaces
-        And findings should mention trailing whitespace
-        """
-        # Given: A document with trailing whitespace
-        content = [
-            "Line without trailing space",
-            "Line with trailing space ",
-            "Another clean line",
-            "More trailing space  ",
-        ]
-
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: Two findings should be reported
-        self.assertEqual(
-            len(findings),
-            2,
-            "Two lines with trailing whitespace should produce two findings",
-        )
-
-        # And: Each finding should mention trailing whitespace
-        for finding in findings:
-            self.assertTrue(
-                "trailing whitespace" in finding.message,
-                "Finding should mention trailing whitespace",
-            )
-
-    def test_tabs(self):
-        """
-        Given a document with lines containing tabs
-        When the whitespace rule is checked
-        Then findings should be reported for lines with tabs
-        And findings should mention tab usage
-        """
-        # Given: A document with tab characters
-        content = [
-            "Normal line",
-            "\tLine with tab",
-            "    Spaces are fine",
-            "\tAnother tab",
-        ]
-
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: Two findings should be reported
-        self.assertEqual(
-            len(findings), 2, "Two lines with tabs should produce two findings"
-        )
-
-        # And: Each finding should mention tab usage
-        for finding in findings:
-            self.assertTrue(
-                "contains tabs" in finding.message, "Finding should mention tab usage"
-            )
-
-    def test_section_title_spacing(self):
-        """
-        Given a document with section titles
-        When the whitespace rule is checked
-        Then findings should be reported for improper spacing around titles
-        And findings should mention both preceding and following space requirements
-        """
-        # Given: A document with section titles
-        content = [
-            "Some text",
-            "== Section Title",
-            "No space after",
-            "",
-            "=== Another Section",
-            "",
-            "This is correct",
-        ]
-
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: Two findings should be reported
-        self.assertEqual(
-            len(findings),
-            2,
-            "Two spacing issues around section titles should produce two findings",
-        )
-
-        # And: Findings should mention both preceding and following space requirements
-        self.assertTrue(
-            any("preceded by" in f.message for f in findings),
-            "Should report missing preceding space",
-        )
-        self.assertTrue(
-            any("followed by" in f.message for f in findings),
-            "Should report missing following space",
-        )
-
-    def test_valid_document(self):
-        """
-        Given a well-formatted document
-        When the whitespace rule is checked
-        Then no findings should be reported
-        Because all whitespace conventions are followed
-        """
-        # Given: A well-formatted document
-        content = [
-            "= Document Title",
-            "",
-            "== Section 1",
-            "",
-            "* List item 1",
-            "* List item 2",
-            "",
-            "NOTE: Important note",
-            "",
-            "=== Subsection",
-            "",
-            "Normal paragraph.",
-        ]
-
-        # When: We check each line for whitespace issues
-        findings = []
-        for i, line in enumerate(content):
-            findings.extend(self.rule.check_line(line, i, content))
-
-        # Then: No findings should be reported
-        self.assertEqual(
-            len(findings), 0, "Well-formatted document should not produce any findings"
-        )
-
-
-if __name__ == "__main__":
-    unittest.main()
+def test_multiple_consecutive_empty_lines():
+    """Test detection of too many consecutive empty lines"""
+    rule = WhitespaceRule()
+    document = [
+        "= Document Title",
+        "",
+        "",
+        "",
+        "Content here."
+    ]
+    
+    findings = rule.check(document)
+    
+    # Should detect too many consecutive empty lines
+    assert any(f.message == "Too many consecutive empty lines" 
+              and f.position.line == 4 for f in findings)

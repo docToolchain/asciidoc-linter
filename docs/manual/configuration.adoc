@@ -1,0 +1,137 @@
+# configuration.adoc - Configuration documentation for AsciiDoc Linter
+== Configuration
+
+=== Configuration File
+
+The linter uses a YAML configuration file to customize its behavior. By default, it looks for `.asciidoc-lint.yml` in the current directory.
+
+=== Basic Configuration
+
+Create a `.asciidoc-lint.yml` file:
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: true
+    severity: warning
+----
+
+=== Rule Configuration Options
+
+Each rule supports these options:
+
+enabled::
+  Boolean value (true/false) to enable or disable the rule
+
+severity::
+  String value ("error" or "warning") to set the rule's severity level
+
+=== Example Configurations
+
+==== Disable a Rule
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: false
+----
+
+==== Change Rule Severity
+
+[source,yaml]
+----
+rules:
+  HEAD001:
+    severity: warning
+----
+
+==== Multiple Rule Configuration
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: false
+  HEAD001:
+    severity: warning
+  HEAD002:
+    enabled: true
+    severity: error
+----
+
+=== Default Configuration
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: true
+    severity: warning
+  HEAD001:
+    enabled: true
+    severity: error
+  HEAD002:
+    enabled: true
+    severity: error
+  HEAD003:
+    enabled: true
+    severity: error
+  BLOCK001:
+    enabled: true
+    severity: error
+  BLOCK002:
+    enabled: true
+    severity: warning
+  IMG001:
+    enabled: true
+    severity: warning
+  TABLE001:
+    enabled: true
+    severity: warning
+----
+
+=== Configuration File Location
+
+The linter searches for configuration in this order:
+
+1. File specified with --config option
+2. .asciidoc-lint.yml in current directory
+3. Default configuration
+
+=== Environment-specific Configurations
+
+==== CI/CD Configuration
+
+.ci-config.yml
+[source,yaml]
+----
+rules:
+  # Strict checking in CI
+  WS001:
+    severity: error
+  HEAD001:
+    severity: error
+----
+
+==== Development Configuration
+
+.dev-config.yml
+[source,yaml]
+----
+rules:
+  # Lenient checking during development
+  WS001:
+    severity: warning
+  HEAD002:
+    enabled: false
+----
+
+=== Best Practices
+
+1. Start with default configuration
+2. Adjust gradually based on team needs
+3. Document configuration changes
+4. Use different configs for different environments
+5. Version control your configuration file

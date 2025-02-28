@@ -1,16 +1,18 @@
-// index.adoc - Main documentation
+# index.adoc - User manual for AsciiDoc Linter
 = AsciiDoc Linter Manual
 :toc: left
 :icons: font
 :source-highlighter: rouge
 :experimental:
 
-include::introduction.adoc[leveloffset=+1]
+include::introduction.adoc[]
 
-include::development.adoc[leveloffset=+1]
+include::installation.adoc[]
 
-include::testing.adoc[leveloffset=+1]
+include::usage.adoc[]
 
-include::usage.adoc[leveloffset=+1]
+include::configuration.adoc[]
 
-include::rules.adoc[leveloffset=+1]
+include::rules.adoc[]
+
+include::troubleshooting.adoc[]

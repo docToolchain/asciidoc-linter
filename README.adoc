@@ -104,6 +104,72 @@ asciidoc-lint doc1.adoc doc2.adoc
 
 # Check with specific output format
 asciidoc-lint --format json document.adoc
+
+# Check with configuration file
+asciidoc-lint --config .asciidoc-lint.yml document.adoc
+----
+
+=== Configuration
+
+The linter can be configured using a YAML configuration file. By default, it looks for `.asciidoc-lint.yml` in the current directory.
+
+==== Example Configuration
+
+[source,yaml]
+----
+rules:
+  # Disable a rule
+  WS001:
+    enabled: false
+
+  # Change rule severity
+  HEAD001:
+    severity: warning
+
+  # Configure multiple rules
+  HEAD002:
+    enabled: true
+    severity: error
+----
+
+==== Rule Configuration Options
+
+Each rule can be configured with the following options:
+
+enabled:: Boolean value (true/false) to enable or disable the rule
+severity:: String value ("error" or "warning") to set the rule's severity level
+
+==== Default Configuration
+
+All rules are enabled by default with their predefined severity levels:
+
+[source,yaml]
+----
+rules:
+  WS001:
+    enabled: true
+    severity: warning
+  HEAD001:
+    enabled: true
+    severity: error
+  HEAD002:
+    enabled: true
+    severity: error
+  HEAD003:
+    enabled: true
+    severity: error
+  BLOCK001:
+    enabled: true
+    severity: error
+  BLOCK002:
+    enabled: true
+    severity: warning
+  IMG001:
+    enabled: true
+    severity: warning
+  TABLE001:
+    enabled: true
+    severity: warning
 ----
 
 === Output Formats
@@ -237,7 +303,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 * ✅ Whitespace rules
 * ✅ Image validation
 * ⚠️ Table validation
-* ⏳ Configuration system
+* ✅ Configuration system
 
 2. Phase 2 (Next)
 * 🔲 Fix table content validation

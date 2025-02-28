@@ -1,162 +1,104 @@
-# block_rules.py - Rules for checking AsciiDoc blocks
+# block_rules.py - Rules for checking blocks in AsciiDoc files
 
-from typing import List, Dict, Any, Union
+from typing import List, Union, Dict
 from .base import Rule, Finding, Severity, Position
 
-
 class UnterminatedBlockRule(Rule):
-    """Rule to check for unterminated blocks in AsciiDoc files."""
+    """Rule to check for unterminated blocks"""
+    id = "BLOCK001"
+    name = "Unterminated Block"
+    description = "Checks for unterminated blocks"
+    severity = Severity.ERROR
 
-    def __init__(self):
-        super().__init__()
-        self.id = "BLOCK001"
-        self.block_markers = {
-            "----": "listing block",
-            "====": "example block",
-            "****": "sidebar block",
-            "....": "literal block",
-            "____": "quote block",
-            "|===": "table block",
-            "////": "comment block",
-            "++++": "passthrough block",
-        }
-        self.open_blocks = {}
-
-    @property
-    def description(self) -> str:
-        return "Checks for blocks that are not properly terminated"
-
-    def check_line(
-        self, line: str, line_num: int, document: List[str]
-    ) -> List[Finding]:
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        if not self.enabled:
+            return []
+            
         findings = []
-        stripped_line = line.strip()
-
-        if stripped_line in self.block_markers:
-            if stripped_line in self.open_blocks:
-                # This is a closing delimiter
-                del self.open_blocks[stripped_line]
-            else:
-                # This is an opening delimiter
-                self.open_blocks[stripped_line] = line_num
-
-                # Look ahead for matching end delimiter
-                is_terminated = False
-                for i, next_line in enumerate(
-                    document[line_num + 1 :], start=line_num + 1
-                ):
-                    if next_line.strip() == stripped_line:
-                        is_terminated = True
-                        break
-
-                if not is_terminated:
+        block_stack = []
+        
+        for line_number, line in enumerate(document):
+            line_content = str(line).strip()
+            
+            # Check for block delimiters
+            if line_content in ['----', '====', '****', '....', '|===']:
+                if not block_stack or block_stack[-1] != line_content:
+                    block_stack.append(line_content)
+                else:
+                    block_stack.pop()
+            
+            # Check for listing blocks
+            elif line_content.startswith('[source'):
+                next_line = document[line_number + 1] if line_number + 1 < len(document) else ''
+                if str(next_line).strip() != '----':
                     findings.append(
                         Finding(
                             rule_id=self.id,
-                            position=Position(line=line_num + 1),
-                            message=f"Unterminated {self.block_markers[stripped_line]} starting",
-                            severity=Severity.ERROR,
-                            context=line,
+                            position=Position(line=line_number + 1),
+                            message="Source block not followed by delimiter",
+                            severity=self.severity,
+                            context=line_content,
                         )
                     )
-
+        
+        # Report unterminated blocks
+        for block in block_stack:
+            findings.append(
+                Finding(
+                    rule_id=self.id,
+                    position=Position(line=len(document)),
+                    message=f"Unterminated block: {block}",
+                    severity=self.severity,
+                    context="End of file",
+                )
+            )
+        
         return findings
-
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
-        findings = []
-        self.open_blocks = {}  # Reset open blocks
-
-        # Convert document to lines if it's not already
-        if isinstance(document, dict):
-            lines = document.get("content", "").splitlines()
-        elif isinstance(document, str):
-            lines = document.splitlines()
-        else:
-            lines = document
-
-        for line_num, line in enumerate(lines):
-            if isinstance(line, str):
-                findings.extend(self.check_line(line, line_num, lines))
-
-        return findings
-
 
 class BlockSpacingRule(Rule):
-    """Rule to check for proper spacing around blocks."""
+    """Rule to check block spacing"""
+    id = "BLOCK002"
+    name = "Block Spacing"
+    description = "Checks for proper spacing around blocks"
+    severity = Severity.WARNING
 
-    def __init__(self):
-        super().__init__()
-        self.id = "BLOCK002"
-        self.block_markers = {
-            "----",
-            "====",
-            "****",
-            "....",
-            "____",
-            "|===",
-            "////",
-            "++++",
-        }
-        self.open_blocks = {}
-
-    @property
-    def description(self) -> str:
-        return "Checks for proper blank lines around blocks"
-
-    def check_line(
-        self, line: str, line_num: int, document: List[str]
-    ) -> List[Finding]:
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        if not self.enabled:
+            return []
+            
         findings = []
-        stripped_line = line.strip()
-
-        if stripped_line in self.block_markers:
-            if stripped_line in self.open_blocks:
-                # This is a closing delimiter
-                if line_num + 1 < len(document):
-                    next_line = document[line_num + 1].strip()
-                    if next_line and not next_line.startswith("="):
+        block_delimiters = ['----', '====', '****', '....', '|===']
+        
+        for line_number, line in enumerate(document):
+            line_content = str(line).strip()
+            
+            if line_content in block_delimiters:
+                # Check spacing before block
+                if line_number > 0:
+                    prev_line = str(document[line_number - 1]).strip()
+                    if prev_line and not prev_line.startswith('['):
                         findings.append(
                             Finding(
                                 rule_id=self.id,
-                                position=Position(line=line_num + 2),
-                                message="Block should be followed by a blank line",
-                                severity=Severity.WARNING,
-                                context=document[line_num + 1],
-                            )
-                        )
-                del self.open_blocks[stripped_line]
-            else:
-                # This is an opening delimiter
-                if line_num > 0:
-                    prev_line = document[line_num - 1].strip()
-                    if prev_line and not prev_line.startswith("="):
-                        findings.append(
-                            Finding(
-                                rule_id=self.id,
-                                position=Position(line=line_num + 1),
+                                position=Position(line=line_number + 1),
                                 message="Block should be preceded by a blank line",
-                                severity=Severity.WARNING,
-                                context=line,
+                                severity=self.severity,
+                                context=line_content,
                             )
                         )
-                self.open_blocks[stripped_line] = line_num
-
-        return findings
-
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
-        findings = []
-        self.open_blocks = {}  # Reset open blocks
-
-        # Convert document to lines if it's not already
-        if isinstance(document, dict):
-            lines = document.get("content", "").splitlines()
-        elif isinstance(document, str):
-            lines = document.splitlines()
-        else:
-            lines = document
-
-        for line_num, line in enumerate(lines):
-            if isinstance(line, str):
-                findings.extend(self.check_line(line, line_num, lines))
-
+                
+                # Check spacing after block
+                if line_number < len(document) - 1:
+                    next_line = str(document[line_number + 1]).strip()
+                    if next_line and not any(next_line.startswith(d) for d in block_delimiters):
+                        findings.append(
+                            Finding(
+                                rule_id=self.id,
+                                position=Position(line=line_number + 1),
+                                message="Block should be followed by a blank line",
+                                severity=self.severity,
+                                context=line_content,
+                            )
+                        )
+        
         return findings

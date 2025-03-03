@@ -552,13 +552,13 @@ pip install .</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
-asciidoc-lint document.adoc
+asciidoc-linter document.adoc
 
 # Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
+asciidoc-linter doc1.adoc doc2.adoc
 
 # Get help
-asciidoc-lint --help</code></pre>
+asciidoc-linter --help</code></pre>
 </div>
 </div>
 </div>
@@ -1453,22 +1453,22 @@ jobs:
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
-asciidoc-lint document.adoc
+asciidoc-linter document.adoc
 
 # Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
+asciidoc-linter doc1.adoc doc2.adoc
 
 # Check with specific output format
-asciidoc-lint --format json document.adoc
+asciidoc-linter --format json document.adoc
 
 # Use specific configuration
-asciidoc-lint --config my-config.yml document.adoc
+asciidoc-linter --config my-config.yml document.adoc
 
 # Enable verbose output
-asciidoc-lint --verbose document.adoc
+asciidoc-linter --verbose document.adoc
 
 # Enable debug output
-asciidoc-lint --debug document.adoc</code></pre>
+asciidoc-linter --debug document.adoc</code></pre>
 </div>
 </div>
 </div>
@@ -1617,7 +1617,7 @@ document.adoc:23 WARNING: Heading should start with uppercase</code></pre>
 <pre class="prettyprint highlight"><code data-lang="bash">#!/bin/sh
 files=$(git diff --cached --name-only --diff-filter=ACM | grep '.adoc$')
 if [ -n "$files" ]; then
-    asciidoc-lint $files
+    asciidoc-linter $files
 fi</code></pre>
 </div>
 </div>
@@ -1637,7 +1637,7 @@ jobs:
       - name: Lint Documentation
         run: |
           pip install asciidoc-linter
-          asciidoc-lint docs/</code></pre>
+          asciidoc-linter docs/</code></pre>
 </div>
 </div>
 </div>
@@ -1720,10 +1720,10 @@ jobs:
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash"># Enable debug output
-asciidoc-lint --debug document.adoc
+asciidoc-linter --debug document.adoc
 
 # Show rule processing details
-asciidoc-lint --verbose document.adoc</code></pre>
+asciidoc-linter --verbose document.adoc</code></pre>
 </div>
 </div>
 </div>

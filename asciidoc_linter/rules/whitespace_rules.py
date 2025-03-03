@@ -41,6 +41,9 @@ class WhitespaceRule(Rule):
         findings = []
         line_content = self.get_line_content(line)
 
+        # Debug output to see why the whitespace_rules got triggered
+        print(f"Checking line {line_number + 1}: {line_content}")
+
         # Check for multiple consecutive empty lines
         if not line_content.strip():
             self.consecutive_empty_lines += 1

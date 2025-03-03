@@ -308,5 +308,60 @@ class TestMultipleTopLevelHeadingsRule(unittest.TestCase):
         )
 
 
+class TestHeadingAttributesAndRoles(unittest.TestCase):
+    """Tests for handling attributes and roles around section titles."""
+
+    def setUp(self):
+        """
+        Given a WhitespaceRule instance
+        """
+        from asciidoc_linter.rules.whitespace_rules import WhitespaceRule
+        self.rule = WhitespaceRule()
+
+    def test_attributes_after_heading(self):
+        """
+        Given a document with attributes immediately after headings
+        When the whitespace rule is checked
+        Then no findings should be reported
+        """
+        # Given: A document with attributes after headings
+        content = """
+= Title
+:attribute: value
+
+== Section
+:another-attribute: value
+"""
+        # When: We check the document
+        findings = self.rule.check(content)
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings), 0, "Attributes after headings should not produce findings"
+        )
+
+    def test_roles_before_heading(self):
+        """
+        Given a document with roles immediately before headings
+        When the whitespace rule is checked
+        Then no findings should be reported
+        """
+        # Given: A document with roles before headings
+        content = """
+[.role]
+= Title
+
+[[target]]
+== Section
+"""
+        # When: We check the document
+        findings = self.rule.check(content)
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings), 0, "Roles before headings should not produce findings"
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -31,7 +31,8 @@ test = [
     "pytest-cov>=4.0.0",
     "coverage>=7.0.0",
     "pytest-html>=4.1.1",
-    "pytest-metadata>=3.1.1"
+    "pytest-metadata>=3.1.1",
+    "pyyaml"
 ]
 
 [tool.pytest.ini_options]

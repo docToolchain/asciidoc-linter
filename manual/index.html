@@ -368,7 +368,8 @@
 <div class="sect3">
 <h4 id="_about_the_project">About the Project</h4>
 <div class="paragraph">
-<p>AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.</p>
+<p>AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation.
+It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.</p>
 </div>
 <div class="paragraph">
 <p>As part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), it integrates well with existing documentation workflows.</p>
@@ -526,7 +527,8 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Direct installation via pip is planned for future releases. Currently, installation is done via git clone.</p>
+<p>Direct installation via pip is planned for future releases.
+Currently, installation is done via git clone.</p>
 </div>
 </td>
 </tr>
@@ -1739,7 +1741,8 @@ asciidoc-lint --verbose document.adoc</code></pre>
 <div class="sect5">
 <h6 id="_description">Description</h6>
 <div class="paragraph">
-<p>This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.</p>
+<p>This rule checks that heading levels are not skipped.
+For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1775,8 +1778,7 @@ asciidoc-lint --verbose document.adoc</code></pre>
 <h6 id="_description_2">Description</h6>
 <div class="paragraph">
 <p>This rule checks two aspects of heading format:
-1. There must be a space after the = characters
-2. The heading text should start with an uppercase letter</p>
+1. There must be a space after the = characters 2. The heading text should start with an uppercase letter</p>
 </div>
 </div>
 <div class="sect5">
@@ -1806,7 +1808,8 @@ asciidoc-lint --verbose document.adoc</code></pre>
 <div class="sect5">
 <h6 id="_description_3">Description</h6>
 <div class="paragraph">
-<p>This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.</p>
+<p>This rule checks that there is only one level 1 heading (=) in the document.
+Multiple top-level headings can indicate structural problems or accidentally split documents.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1843,7 +1846,8 @@ asciidoc-lint --verbose document.adoc</code></pre>
 <div class="sect5">
 <h6 id="_description_4">Description</h6>
 <div class="paragraph">
-<p>This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.</p>
+<p>This rule ensures that all block delimiters are properly paired.
+Each opening delimiter must have a matching closing delimiter.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1887,7 +1891,7 @@ asciidoc-lint --verbose document.adoc</code></pre>
 </div>
 <div class="paragraph">
 <p>def hello():
-    print("Hello, World!")</p>
+print("Hello, World!")</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1905,7 +1909,7 @@ Some example content
 </div>
 <div class="paragraph">
 <p>def hello():
-    print("Hello, World!")</p>
+print("Hello, World!")</p>
 </div>
 <div class="exampleblock">
 <div class="title">Example 1. Example Block</div>
@@ -1948,8 +1952,7 @@ This rule checks that blocks are properly separated from surrounding content wit
 </div>
 <div class="paragraph">
 <p>Some text before the block.
-----  // Warning: No blank line before block
-Block content</p>
+---- // Warning: No blank line before block Block content</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2036,10 +2039,7 @@ Extra blank line     // Too many blank lines</code></pre>
 </div>
 <div class="paragraph">
 <p>This rule checks:
-1. All images have alt text
-2. Referenced local images exist
-3. Block images have titles
-4. Image attributes are properly formatted</p>
+1. All images have alt text 2. Referenced local images exist 3. Block images have titles 4. Image attributes are properly formatted</p>
 </div>
 <div class="paragraph">
 <p>===== Examples</p>
@@ -2079,27 +2079,21 @@ image::missing.png[Missing Image]</code></pre>
 </div>
 <div class="paragraph">
 <p>Will check table formatting consistency:
-* Column alignment
-* Header row presence
-* Cell content formatting</p>
+* Column alignment * Header row presence * Cell content formatting</p>
 </div>
 <div class="paragraph">
 <p>==== LINK001: Link Verification (Planned)</p>
 </div>
 <div class="paragraph">
 <p>Will verify:
-* Internal cross-references
-* External link validity
-* Anchor definitions</p>
+* Internal cross-references * External link validity * Anchor definitions</p>
 </div>
 <div class="paragraph">
 <p>==== FMT001: Format Consistency (Planned)</p>
 </div>
 <div class="paragraph">
 <p>Will check:
-* Consistent emphasis style
-* List formatting
-* Admonition usage</p>
+* Consistent emphasis style * List formatting * Admonition usage</p>
 </div>
 </div>
 </div>

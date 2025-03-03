@@ -9,7 +9,7 @@
     <meta content="jbake" name="generator">
     <meta content="INDEX, FOLLOW" name="ROBOTS">
 
-    <title>ADR 5: Table Processing Strategy</title>
+    <title>ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</title>
     <meta content="docToolchain" property="og:title">
     <meta content="build your dev docs the easy way..." property="og:description">
     <meta content="website" property="og:type">
@@ -354,7 +354,7 @@
            target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
 
 
-        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/decisions/ADR-005-table-processing-strategy.adoc%0A%23branch:%20main" target="_blank"><i
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR-005-table-processing-strategy.adoc+-+Table+Processing+Strategy+Decision%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/arc42/decisions/ADR-005-table-processing-strategy.adoc%0A%23branch:%20main" target="_blank"><i
                 class="fab fa-github fa-fw"></i> Create an issue</a>
 
         
@@ -363,21 +363,10 @@
 
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a>
 <ul class="sectlevel1">
-<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a>
+<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a>
 <ul class="sectlevel2">
-<li><a href="#_status">Status</a></li>
-<li><a href="#_context">Context</a></li>
-<li><a href="#_decision">Decision</a></li>
-<li><a href="#_technical_details">Technical Details</a></li>
-<li><a href="#_consequences">Consequences</a></li>
-<li><a href="#_implementation_plan">Implementation Plan</a></li>
-<li><a href="#_validation">Validation</a></li>
-<li><a href="#_related_diagrams">Related Diagrams</a></li>
-</ul>
-</li>
+<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></li>
 </ul>
 </li>
 </ul>
@@ -402,34 +391,30 @@
     <div class="td-content">
         <p>
             
-<h1 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision" class="sect0">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</h1>
 <div class="sect1">
-<h2 id="_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</h2>
+<h2 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_status">Status</h3>
+<h3 id="_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</h3>
+<div class="sect3">
+<h4 id="_status">Status</h4>
 <div class="paragraph">
 <p>Proposed</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_context">Context</h3>
+<div class="sect3">
+<h4 id="_context">Context</h4>
 <div class="paragraph">
 <p>Table processing in AsciiDoc documents requires complex parsing and validation:
-* Tables can contain various content types (text, lists, blocks)
-* Cell extraction needs to handle multi-line content
-* Column counting must be reliable
-* List detection in cells must be accurate</p>
+* Tables can contain various content types (text, lists, blocks) * Cell extraction needs to handle multi-line content * Column counting must be reliable * List detection in cells must be accurate</p>
 </div>
 <div class="paragraph">
 <p>Current implementation has issues:
-* Cell extraction produces incorrect results
-* List detection generates false positives
-* Column counting is unreliable</p>
+* Cell extraction produces incorrect results * List detection generates false positives * Column counting is unreliable</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_decision">Decision</h3>
+<div class="sect3">
+<h4 id="_decision">Decision</h4>
 <div class="paragraph">
 <p>We will implement a new table processing strategy:</p>
 </div>
@@ -499,8 +484,8 @@
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_technical_details">Technical Details</h3>
+<div class="sect3">
+<h4 id="_technical_details">Technical Details</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="python">class TableCell:
@@ -533,8 +518,8 @@ class TableProcessor:
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_consequences">Consequences</h3>
+<div class="sect3">
+<h4 id="_consequences">Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -581,8 +566,8 @@ class TableProcessor:
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_implementation_plan">Implementation Plan</h3>
+<div class="sect3">
+<h4 id="_implementation_plan">Implementation Plan</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -636,19 +621,15 @@ class TableProcessor:
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_validation">Validation</h3>
+<div class="sect3">
+<h4 id="_validation">Validation</h4>
 <div class="paragraph">
 <p>Success criteria:
-* All current table-related tests pass
-* Cell extraction matches expected results
-* List detection has no false positives
-* Column counting is accurate
-* Memory usage remains within limits</p>
+* All current table-related tests pass * Cell extraction matches expected results * List detection has no false positives * Column counting is accurate * Memory usage remains within limits</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_related_diagrams">Related Diagrams</h3>
+<div class="sect3">
+<h4 id="_related_diagrams">Related Diagrams</h4>
 <div class="imageblock">
 <div class="content">
 <img src="../../images/decisions/table-processing-class-diagram.png" alt="Table Processing Class Diagram">
@@ -657,6 +638,7 @@ class TableProcessor:
 <div class="imageblock">
 <div class="content">
 <img src="../../images/decisions/table-processing-sequence.png" alt="Table Processing Sequence">
+</div>
 </div>
 </div>
 </div>
@@ -689,11 +671,11 @@ class TableProcessor:
     <button class="feedback--answer feedback--answer-yes">Yes</button>
     <button class="feedback--answer feedback--answer-no">No</button>
     <p class="feedback--response feedback--response-yes">
-        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell us
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR-005-table-processing-strategy.adoc+-+Table+Processing+Strategy+Decision%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell us
     how we can improve</a>.
     </p>
     <p class="feedback--response feedback--response-no">
-        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR+5%3A+Table+Processing+Strategy%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27ADR-005-table-processing-strategy.adoc+-+Table+Processing+Strategy+Decision%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:arc42/decisions/ADR-005-table-processing-strategy.adoc">tell
     us how we can improve</a>.
     </p>
 </div>

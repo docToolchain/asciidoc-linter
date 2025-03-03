@@ -441,46 +441,39 @@
 <ul class="sectlevel1">
 <li><a href="#_architecture_decisions">Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a></li>
-<li><a href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a>
+<li><a href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_1_rule_base_class_design_2">ADR 1: Rule Base Class Design</a></li>
+<li><a href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></li>
-<li><a href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a>
+<li><a href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_2_finding_data_structure_2">ADR 2: Finding Data Structure</a></li>
+<li><a href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></li>
-<li><a href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a>
+<li><a href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_3_rule_implementation_strategy_2">ADR 3: Rule Implementation Strategy</a></li>
+<li><a href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></li>
-<li><a href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a>
+<li><a href="#_adr_4_test_strategy">ADR 4: Test Strategy</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_4_test_strategy_2">ADR 4: Test Strategy</a></li>
+<li><a href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></li>
-<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a>
+<li><a href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_5_table_processing_strategy_2">ADR 5: Table Processing Strategy</a></li>
+<li><a href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a></li>
-<li><a href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a>
+<li><a href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_6_severity_standardization_2">ADR 6: Severity Standardization</a></li>
+<li><a href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a></li>
 </ul>
 </li>
-<li><a href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a></li>
-<li><a href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a>
+<li><a href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a>
 <ul class="sectlevel3">
-<li><a href="#_adr_7_rule_registry_enhancement_2">ADR 7: Rule Registry Enhancement</a></li>
+<li><a href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a></li>
 </ul>
 </li>
 </ul>
@@ -578,7 +571,8 @@
 <div class="sect2">
 <h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a><a class="link" href="#_requirements_overview">Requirements Overview</a></h3>
 <div class="paragraph">
-<p>The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents. It helps teams maintain high-quality documentation by enforcing style rules and best practices.</p>
+<p>The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents.
+It helps teams maintain high-quality documentation by enforcing style rules and best practices.</p>
 </div>
 <div class="paragraph">
 <p>Key requirements include:</p>
@@ -1174,32 +1168,30 @@ Each decision is documented in a separate file and included here.</p>
 </div>
 <div class="sect2">
 <h3 id="_adr_1_rule_base_class_design"><a class="anchor" href="#_adr_1_rule_base_class_design"></a><a class="link" href="#_adr_1_rule_base_class_design">ADR 1: Rule Base Class Design</a></h3>
-
-</div>
-<div class="sect2">
-<h3 id="_adr_001_rule_base_class_adoc_rule_base_class_design_decision"><a class="anchor" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision"></a><a class="link" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a></h3>
 <div class="sect3">
-<h4 id="_adr_1_rule_base_class_design_2"><a class="anchor" href="#_adr_1_rule_base_class_design_2"></a><a class="link" href="#_adr_1_rule_base_class_design_2">ADR 1: Rule Base Class Design</a></h4>
+<h4 id="_adr_001_rule_base_class_adoc_rule_base_class_design_decision"><a class="anchor" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision"></a><a class="link" href="#_adr_001_rule_base_class_adoc_rule_base_class_design_decision">ADR-001-rule-base-class.adoc - Rule Base Class Design Decision</a></h4>
 <div class="sect4">
-<h5 id="_status"><a class="anchor" href="#_status"></a><a class="link" href="#_status">Status</a></h5>
+<h5 id="_adr_1_rule_base_class_design_2"><a class="anchor" href="#_adr_1_rule_base_class_design_2"></a><a class="link" href="#_adr_1_rule_base_class_design_2">ADR 1: Rule Base Class Design</a></h5>
+<div class="sect5">
+<h6 id="_status"><a class="anchor" href="#_status"></a><a class="link" href="#_status">Status</a></h6>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context"><a class="anchor" href="#_context"></a><a class="link" href="#_context">Context</a></h5>
+<div class="sect5">
+<h6 id="_context"><a class="anchor" href="#_context"></a><a class="link" href="#_context">Context</a></h6>
 <div class="paragraph">
 <p>We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision"><a class="anchor" href="#_decision"></a><a class="link" href="#_decision">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision"><a class="anchor" href="#_decision"></a><a class="link" href="#_decision">Decision</a></h6>
 <div class="paragraph">
 <p>We will use an abstract base class <code>Rule</code> with a defined interface that all concrete rules must implement.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences"><a class="anchor" href="#_consequences"></a><a class="link" href="#_consequences">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences"><a class="anchor" href="#_consequences"></a><a class="link" href="#_consequences">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1239,34 +1231,33 @@ Each decision is documented in a separate file and included here.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_2_finding_data_structure"><a class="anchor" href="#_adr_2_finding_data_structure"></a><a class="link" href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_002_finding_data_structure_adoc_finding_data_structure_decision"><a class="anchor" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision"></a><a class="link" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a></h3>
+<h3 id="_adr_2_finding_data_structure"><a class="anchor" href="#_adr_2_finding_data_structure"></a><a class="link" href="#_adr_2_finding_data_structure">ADR 2: Finding Data Structure</a></h3>
 <div class="sect3">
-<h4 id="_adr_2_finding_data_structure_2"><a class="anchor" href="#_adr_2_finding_data_structure_2"></a><a class="link" href="#_adr_2_finding_data_structure_2">ADR 2: Finding Data Structure</a></h4>
+<h4 id="_adr_002_finding_data_structure_adoc_finding_data_structure_decision"><a class="anchor" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision"></a><a class="link" href="#_adr_002_finding_data_structure_adoc_finding_data_structure_decision">ADR-002-finding-data-structure.adoc - Finding Data Structure Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_2"><a class="anchor" href="#_status_2"></a><a class="link" href="#_status_2">Status</a></h5>
+<h5 id="_adr_2_finding_data_structure_2"><a class="anchor" href="#_adr_2_finding_data_structure_2"></a><a class="link" href="#_adr_2_finding_data_structure_2">ADR 2: Finding Data Structure</a></h5>
+<div class="sect5">
+<h6 id="_status_2"><a class="anchor" href="#_status_2"></a><a class="link" href="#_status_2">Status</a></h6>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_2"><a class="anchor" href="#_context_2"></a><a class="link" href="#_context_2">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_2"><a class="anchor" href="#_context_2"></a><a class="link" href="#_context_2">Context</a></h6>
 <div class="paragraph">
 <p>Rule violations need to be reported in a consistent and informative way.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_2"><a class="anchor" href="#_decision_2"></a><a class="link" href="#_decision_2">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_2"><a class="anchor" href="#_decision_2"></a><a class="link" href="#_decision_2">Decision</a></h6>
 <div class="paragraph">
 <p>We will use a <code>Finding</code> data class with fields for message, severity, position, rule ID, and context.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a><a class="link" href="#_consequences_2">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a><a class="link" href="#_consequences_2">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1303,34 +1294,33 @@ Each decision is documented in a separate file and included here.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_3_rule_implementation_strategy"><a class="anchor" href="#_adr_3_rule_implementation_strategy"></a><a class="link" href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"><a class="anchor" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"></a><a class="link" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a></h3>
+<h3 id="_adr_3_rule_implementation_strategy"><a class="anchor" href="#_adr_3_rule_implementation_strategy"></a><a class="link" href="#_adr_3_rule_implementation_strategy">ADR 3: Rule Implementation Strategy</a></h3>
 <div class="sect3">
-<h4 id="_adr_3_rule_implementation_strategy_2"><a class="anchor" href="#_adr_3_rule_implementation_strategy_2"></a><a class="link" href="#_adr_3_rule_implementation_strategy_2">ADR 3: Rule Implementation Strategy</a></h4>
+<h4 id="_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"><a class="anchor" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision"></a><a class="link" href="#_adr_003_rule_implementation_strategy_adoc_rule_implementation_strategy_decision">ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_3"><a class="anchor" href="#_status_3"></a><a class="link" href="#_status_3">Status</a></h5>
+<h5 id="_adr_3_rule_implementation_strategy_2"><a class="anchor" href="#_adr_3_rule_implementation_strategy_2"></a><a class="link" href="#_adr_3_rule_implementation_strategy_2">ADR 3: Rule Implementation Strategy</a></h5>
+<div class="sect5">
+<h6 id="_status_3"><a class="anchor" href="#_status_3"></a><a class="link" href="#_status_3">Status</a></h6>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_3"><a class="anchor" href="#_context_3"></a><a class="link" href="#_context_3">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_3"><a class="anchor" href="#_context_3"></a><a class="link" href="#_context_3">Context</a></h6>
 <div class="paragraph">
 <p>Rules need to process AsciiDoc content and identify violations efficiently.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_3"><a class="anchor" href="#_decision_3"></a><a class="link" href="#_decision_3">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_3"><a class="anchor" href="#_decision_3"></a><a class="link" href="#_decision_3">Decision</a></h6>
 <div class="paragraph">
 <p>Each rule will process the content line by line, using regular expressions for pattern matching.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a><a class="link" href="#_consequences_3">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a><a class="link" href="#_consequences_3">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1370,34 +1360,33 @@ Each decision is documented in a separate file and included here.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_4_test_strategy"><a class="anchor" href="#_adr_4_test_strategy"></a><a class="link" href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_004_test_strategy_adoc_test_strategy_decision"><a class="anchor" href="#_adr_004_test_strategy_adoc_test_strategy_decision"></a><a class="link" href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a></h3>
+<h3 id="_adr_4_test_strategy"><a class="anchor" href="#_adr_4_test_strategy"></a><a class="link" href="#_adr_4_test_strategy">ADR 4: Test Strategy</a></h3>
 <div class="sect3">
-<h4 id="_adr_4_test_strategy_2"><a class="anchor" href="#_adr_4_test_strategy_2"></a><a class="link" href="#_adr_4_test_strategy_2">ADR 4: Test Strategy</a></h4>
+<h4 id="_adr_004_test_strategy_adoc_test_strategy_decision"><a class="anchor" href="#_adr_004_test_strategy_adoc_test_strategy_decision"></a><a class="link" href="#_adr_004_test_strategy_adoc_test_strategy_decision">ADR-004-test-strategy.adoc - Test Strategy Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_4"><a class="anchor" href="#_status_4"></a><a class="link" href="#_status_4">Status</a></h5>
+<h5 id="_adr_4_test_strategy_2"><a class="anchor" href="#_adr_4_test_strategy_2"></a><a class="link" href="#_adr_4_test_strategy_2">ADR 4: Test Strategy</a></h5>
+<div class="sect5">
+<h6 id="_status_4"><a class="anchor" href="#_status_4"></a><a class="link" href="#_status_4">Status</a></h6>
 <div class="paragraph">
 <p>Accepted</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_4"><a class="anchor" href="#_context_4"></a><a class="link" href="#_context_4">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_4"><a class="anchor" href="#_context_4"></a><a class="link" href="#_context_4">Context</a></h6>
 <div class="paragraph">
 <p>Rules need to be thoroughly tested to ensure reliable operation.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_4"><a class="anchor" href="#_decision_4"></a><a class="link" href="#_decision_4">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_4"><a class="anchor" href="#_decision_4"></a><a class="link" href="#_decision_4">Decision</a></h6>
 <div class="paragraph">
 <p>Each rule will have its own test class with multiple test methods covering various scenarios.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a><a class="link" href="#_consequences_4">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a><a class="link" href="#_consequences_4">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1434,38 +1423,32 @@ Each decision is documented in a separate file and included here.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_5_table_processing_strategy"><a class="anchor" href="#_adr_5_table_processing_strategy"></a><a class="link" href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"><a class="anchor" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"></a><a class="link" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a></h3>
+<h3 id="_adr_5_table_processing_strategy"><a class="anchor" href="#_adr_5_table_processing_strategy"></a><a class="link" href="#_adr_5_table_processing_strategy">ADR 5: Table Processing Strategy</a></h3>
 <div class="sect3">
-<h4 id="_adr_5_table_processing_strategy_2"><a class="anchor" href="#_adr_5_table_processing_strategy_2"></a><a class="link" href="#_adr_5_table_processing_strategy_2">ADR 5: Table Processing Strategy</a></h4>
+<h4 id="_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"><a class="anchor" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision"></a><a class="link" href="#_adr_005_table_processing_strategy_adoc_table_processing_strategy_decision">ADR-005-table-processing-strategy.adoc - Table Processing Strategy Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_5"><a class="anchor" href="#_status_5"></a><a class="link" href="#_status_5">Status</a></h5>
+<h5 id="_adr_5_table_processing_strategy_2"><a class="anchor" href="#_adr_5_table_processing_strategy_2"></a><a class="link" href="#_adr_5_table_processing_strategy_2">ADR 5: Table Processing Strategy</a></h5>
+<div class="sect5">
+<h6 id="_status_5"><a class="anchor" href="#_status_5"></a><a class="link" href="#_status_5">Status</a></h6>
 <div class="paragraph">
 <p>Proposed</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_5"><a class="anchor" href="#_context_5"></a><a class="link" href="#_context_5">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_5"><a class="anchor" href="#_context_5"></a><a class="link" href="#_context_5">Context</a></h6>
 <div class="paragraph">
 <p>Table processing in AsciiDoc documents requires complex parsing and validation:
-* Tables can contain various content types (text, lists, blocks)
-* Cell extraction needs to handle multi-line content
-* Column counting must be reliable
-* List detection in cells must be accurate</p>
+* Tables can contain various content types (text, lists, blocks) * Cell extraction needs to handle multi-line content * Column counting must be reliable * List detection in cells must be accurate</p>
 </div>
 <div class="paragraph">
 <p>Current implementation has issues:
-* Cell extraction produces incorrect results
-* List detection generates false positives
-* Column counting is unreliable</p>
+* Cell extraction produces incorrect results * List detection generates false positives * Column counting is unreliable</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_5"><a class="anchor" href="#_decision_5"></a><a class="link" href="#_decision_5">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_5"><a class="anchor" href="#_decision_5"></a><a class="link" href="#_decision_5">Decision</a></h6>
 <div class="paragraph">
 <p>We will implement a new table processing strategy:</p>
 </div>
@@ -1535,8 +1518,8 @@ Each decision is documented in a separate file and included here.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_technical_details"><a class="anchor" href="#_technical_details"></a><a class="link" href="#_technical_details">Technical Details</a></h5>
+<div class="sect5">
+<h6 id="_technical_details"><a class="anchor" href="#_technical_details"></a><a class="link" href="#_technical_details">Technical Details</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="python">class TableCell:
@@ -1569,8 +1552,8 @@ class TableProcessor:
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_5"><a class="anchor" href="#_consequences_5"></a><a class="link" href="#_consequences_5">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_5"><a class="anchor" href="#_consequences_5"></a><a class="link" href="#_consequences_5">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1617,8 +1600,8 @@ class TableProcessor:
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_implementation_plan"><a class="anchor" href="#_implementation_plan"></a><a class="link" href="#_implementation_plan">Implementation Plan</a></h5>
+<div class="sect5">
+<h6 id="_implementation_plan"><a class="anchor" href="#_implementation_plan"></a><a class="link" href="#_implementation_plan">Implementation Plan</a></h6>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1672,19 +1655,15 @@ class TableProcessor:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_validation"><a class="anchor" href="#_validation"></a><a class="link" href="#_validation">Validation</a></h5>
+<div class="sect5">
+<h6 id="_validation"><a class="anchor" href="#_validation"></a><a class="link" href="#_validation">Validation</a></h6>
 <div class="paragraph">
 <p>Success criteria:
-* All current table-related tests pass
-* Cell extraction matches expected results
-* List detection has no false positives
-* Column counting is accurate
-* Memory usage remains within limits</p>
+* All current table-related tests pass * Cell extraction matches expected results * List detection has no false positives * Column counting is accurate * Memory usage remains within limits</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_related_diagrams"><a class="anchor" href="#_related_diagrams"></a><a class="link" href="#_related_diagrams">Related Diagrams</a></h5>
+<div class="sect5">
+<h6 id="_related_diagrams"><a class="anchor" href="#_related_diagrams"></a><a class="link" href="#_related_diagrams">Related Diagrams</a></h6>
 <div class="imageblock">
 <div class="content">
 <img src="../images/decisions/table-processing-class-diagram.png" alt="Table Processing Class Diagram">
@@ -1698,31 +1677,28 @@ class TableProcessor:
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_6_severity_standardization"><a class="anchor" href="#_adr_6_severity_standardization"></a><a class="link" href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_006_severity_standardization_adoc_severity_standardization_decision"><a class="anchor" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision"></a><a class="link" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a></h3>
+<h3 id="_adr_6_severity_standardization"><a class="anchor" href="#_adr_6_severity_standardization"></a><a class="link" href="#_adr_6_severity_standardization">ADR 6: Severity Standardization</a></h3>
 <div class="sect3">
-<h4 id="_adr_6_severity_standardization_2"><a class="anchor" href="#_adr_6_severity_standardization_2"></a><a class="link" href="#_adr_6_severity_standardization_2">ADR 6: Severity Standardization</a></h4>
+<h4 id="_adr_006_severity_standardization_adoc_severity_standardization_decision"><a class="anchor" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision"></a><a class="link" href="#_adr_006_severity_standardization_adoc_severity_standardization_decision">ADR-006-severity-standardization.adoc - Severity Standardization Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_6"><a class="anchor" href="#_status_6"></a><a class="link" href="#_status_6">Status</a></h5>
+<h5 id="_adr_6_severity_standardization_2"><a class="anchor" href="#_adr_6_severity_standardization_2"></a><a class="link" href="#_adr_6_severity_standardization_2">ADR 6: Severity Standardization</a></h5>
+<div class="sect5">
+<h6 id="_status_6"><a class="anchor" href="#_status_6"></a><a class="link" href="#_status_6">Status</a></h6>
 <div class="paragraph">
 <p>Proposed</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_6"><a class="anchor" href="#_context_6"></a><a class="link" href="#_context_6">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_6"><a class="anchor" href="#_context_6"></a><a class="link" href="#_context_6">Context</a></h6>
 <div class="paragraph">
 <p>Current implementation has inconsistent severity level handling:
-* Mixed case usage (ERROR vs error)
-* Inconsistent severity levels across rules
-* No clear guidelines for severity assignment</p>
+* Mixed case usage (ERROR vs error) * Inconsistent severity levels across rules * No clear guidelines for severity assignment</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_6"><a class="anchor" href="#_decision_6"></a><a class="link" href="#_decision_6">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_6"><a class="anchor" href="#_decision_6"></a><a class="link" href="#_decision_6">Decision</a></h6>
 <div class="paragraph">
 <p>We will standardize severity handling:</p>
 </div>
@@ -1779,8 +1755,8 @@ class TableProcessor:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_6"><a class="anchor" href="#_consequences_6"></a><a class="link" href="#_consequences_6">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_6"><a class="anchor" href="#_consequences_6"></a><a class="link" href="#_consequences_6">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1815,8 +1791,8 @@ class TableProcessor:
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_related_diagrams_2"><a class="anchor" href="#_related_diagrams_2"></a><a class="link" href="#_related_diagrams_2">Related Diagrams</a></h5>
+<div class="sect5">
+<h6 id="_related_diagrams_2"><a class="anchor" href="#_related_diagrams_2"></a><a class="link" href="#_related_diagrams_2">Related Diagrams</a></h6>
 <div class="imageblock">
 <div class="content">
 <img src="../images/decisions/severity-state-diagram.png" alt="Severity State Diagram">
@@ -1825,32 +1801,28 @@ class TableProcessor:
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_adr_7_rule_registry_enhancement"><a class="anchor" href="#_adr_7_rule_registry_enhancement"></a><a class="link" href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a></h3>
-
 </div>
 <div class="sect2">
-<h3 id="_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"><a class="anchor" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"></a><a class="link" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a></h3>
+<h3 id="_adr_7_rule_registry_enhancement"><a class="anchor" href="#_adr_7_rule_registry_enhancement"></a><a class="link" href="#_adr_7_rule_registry_enhancement">ADR 7: Rule Registry Enhancement</a></h3>
 <div class="sect3">
-<h4 id="_adr_7_rule_registry_enhancement_2"><a class="anchor" href="#_adr_7_rule_registry_enhancement_2"></a><a class="link" href="#_adr_7_rule_registry_enhancement_2">ADR 7: Rule Registry Enhancement</a></h4>
+<h4 id="_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"><a class="anchor" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision"></a><a class="link" href="#_adr_007_rule_registry_enhancement_adoc_rule_registry_enhancement_decision">ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision</a></h4>
 <div class="sect4">
-<h5 id="_status_7"><a class="anchor" href="#_status_7"></a><a class="link" href="#_status_7">Status</a></h5>
+<h5 id="_adr_7_rule_registry_enhancement_2"><a class="anchor" href="#_adr_7_rule_registry_enhancement_2"></a><a class="link" href="#_adr_7_rule_registry_enhancement_2">ADR 7: Rule Registry Enhancement</a></h5>
+<div class="sect5">
+<h6 id="_status_7"><a class="anchor" href="#_status_7"></a><a class="link" href="#_status_7">Status</a></h6>
 <div class="paragraph">
 <p>Proposed</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_context_7"><a class="anchor" href="#_context_7"></a><a class="link" href="#_context_7">Context</a></h5>
+<div class="sect5">
+<h6 id="_context_7"><a class="anchor" href="#_context_7"></a><a class="link" href="#_context_7">Context</a></h6>
 <div class="paragraph">
 <p>Current rule registry implementation lacks:
-* Test coverage
-* Clear registration mechanism
-* Version handling
-* Rule dependency management</p>
+* Test coverage * Clear registration mechanism * Version handling * Rule dependency management</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_decision_7"><a class="anchor" href="#_decision_7"></a><a class="link" href="#_decision_7">Decision</a></h5>
+<div class="sect5">
+<h6 id="_decision_7"><a class="anchor" href="#_decision_7"></a><a class="link" href="#_decision_7">Decision</a></h6>
 <div class="paragraph">
 <p>We will enhance the rule registry:</p>
 </div>
@@ -1907,8 +1879,8 @@ class TableProcessor:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_consequences_7"><a class="anchor" href="#_consequences_7"></a><a class="link" href="#_consequences_7">Consequences</a></h5>
+<div class="sect5">
+<h6 id="_consequences_7"><a class="anchor" href="#_consequences_7"></a><a class="link" href="#_consequences_7">Consequences</a></h6>
 <div class="ulist">
 <ul>
 <li>
@@ -1943,8 +1915,8 @@ class TableProcessor:
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_related_diagrams_3"><a class="anchor" href="#_related_diagrams_3"></a><a class="link" href="#_related_diagrams_3">Related Diagrams</a></h5>
+<div class="sect5">
+<h6 id="_related_diagrams_3"><a class="anchor" href="#_related_diagrams_3"></a><a class="link" href="#_related_diagrams_3">Related Diagrams</a></h6>
 <div class="imageblock">
 <div class="content">
 <img src="../images/decisions/rule-registry-components.png" alt="Rule Registry Components">
@@ -1953,6 +1925,7 @@ class TableProcessor:
 <div class="imageblock">
 <div class="content">
 <img src="../images/decisions/rule-registration-flow.png" alt="Rule Registration Flow">
+</div>
 </div>
 </div>
 </div>

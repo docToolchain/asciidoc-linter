@@ -10,5 +10,8 @@ COPY . /app
 # Install the project dependencies
 RUN pip install --no-cache-dir -e .
 
+# Install asciidoc-linter as described in the README file
+RUN pip install .
+
 # Set the entry point to the linter CLI
 ENTRYPOINT ["asciidoc-lint"]

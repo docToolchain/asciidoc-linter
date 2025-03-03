@@ -53,7 +53,7 @@ class AsciiDocLinter:
     def load_config(self, config_path: str) -> None:
         """Load configuration from a YAML file"""
         try:
-            with open(config_path, 'r') as config_file:
+            with open(config_path, "r") as config_file:
                 config = yaml.safe_load(config_file)
                 self.apply_config(config)
         except Exception as e:
@@ -61,13 +61,13 @@ class AsciiDocLinter:
 
     def apply_config(self, config: dict) -> None:
         """Apply configuration to the linter"""
-        rules_config = config.get('rules', {})
+        rules_config = config.get("rules", {})
         for rule in self.rules:
             rule_config = rules_config.get(rule.id, {})
-            if not rule_config.get('enabled', True):
+            if not rule_config.get("enabled", True):
                 self.rules.remove(rule)
             else:
-                rule.severity = Severity(rule_config.get('severity', rule.severity))
+                rule.severity = Severity(rule_config.get("severity", rule.severity))
 
     def lint_file(self, file_path: Path) -> List[Finding]:
         """Lint a single file and return a report"""

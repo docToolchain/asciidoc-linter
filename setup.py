@@ -43,4 +43,5 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.8",
+    scripts=["asciidoc_linter/cli.py"],
 )

@@ -13,6 +13,7 @@ setup(
             "pytest-metadata",
             "black",
             "flake8",
+            "pyyaml",
         ],
         "docs": [
             "sphinx",
@@ -22,7 +23,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "asciidoc-lint=asciidoc_linter.cli:main",
+            "asciidoc-linter=asciidoc_linter.cli:main",
         ],
     },
     author="Your Name",

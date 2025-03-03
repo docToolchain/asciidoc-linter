@@ -184,3 +184,27 @@ rules:
 
     # Ensure that the WS001 rule is disabled and no findings are reported
     assert len(report.findings) == 0
+
+
+def test_lint_string_with_attributes_and_roles(mock_parser, mock_rule):
+    """Test linting a string with headings followed by attributes or roles"""
+    content = """
+= Title
+:attribute: value
+
+[.role]
+== Section 1
+
+[[target]]
+== Section 2
+"""
+
+    with patch("asciidoc_linter.linter.AsciiDocParser", return_value=mock_parser):
+        linter = AsciiDocLinter()
+        linter.rules = [mock_rule]
+
+        findings = linter.lint_string(content)
+
+        assert len(findings) == 0
+        mock_parser.parse.assert_called_once_with(content)
+        mock_rule.check.assert_called_once()

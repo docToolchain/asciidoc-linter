@@ -1,5 +1,6 @@
 {
   "tasks": {
-    "test": "./setup_test_environment.sh && python -m pytest"
+    "test": "./setup_test_environment.sh && python -m pytest",
+    "build": "pip install .[test,docs]"
   }
 }

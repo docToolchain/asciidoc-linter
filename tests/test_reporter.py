@@ -171,3 +171,29 @@ def test_html_reporter_styling(sample_report):
     assert "<style>" in output
     assert "table {" in output
     assert "border-collapse: collapse" in output
+
+
+def test_console_reporter_with_attributes_and_roles():
+    """Test formatting errors with headings followed by attributes or roles"""
+    findings = [
+        Finding(
+            message="Section title should be followed by a blank line",
+            severity=Severity.WARNING,
+            file="test.adoc",
+            position=Position(line=2),
+            rule_id="WS001",
+        ),
+        Finding(
+            message="Section title should be preceded by a blank line",
+            severity=Severity.WARNING,
+            file="test.adoc",
+            position=Position(line=4),
+            rule_id="WS001",
+        ),
+    ]
+    report = LintReport(findings)
+    reporter = ConsoleReporter(enable_color=False)
+    lines = reporter.format_report(report).split("\n")
+    assert "Results for test.adoc:" in lines
+    assert "✗ test.adoc, line 2: Section title should be followed by a blank line" in lines
+    assert "✗ test.adoc, line 4: Section title should be preceded by a blank line" in lines

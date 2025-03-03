@@ -308,5 +308,61 @@ class TestMultipleTopLevelHeadingsRule(unittest.TestCase):
         )
 
 
+class TestHeadingAttributesAndRoles(unittest.TestCase):
+    """Tests for headings with attributes and roles.
+    This rule ensures that headings with attributes and roles are properly handled.
+    """
+
+    def setUp(self):
+        """
+        Given a HeadingFormatRule instance
+        """
+        self.rule = HeadingFormatRule()
+
+    def test_heading_with_attributes(self):
+        """
+        Given a document with headings followed by attributes
+        When the heading format rule is checked
+        Then no findings should be reported
+        """
+        # Given: A document with headings followed by attributes
+        content = """
+= Level 1
+:attribute: value
+
+== Level 2
+:another-attribute: value
+"""
+        # When: We check the heading format
+        findings = self.rule.check(content)
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings), 0, "Headings followed by attributes should not produce findings"
+        )
+
+    def test_heading_with_roles(self):
+        """
+        Given a document with headings preceded by roles
+        When the heading format rule is checked
+        Then no findings should be reported
+        """
+        # Given: A document with headings preceded by roles
+        content = """
+[.role]
+= Level 1
+
+[[target]]
+== Level 2
+"""
+        # When: We check the heading format
+        findings = self.rule.check(content)
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings), 0, "Headings preceded by roles should not produce findings"
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,36 +1,37 @@
-# ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision
+= ADR-007-rule-registry-enhancement.adoc - Rule Registry Enhancement Decision
 
 == ADR 7: Rule Registry Enhancement
 
 === Status
+
 Proposed
 
 === Context
+
 Current rule registry implementation lacks:
-* Test coverage
-* Clear registration mechanism
-* Version handling
-* Rule dependency management
+* Test coverage * Clear registration mechanism * Version handling * Rule dependency management
 
 === Decision
+
 We will enhance the rule registry:
 
 1. *Registration*
-   * Add explicit registration decorator
-   * Support rule dependencies
-   * Add version information
+* Add explicit registration decorator
+* Support rule dependencies
+* Add version information
 
 2. *Management*
-   * Add rule enabling/disabling
-   * Support rule groups
-   * Add configuration validation
+* Add rule enabling/disabling
+* Support rule groups
+* Add configuration validation
 
 3. *Testing*
-   * Add comprehensive test suite
-   * Test all registration scenarios
-   * Test configuration handling
+* Add comprehensive test suite
+* Test all registration scenarios
+* Test configuration handling
 
 === Consequences
+
 * *Positive*
 ** Better rule management
 ** Clear registration process
@@ -40,5 +41,6 @@ We will enhance the rule registry:
 ** Additional maintenance overhead
 
 === Related Diagrams
+
 image::../images/decisions/rule-registry-components.png[Rule Registry Components]
 image::../images/decisions/rule-registration-flow.png[Rule Registration Flow]

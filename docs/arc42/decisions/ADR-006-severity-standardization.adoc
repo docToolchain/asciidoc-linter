@@ -1,35 +1,37 @@
-# ADR-006-severity-standardization.adoc - Severity Standardization Decision
+= ADR-006-severity-standardization.adoc - Severity Standardization Decision
 
 == ADR 6: Severity Standardization
 
 === Status
+
 Proposed
 
 === Context
+
 Current implementation has inconsistent severity level handling:
-* Mixed case usage (ERROR vs error)
-* Inconsistent severity levels across rules
-* No clear guidelines for severity assignment
+* Mixed case usage (ERROR vs error) * Inconsistent severity levels across rules * No clear guidelines for severity assignment
 
 === Decision
+
 We will standardize severity handling:
 
 1. *Severity Levels*
-   * ERROR: Issues that must be fixed
-   * WARNING: Issues that should be reviewed
-   * INFO: Suggestions for improvement
+* ERROR: Issues that must be fixed
+* WARNING: Issues that should be reviewed
+* INFO: Suggestions for improvement
 
 2. *Implementation*
-   * Use lowercase for internal representation
-   * Provide case-sensitive display methods
-   * Add severity level documentation
+* Use lowercase for internal representation
+* Provide case-sensitive display methods
+* Add severity level documentation
 
 3. *Migration*
-   * Update all existing rules
-   * Add validation in base class
-   * Update tests to use new standard
+* Update all existing rules
+* Add validation in base class
+* Update tests to use new standard
 
 === Consequences
+
 * *Positive*
 ** Consistent severity handling
 ** Clear guidelines for new rules
@@ -39,4 +41,5 @@ We will standardize severity handling:
 ** Potential backward compatibility issues
 
 === Related Diagrams
+
 image::../images/decisions/severity-state-diagram.png[Severity State Diagram]

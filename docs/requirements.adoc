@@ -146,17 +146,20 @@ The rules are organized into the following categories:
 == Implementation Phases
 
 === Phase 1 - Core Rules (Completed)
+
 * ✅ Heading hierarchy and format (HEAD001, HEAD002, HEAD003)
 * ✅ Block termination and spacing (BLOCK001, BLOCK002)
 * ✅ Whitespace rules (WS001)
 * ✅ Image validation (IMG001)
 
 === Phase 2 - Enhancement Rules (Current)
+
 * 🔲 Table validation (TABLE001, TABLE002, TABLE003)
 * 🔲 Format rules (FMT001, FMT002, FMT003)
 * 🔲 Link validation (LINK001, LINK002)
 
 === Phase 3 - Polish Rules (Planned)
+
 * 🔲 IDE integration
 * 🔲 Git pre-commit hooks
 * 🔲 Custom rule development
@@ -181,16 +184,19 @@ The linter supports the following output formats:
 == Future Considerations
 
 === Technical Enhancements
+
 * Performance optimization for large documents
 * Parallel processing for multiple files
 * Incremental checking for changed files only
 
 === Integration Features
+
 * IDE plugins (VS Code, IntelliJ)
 * CI/CD pipeline integration
 * Pre-commit hook templates
 
 === Rule Development
+
 * Rule development guide
 * Custom rule API
 * Rule testing framework

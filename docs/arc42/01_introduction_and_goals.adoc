@@ -4,7 +4,8 @@
 
 === Requirements Overview
 
-The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents. It helps teams maintain high-quality documentation by enforcing style rules and best practices.
+The AsciiDoc Linter is a tool designed to ensure consistent formatting and structure in AsciiDoc documents.
+It helps teams maintain high-quality documentation by enforcing style rules and best practices.
 
 Key requirements include:
 

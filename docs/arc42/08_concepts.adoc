@@ -47,16 +47,19 @@ package "Domain Model" {
 === Security Concepts
 
 ==== Authentication and Authorization
+
 * Package distribution secured via PyPI authentication
 * Configuration files with restricted access
 * Signed releases with GPG keys
 
 ==== Input Validation
+
 * Strict content validation
 * Safe file handling
 * Memory usage limits
 
 ==== Output Sanitization
+
 * Escaped error messages
 * Safe file paths handling
 * Controlled error reporting

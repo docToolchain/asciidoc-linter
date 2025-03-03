@@ -3,7 +3,8 @@
 
 == About the Project
 
-AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.
+AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation.
+It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.
 
 As part of the docToolchain project (https://doctoolchain.org), it integrates well with existing documentation workflows.
 
@@ -65,7 +66,8 @@ As part of the docToolchain project (https://doctoolchain.org), it integrates we
 
 [NOTE]
 ====
-Direct installation via pip is planned for future releases. Currently, installation is done via git clone.
+Direct installation via pip is planned for future releases.
+Currently, installation is done via git clone.
 ====
 
 [source,bash]

@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -e .
 RUN pip install pyyaml
 
 # Set the entry point to the linter CLI
-ENTRYPOINT ["asciidoc-lint"]
+ENTRYPOINT ["asciidoc-linter"]

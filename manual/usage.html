@@ -217,15 +217,15 @@
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link active" href="../manual/index.html"><span>manual</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
                 <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
                 <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
-            </li>
-
-            <li class="nav-item mr-4 mb-2 mb-lg-0">
-                <a class="nav-link active" href="../manual/index.html"><span>manual</span></a>
             </li>
 
             <li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -380,7 +380,13 @@ asciidoc-lint doc1.adoc doc2.adoc
 asciidoc-lint --format json document.adoc
 
 # Use specific configuration
-asciidoc-lint --config my-config.yml document.adoc</code></pre>
+asciidoc-lint --config my-config.yml document.adoc
+
+# Enable verbose output
+asciidoc-lint --verbose document.adoc
+
+# Enable debug output
+asciidoc-lint --debug document.adoc</code></pre>
 </div>
 </div>
 </div>
@@ -416,6 +422,11 @@ asciidoc-lint --config my-config.yml document.adoc</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable verbose output</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable debug output</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">--quiet</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Suppress non-error output</p></td>
@@ -437,6 +448,9 @@ rules:
     severity: error
   HEAD002:
     enabled: true
+    severity: warning
+  WS001:
+    enabled: false
     severity: warning</code></pre>
 </div>
 </div>

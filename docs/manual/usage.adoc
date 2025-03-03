@@ -7,22 +7,22 @@
 [source,bash]
 ----
 # Check a single file
-asciidoc-lint document.adoc
+asciidoc-linter document.adoc
 
 # Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
+asciidoc-linter doc1.adoc doc2.adoc
 
 # Check with specific output format
-asciidoc-lint --format json document.adoc
+asciidoc-linter --format json document.adoc
 
 # Use specific configuration
-asciidoc-lint --config my-config.yml document.adoc
+asciidoc-linter --config my-config.yml document.adoc
 
 # Enable verbose output
-asciidoc-lint --verbose document.adoc
+asciidoc-linter --verbose document.adoc
 
 # Enable debug output
-asciidoc-lint --debug document.adoc
+asciidoc-linter --debug document.adoc
 ----
 
 === Command Line Options
@@ -122,7 +122,7 @@ Generates a detailed HTML report with:
 #!/bin/sh
 files=$(git diff --cached --name-only --diff-filter=ACM | grep '.adoc$')
 if [ -n "$files" ]; then
-    asciidoc-lint $files
+    asciidoc-linter $files
 fi
 ----
 
@@ -141,7 +141,7 @@ jobs:
       - name: Lint Documentation
         run: |
           pip install asciidoc-linter
-          asciidoc-lint docs/
+          asciidoc-linter docs/
 ----
 
 == Best Practices
@@ -184,8 +184,8 @@ jobs:
 [source,bash]
 ----
 # Enable debug output
-asciidoc-lint --debug document.adoc
+asciidoc-linter --debug document.adoc
 
 # Show rule processing details
-asciidoc-lint --verbose document.adoc
+asciidoc-linter --verbose document.adoc
 ----

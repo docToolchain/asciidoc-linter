@@ -87,13 +87,13 @@ pip install .
 [source,bash]
 ----
 # Check a single file
-asciidoc-lint document.adoc
+asciidoc-linter document.adoc
 
 # Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
+asciidoc-linter doc1.adoc doc2.adoc
 
 # Get help
-asciidoc-lint --help
+asciidoc-linter --help
 ----
 
 == Current Status

@@ -22,7 +22,11 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    "pyyaml",  # Add this line
 ]
 
 [project.optional-dependencies]
@@ -32,7 +36,6 @@ test = [
     "coverage>=7.0.0",
     "pytest-html>=4.1.1",
     "pytest-metadata>=3.1.1",
-    "pyyaml"
 ]
 
 [tool.pytest.ini_options]

@@ -1,17 +1,21 @@
-# ADR-001-rule-base-class.adoc - Rule Base Class Design Decision
+= ADR-001-rule-base-class.adoc - Rule Base Class Design Decision
 
 == ADR 1: Rule Base Class Design
 
 === Status
+
 Accepted
 
 === Context
+
 We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.
 
 === Decision
+
 We will use an abstract base class `Rule` with a defined interface that all concrete rules must implement.
 
 === Consequences
+
 * *Positive*
 ** Consistent interface for all rules
 ** Easy to add new rules

@@ -1,17 +1,21 @@
-# ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision
+= ADR-003-rule-implementation-strategy.adoc - Rule Implementation Strategy Decision
 
 == ADR 3: Rule Implementation Strategy
 
 === Status
+
 Accepted
 
 === Context
+
 Rules need to process AsciiDoc content and identify violations efficiently.
 
 === Decision
+
 Each rule will process the content line by line, using regular expressions for pattern matching.
 
 === Consequences
+
 * *Positive*
 ** Simple implementation
 ** Good performance for most cases

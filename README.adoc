@@ -5,16 +5,18 @@
 :source-highlighter: rouge
 :experimental:
 
-image:https://img.shields.io/badge/license-MIT-blue.svg[License: MIT, link=https://opensource.org/licenses/MIT]
+image:https://img.shields.io/badge/license-MIT-blue.svg[License: MIT,link=https://opensource.org/licenses/MIT]
 image:https://img.shields.io/badge/python-3.8+-blue.svg[Python Version]
 image:https://img.shields.io/badge/test--coverage-95%25-green.svg[Test Coverage]
 image:https://img.shields.io/badge/tests-97%25-green.svg[Test Success Rate]
 
-A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style. Part of the docToolchain project.
+A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style.
+Part of the docToolchain project.
 
 == About
 
-AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations. It helps maintain consistent documentation by enforcing rules for heading structure, formatting, whitespace, and image usage.
+AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations.
+It helps maintain consistent documentation by enforcing rules for heading structure, formatting, whitespace, and image usage.
 
 [NOTE]
 ====
@@ -209,7 +211,9 @@ asciidoc-linter/
 
 == Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+Contributions are welcome!
+Please feel free to submit a Pull Request.
+For major changes, please open an issue first to discuss what you would like to change.
 
 === Development Guidelines
 

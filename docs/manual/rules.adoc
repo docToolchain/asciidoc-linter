@@ -9,7 +9,8 @@ Ensures proper heading level incrementation (no skipped levels).
 
 ==== Description
 
-This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.
+This rule checks that heading levels are not skipped.
+For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.
 
 ==== Examples
 
@@ -40,8 +41,7 @@ Ensures proper heading format (spacing and capitalization).
 ==== Description
 
 This rule checks two aspects of heading format:
-1. There must be a space after the = characters
-2. The heading text should start with an uppercase letter
+1. There must be a space after the = characters 2. The heading text should start with an uppercase letter
 
 ==== Examples
 
@@ -66,7 +66,8 @@ Ensures document has only one top-level heading.
 
 ==== Description
 
-This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.
+This rule checks that there is only one level 1 heading (=) in the document.
+Multiple top-level headings can indicate structural problems or accidentally split documents.
 
 ==== Examples
 
@@ -97,7 +98,8 @@ Checks for blocks that are not properly terminated.
 
 ==== Description
 
-This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.
+This rule ensures that all block delimiters are properly paired.
+Each opening delimiter must have a matching closing delimiter.
 
 ==== Supported Block Types
 
@@ -117,8 +119,10 @@ This rule ensures that all block delimiters are properly paired. Each opening de
 ----
 [source,python]
 ----
+
 def hello():
-    print("Hello, World!")
+print("Hello, World!")
+
 ----
 
 .Example Block
@@ -132,8 +136,9 @@ Some example content
 ----
 [source,python]
 ----
+
 def hello():
-    print("Hello, World!")
+print("Hello, World!")
 // Error: Missing closing ----
 
 .Example Block
@@ -155,6 +160,7 @@ This rule checks that blocks are properly separated from surrounding content wit
 .Valid Block Spacing
 [source,asciidoc]
 ----
+
 Some text before the block.
 
 ----
@@ -162,14 +168,16 @@ Block content
 ----
 
 Some text after the block.
+
 ----
 
 .Invalid Block Spacing
 [source,asciidoc]
 ----
+
 Some text before the block.
-----  // Warning: No blank line before block
-Block content
+---- // Warning: No blank line before block Block content
+
 ----
 Some text after the block.  // Warning: No blank line after block
 ----
@@ -229,10 +237,7 @@ Verifies image attributes and file references.
 ==== Description
 
 This rule checks:
-1. All images have alt text
-2. Referenced local images exist
-3. Block images have titles
-4. Image attributes are properly formatted
+1. All images have alt text 2. Referenced local images exist 3. Block images have titles 4. Image attributes are properly formatted
 
 ==== Examples
 
@@ -268,21 +273,15 @@ image::missing.png[Missing Image]
 === TABLE001: Table Formatting (Planned)
 
 Will check table formatting consistency:
-* Column alignment
-* Header row presence
-* Cell content formatting
+* Column alignment * Header row presence * Cell content formatting
 
 === LINK001: Link Verification (Planned)
 
 Will verify:
-* Internal cross-references
-* External link validity
-* Anchor definitions
+* Internal cross-references * External link validity * Anchor definitions
 
 === FMT001: Format Consistency (Planned)
 
 Will check:
-* Consistent emphasis style
-* List formatting
-* Admonition usage
+* Consistent emphasis style * List formatting * Admonition usage
 

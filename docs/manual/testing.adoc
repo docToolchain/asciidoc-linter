@@ -19,18 +19,21 @@ The testing strategy for the AsciiDoc Linter aims to:
 === Test Levels
 
 ==== Unit Tests
+
 * Test individual rules in isolation
 * Verify rule logic and error detection
 * Cover edge cases and special scenarios
 * Test configuration options
 
 ==== Integration Tests
+
 * Test interaction between parser and rules
 * Verify correct document processing
 * Test CLI interface and options
 * Test reporter output formats
 
 ==== System Tests
+
 * End-to-end testing of the linter
 * Test with real AsciiDoc documents
 * Verify correct error reporting
@@ -122,12 +125,14 @@ def test_integration_pattern(self):
 === Test Data Management
 
 ==== Test Documents
+
 * Maintain a collection of test documents
 * Include both valid and invalid examples
 * Document the purpose of each test file
 * Version control test data
 
 ==== Test Fixtures
+
 * Use pytest fixtures for common setup
 * Share test data between related tests
 * Clean up test environment after each test
@@ -243,6 +248,7 @@ class TestRuleName(unittest.TestCase):
 === Test Checklists
 
 ==== New Feature Checklist
+
 * [ ] Unit tests written
 * [ ] Integration tests updated
 * [ ] System tests verified
@@ -250,6 +256,7 @@ class TestRuleName(unittest.TestCase):
 * [ ] Documentation updated
 
 ==== Test Review Checklist
+
 * [ ] Tests follow patterns
 * [ ] Coverage adequate
 * [ ] Edge cases covered

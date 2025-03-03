@@ -6,22 +6,29 @@ This chapter contains all architecture decisions for the AsciiDoc Linter project
 Each decision is documented in a separate file and included here.
 
 === ADR 1: Rule Base Class Design
+
 include::decisions/ADR-001-rule-base-class.adoc[leveloffset=+2]
 
 === ADR 2: Finding Data Structure
+
 include::decisions/ADR-002-finding-data-structure.adoc[leveloffset=+2]
 
 === ADR 3: Rule Implementation Strategy
+
 include::decisions/ADR-003-rule-implementation-strategy.adoc[leveloffset=+2]
 
 === ADR 4: Test Strategy
+
 include::decisions/ADR-004-test-strategy.adoc[leveloffset=+2]
 
 === ADR 5: Table Processing Strategy
+
 include::decisions/ADR-005-table-processing-strategy.adoc[leveloffset=+2]
 
 === ADR 6: Severity Standardization
+
 include::decisions/ADR-006-severity-standardization.adoc[leveloffset=+2]
 
 === ADR 7: Rule Registry Enhancement
+
 include::decisions/ADR-007-rule-registry-enhancement.adoc[leveloffset=+2]

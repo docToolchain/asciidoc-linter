@@ -1,17 +1,21 @@
-# ADR-002-finding-data-structure.adoc - Finding Data Structure Decision
+= ADR-002-finding-data-structure.adoc - Finding Data Structure Decision
 
 == ADR 2: Finding Data Structure
 
 === Status
+
 Accepted
 
 === Context
+
 Rule violations need to be reported in a consistent and informative way.
 
 === Decision
+
 We will use a `Finding` data class with fields for message, severity, position, rule ID, and context.
 
 === Consequences
+
 * *Positive*
 ** Structured error reporting
 ** Rich context for violations

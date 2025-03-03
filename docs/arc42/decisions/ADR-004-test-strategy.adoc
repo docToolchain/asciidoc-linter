@@ -1,17 +1,21 @@
-# ADR-004-test-strategy.adoc - Test Strategy Decision
+= ADR-004-test-strategy.adoc - Test Strategy Decision
 
 == ADR 4: Test Strategy
 
 === Status
+
 Accepted
 
 === Context
+
 Rules need to be thoroughly tested to ensure reliable operation.
 
 === Decision
+
 Each rule will have its own test class with multiple test methods covering various scenarios.
 
 === Consequences
+
 * *Positive*
 ** High test coverage
 ** Clear test organization

@@ -5,16 +5,19 @@
 === Current Issues (December 2024)
 
 ==== Test Failures
+
 * 3 failed tests in table processing
 * Issues with cell extraction and list detection
 * Impact on table validation reliability
 
 ==== Coverage Gaps
+
 * rules.py: 0% coverage
 * reporter.py: 85% coverage
 * block_rules.py: 89% coverage
 
 ==== Implementation Issues
+
 * Inconsistent severity case handling
 * Missing rule_id attribute in base class
 * Table content validation problems
@@ -229,16 +232,19 @@ SHOW_LEGEND()
 === Mitigation Strategy
 
 ==== Phase 1: Critical Issues (1-2 weeks)
+
 1. Fix table processing
 2. Add missing tests
 3. Standardize severity handling
 
 ==== Phase 2: Important Improvements (2-3 weeks)
+
 1. Improve documentation
 2. Enhance error handling
 3. Add configuration options
 
 ==== Phase 3: Long-term Stability (3-4 weeks)
+
 1. Performance optimization
 2. Memory management
 3. Plugin architecture improvements

@@ -83,13 +83,13 @@ pip install .
 [source,bash]
 ----
 # Check a single file
-asciidoc-lint document.adoc
+asciidoc-linter document.adoc
 
 # Check multiple files
-asciidoc-lint doc1.adoc doc2.adoc
+asciidoc-linter doc1.adoc doc2.adoc
 
 # Check with specific output format
-asciidoc-lint --format json document.adoc
+asciidoc-linter --format json document.adoc
 ----
 
 === Output Formats

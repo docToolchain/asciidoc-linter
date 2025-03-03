@@ -5,6 +5,7 @@ Main linter module that processes AsciiDoc files and applies rules
 
 from typing import List
 from pathlib import Path
+import yaml
 
 from .rules.base import Finding, Severity
 from .rules.heading_rules import (
@@ -22,7 +23,7 @@ from .reporter import LintReport
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
 
-    def __init__(self):
+    def __init__(self, config_path: str = None):
         self.parser = AsciiDocParser()
         self.rules = [
             HeadingFormatRule(),
@@ -33,6 +34,7 @@ class AsciiDocLinter:
             WhitespaceRule(),
             ImageAttributesRule(),
         ]
+        self.config_path = config_path
 
     def lint(self, file_paths: List[str]) -> LintReport:
         """
@@ -40,10 +42,32 @@ class AsciiDocLinter:
 
         This is the main entry point used by the CLI
         """
+        if self.config_path:
+            self.load_config(self.config_path)
+
         all_findings = []
         for file_path in file_paths:
             all_findings.extend(self.lint_file(file_path))
         return LintReport(all_findings)
+
+    def load_config(self, config_path: str) -> None:
+        """Load configuration from a YAML file"""
+        try:
+            with open(config_path, "r") as config_file:
+                config = yaml.safe_load(config_file)
+                self.apply_config(config)
+        except Exception as e:
+            print(f"Error loading config file: {e}")
+
+    def apply_config(self, config: dict) -> None:
+        """Apply configuration to the linter"""
+        rules_config = config.get("rules", {})
+        for rule in self.rules:
+            rule_config = rules_config.get(rule.id, {})
+            if not rule_config.get("enabled", True):
+                self.rules.remove(rule)
+            else:
+                rule.severity = Severity(rule_config.get("severity", rule.severity))
 
     def lint_file(self, file_path: Path) -> List[Finding]:
         """Lint a single file and return a report"""

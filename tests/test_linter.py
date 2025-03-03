@@ -163,3 +163,24 @@ def test_integration_with_real_rules(tmp_path, sample_asciidoc):
     report = linter.lint([test_file])
     assert isinstance(report, LintReport)
     # Note: actual number of errors depends on the implemented rules
+
+
+def test_lint_with_config_file(tmp_path, sample_asciidoc):
+    """Test linting with a configuration file that disables a rule"""
+    test_file = tmp_path / "test.adoc"
+    test_file.write_text(sample_asciidoc)
+
+    config_file = tmp_path / ".asciidoc-lint.yml"
+    config_file.write_text(
+        """
+rules:
+  WS001:
+    enabled: false
+"""
+    )
+
+    linter = AsciiDocLinter(config_path=config_file)
+    report = linter.lint([test_file])
+
+    # Ensure that the WS001 rule is disabled and no findings are reported
+    assert len(report.findings) == 0

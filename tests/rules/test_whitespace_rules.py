@@ -261,6 +261,29 @@ class TestWhitespaceRule(unittest.TestCase):
             len(findings), 0, "Well-formatted document should not produce any findings"
         )
 
+    def test_ws001_rule_can_be_disabled(self):
+        """
+        Given a document with various whitespace issues
+        When the WS001 rule is disabled
+        Then no findings should be reported
+        """
+        # Given: A document with various whitespace issues
+        content = [
+            "Line with trailing space ",
+            "\tLine with tab",
+            "== Section Title",
+            "No space after",
+        ]
+
+        # When: The WS001 rule is disabled
+        self.rule.enabled = False
+        findings = self.rule.check(content)
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings), 0, "Disabled WS001 rule should not produce any findings"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

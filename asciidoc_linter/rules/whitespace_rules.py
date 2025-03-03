@@ -15,9 +15,12 @@ class WhitespaceRule(Rule):
     def __init__(self):
         super().__init__()
         self.consecutive_empty_lines = 0
+        self.enabled = True
 
     def check(self, document: List[Union[str, object]]) -> List[Finding]:
         """Check the entire document for whitespace issues."""
+        if not self.enabled:
+            return []
         findings = []
         for line_number, line in enumerate(document):
             findings.extend(self.check_line(line, line_number, document))

@@ -24,6 +24,8 @@ class TestCliArgumentParsing(unittest.TestCase):
         self.assertEqual(args.files, ["test.adoc"])
         self.assertEqual(args.format, "console")
         self.assertIsNone(args.config)
+        self.assertFalse(args.verbose)
+        self.assertFalse(args.debug)
 
     def test_multiple_files(self):
         """Test parsing multiple file arguments"""
@@ -60,6 +62,20 @@ class TestCliArgumentParsing(unittest.TestCase):
         parser = create_parser()
         with self.assertRaises(SystemExit):
             parser.parse_args(["test.adoc", "--format", "invalid"])
+
+    def test_verbose_option(self):
+        """Test verbose option"""
+        parser = create_parser()
+        args = parser.parse_args(["test.adoc", "--verbose"])
+
+        self.assertTrue(args.verbose)
+
+    def test_debug_option(self):
+        """Test debug option"""
+        parser = create_parser()
+        args = parser.parse_args(["test.adoc", "--debug"])
+
+        self.assertTrue(args.debug)
 
 
 class TestCliFileProcessing(unittest.TestCase):

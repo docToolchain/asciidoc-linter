@@ -1,4 +1,3 @@
-// usage.adoc - Usage guide
 = Usage Guide
 
 == Command Line Interface
@@ -18,6 +17,12 @@ asciidoc-lint --format json document.adoc
 
 # Use specific configuration
 asciidoc-lint --config my-config.yml document.adoc
+
+# Enable verbose output
+asciidoc-lint --verbose document.adoc
+
+# Enable debug output
+asciidoc-lint --debug document.adoc
 ----
 
 === Command Line Options
@@ -38,6 +43,10 @@ asciidoc-lint --config my-config.yml document.adoc
 |False
 |Enable verbose output
 
+|--debug
+|False
+|Enable debug output
+
 |--quiet
 |False
 |Suppress non-error output
@@ -56,6 +65,9 @@ rules:
     severity: error
   HEAD002:
     enabled: true
+    severity: warning
+  WS001:
+    enabled: false
     severity: warning
 ----
 

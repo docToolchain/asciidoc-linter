@@ -121,7 +121,7 @@ class WhitespaceRule(Rule):
             # Check for blank line before section title (except for first line)
             if line_number > 0:
                 prev_content = self.get_line_content(context[line_number - 1])
-                if prev_content.strip():
+                if prev_content.strip() and not prev_content.strip().startswith(("[.", "[[")):
                     findings.append(
                         Finding(
                             rule_id=self.id,
@@ -135,7 +135,7 @@ class WhitespaceRule(Rule):
             # Check for blank line after section title (except for last line)
             if line_number < len(context) - 1:
                 next_content = self.get_line_content(context[line_number + 1])
-                if next_content.strip():
+                if next_content.strip() and not next_content.strip().startswith(":"):
                     findings.append(
                         Finding(
                             rule_id=self.id,

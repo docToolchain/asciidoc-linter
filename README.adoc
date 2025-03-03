@@ -140,6 +140,57 @@ WARNING: Missing alt text for image: diagram.png (line 80)
   image::diagram.png[]
 ----
 
+== Using AsciiDoc Linter as a GitHub Action
+
+You can use the AsciiDoc Linter as a GitHub Action to automatically lint your AsciiDoc files on every push or pull request. To do this, create a new workflow file in your repository (e.g., `.github/workflows/asciidoc-linter.yml`) with the following content:
+
+[source,yaml]
+----
+name: AsciiDoc Linter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t asciidoc-linter .
+
+      - name: Run AsciiDoc Linter
+        run: docker run --rm asciidoc-linter
+----
+
+== Using AsciiDoc Linter with Docker
+
+You can also use the AsciiDoc Linter as a Docker image to avoid installing Python and dependencies on your local machine. To do this, follow these steps:
+
+1. Build the Docker image:
+
+[source,bash]
+----
+docker build -t asciidoc-linter .
+----
+
+2. Run the AsciiDoc Linter using the Docker image:
+
+[source,bash]
+----
+docker run --rm -v $(pwd):/app asciidoc-linter document.adoc
+----
+
+Replace `document.adoc` with the path to the AsciiDoc file you want to lint. The `-v $(pwd):/app` option mounts the current directory to the `/app` directory inside the Docker container, allowing the linter to access your files.
+
 == Development
 
 === Current Status

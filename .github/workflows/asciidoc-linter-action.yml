@@ -20,4 +20,4 @@ jobs:
         run: docker build -t asciidoc-linter .
 
       - name: Run AsciiDoc Linter
-        run: docker run --rm asciidoc-linter
+        run: docker run --rm asciidoc-linter .

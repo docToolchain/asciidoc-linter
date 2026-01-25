@@ -16,7 +16,11 @@ from .rules.heading_rules import (
 from .rules.block_rules import UnterminatedBlockRule, BlockSpacingRule
 from .rules.whitespace_rules import WhitespaceRule
 from .rules.image_rules import ImageAttributesRule
-from .rules.format_rules import MarkdownSyntaxRule, ExplicitNumberedListRule
+from .rules.format_rules import (
+    MarkdownSyntaxRule,
+    ExplicitNumberedListRule,
+    NonSemanticDefinitionListRule,
+)
 from .parser import AsciiDocParser
 from .reporter import LintReport
 
@@ -36,6 +40,7 @@ class AsciiDocLinter:
             ImageAttributesRule(),
             MarkdownSyntaxRule(),
             ExplicitNumberedListRule(),
+            NonSemanticDefinitionListRule(),
         ]
         self.config_path = config_path
 
@@ -99,7 +104,13 @@ class AsciiDocLinter:
         for rule in self.rules:
             # These rules need raw lines, not parsed elements
             if isinstance(
-                rule, (WhitespaceRule, MarkdownSyntaxRule, ExplicitNumberedListRule)
+                rule,
+                (
+                    WhitespaceRule,
+                    MarkdownSyntaxRule,
+                    ExplicitNumberedListRule,
+                    NonSemanticDefinitionListRule,
+                ),
             ):
                 rule_findings = rule.check(raw_lines)
             else:

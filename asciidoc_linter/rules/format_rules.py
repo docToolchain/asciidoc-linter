@@ -360,3 +360,146 @@ class ExplicitNumberedListRule(Rule):
             )
 
         return findings
+
+
+class NonSemanticDefinitionListRule(Rule):
+    """
+    FMT002: Detect non-semantic definition list patterns in AsciiDoc files.
+
+    This rule detects common patterns that LLMs use to create "fake" definition
+    lists instead of proper AsciiDoc Definition List syntax (Term:: Definition).
+
+    Detected patterns:
+    - *Term*: definition (single asterisk bold)
+    - **Term**: definition (double asterisk bold)
+    - - *Term*: definition (list item with bold term)
+    - * *Term*: definition (list item with bold term)
+    """
+
+    id = "FMT002"
+    name = "Non-Semantic Definition List Detection"
+    description = (
+        "Detects non-semantic definition list patterns and suggests "
+        "using AsciiDoc 'Term:: Definition' syntax"
+    )
+    severity = Severity.WARNING
+
+    # Regex patterns for non-semantic definition lists
+    # Pattern 1: *Term*: at start of line (single asterisk)
+    SINGLE_BOLD_TERM_PATTERN = re.compile(r"^\*([^*]+)\*:\s+")
+
+    # Pattern 2: **Term**: at start of line (double asterisk)
+    DOUBLE_BOLD_TERM_PATTERN = re.compile(r"^\*\*([^*]+)\*\*:\s+")
+
+    # Pattern 3: - *Term*: (list item with bold term, single asterisk)
+    LIST_SINGLE_BOLD_PATTERN = re.compile(r"^-\s+\*([^*]+)\*:\s+")
+
+    # Pattern 4: * *Term*: (asterisk list item with bold term)
+    ASTERISK_LIST_BOLD_PATTERN = re.compile(r"^\*\s+\*([^*]+)\*:\s+")
+
+    # AsciiDoc block delimiters that indicate code/literal blocks
+    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
+
+    def __init__(self):
+        super().__init__()
+        self.enabled = True
+
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        """Check the entire document for non-semantic definition list patterns."""
+        if not self.enabled:
+            return []
+
+        findings = []
+        in_code_block = False
+        current_delimiter = None
+
+        for line_number, line in enumerate(document):
+            line_content = self._get_line_content(line)
+            stripped = line_content.strip()
+
+            # Check for code block delimiters
+            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
+                if not in_code_block:
+                    in_code_block = True
+                    current_delimiter = stripped
+                elif stripped == current_delimiter:
+                    in_code_block = False
+                    current_delimiter = None
+                continue
+
+            # Skip content inside code blocks
+            if in_code_block:
+                continue
+
+            findings.extend(self._check_line(line_content, line_number))
+
+        return findings
+
+    def _get_line_content(self, line: Union[str, object]) -> str:
+        """Extract the content from a line object or return the line if it's a string."""
+        if hasattr(line, "content"):
+            return line.content
+        return str(line)
+
+    def _check_line(self, line: str, line_number: int) -> List[Finding]:
+        """Check a single line for non-semantic definition list patterns."""
+        findings = []
+
+        # Skip empty lines
+        if not line.strip():
+            return findings
+
+        # Skip AsciiDoc comments
+        if line.strip().startswith("//"):
+            return findings
+
+        # Skip AsciiDoc attributes (lines starting with :)
+        if line.strip().startswith(":"):
+            return findings
+
+        # Skip proper AsciiDoc definition lists (Term::)
+        if "::" in line and not line.strip().startswith("*"):
+            return findings
+
+        # Check for single bold term pattern: *Term*:
+        match = self.SINGLE_BOLD_TERM_PATTERN.match(line)
+        if match:
+            term = match.group(1)
+            findings.append(self._create_finding(term, line, line_number))
+            return findings  # Only report one finding per line
+
+        # Check for double bold term pattern: **Term**:
+        match = self.DOUBLE_BOLD_TERM_PATTERN.match(line)
+        if match:
+            term = match.group(1)
+            findings.append(self._create_finding(term, line, line_number))
+            return findings
+
+        # Check for list item with single bold: - *Term*:
+        match = self.LIST_SINGLE_BOLD_PATTERN.match(line)
+        if match:
+            term = match.group(1)
+            findings.append(self._create_finding(term, line, line_number))
+            return findings
+
+        # Check for asterisk list with bold: * *Term*:
+        match = self.ASTERISK_LIST_BOLD_PATTERN.match(line)
+        if match:
+            term = match.group(1)
+            findings.append(self._create_finding(term, line, line_number))
+            return findings
+
+        return findings
+
+    def _create_finding(self, term: str, line: str, line_number: int) -> Finding:
+        """Create a finding for a non-semantic definition list pattern."""
+        return Finding(
+            rule_id=self.id,
+            position=Position(line=line_number + 1),
+            message=(
+                f"Non-semantic definition list detected: use '{term}:: ' "
+                f"(AsciiDoc definition list syntax) instead"
+            ),
+            severity=self.severity,
+            context=line,
+        )

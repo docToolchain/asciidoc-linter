@@ -7,6 +7,7 @@ import pytest
 from asciidoc_linter.rules.format_rules import (
     MarkdownSyntaxRule,
     ExplicitNumberedListRule,
+    NonSemanticDefinitionListRule,
 )
 from asciidoc_linter.rules.base import Severity
 
@@ -473,3 +474,167 @@ class TestExplicitNumberedListRuleMetadata:
     def test_rule_severity(self, numbered_list_rule):
         """Test that rule has WARNING severity by default."""
         assert numbered_list_rule.severity == Severity.WARNING
+
+
+# =============================================================================
+# FMT002: Non-Semantic Definition List Detection Tests
+# =============================================================================
+
+
+@pytest.fixture
+def definition_list_rule():
+    """Create a NonSemanticDefinitionListRule instance for testing."""
+    return NonSemanticDefinitionListRule()
+
+
+class TestNonSemanticDefinitionListDetection:
+    """Tests for detecting non-semantic definition list patterns."""
+
+    def test_detects_single_asterisk_term_colon(self, definition_list_rule):
+        """Test detection of *Term*: pattern."""
+        content = ["*Term*: This is the definition"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 1
+        assert findings[0].rule_id == "FMT002"
+        assert "::" in findings[0].message
+
+    def test_detects_double_asterisk_term_colon(self, definition_list_rule):
+        """Test detection of **Term**: pattern."""
+        content = ["**Term**: This is the definition"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_list_item_with_bold_term(self, definition_list_rule):
+        """Test detection of - *Term*: pattern."""
+        content = ["- *Term*: This is the definition"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_asterisk_list_with_bold_term(self, definition_list_rule):
+        """Test detection of * *Term*: pattern."""
+        content = ["* *Term*: This is the definition"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_multiple_patterns(self, definition_list_rule):
+        """Test detection of multiple non-semantic patterns."""
+        content = [
+            "*First*: Definition one",
+            "**Second**: Definition two",
+            "- *Third*: Definition three",
+        ]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 3
+
+    def test_ignores_proper_definition_list(self, definition_list_rule):
+        """Test that proper AsciiDoc definition lists are not flagged."""
+        content = [
+            "Term:: Definition here",
+            "Another Term::",
+            "  Definition on next line",
+        ]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_inline_bold_in_sentence(self, definition_list_rule):
+        """Test that inline bold with colon in middle of sentence is not flagged."""
+        content = ["This sentence has *bold*: but it's not at the start"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_url_with_colon(self, definition_list_rule):
+        """Test that URLs are not flagged."""
+        content = ["Check out https://example.com for more info"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_time_format(self, definition_list_rule):
+        """Test that time formats are not flagged."""
+        content = ["The meeting starts at 10:30"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_inside_code_block(self, definition_list_rule):
+        """Test that patterns inside code blocks are not flagged."""
+        content = [
+            "Some text",
+            "----",
+            "*Term*: This is inside a code block",
+            "----",
+            "More text",
+        ]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_inside_literal_block(self, definition_list_rule):
+        """Test that patterns inside literal blocks are not flagged."""
+        content = [
+            "....",
+            "**Term**: Inside literal block",
+            "....",
+        ]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_detects_outside_code_block(self, definition_list_rule):
+        """Test that patterns outside code blocks are detected."""
+        content = [
+            "*Before*: Before code block",
+            "----",
+            "*Inside*: Inside code block",
+            "----",
+            "*After*: After code block",
+        ]
+        findings = definition_list_rule.check(content)
+
+        # Should detect only the ones outside
+        assert len(findings) == 2
+
+    def test_message_suggests_definition_list_syntax(self, definition_list_rule):
+        """Test that the message suggests using :: syntax."""
+        content = ["*Term*: Definition"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 1
+        assert (
+            "::" in findings[0].message
+            or "definition list" in findings[0].message.lower()
+        )
+
+    def test_ignores_asciidoc_attributes(self, definition_list_rule):
+        """Test that AsciiDoc attributes are not flagged."""
+        content = [":icons: font", ":toc: left"]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
+
+
+class TestNonSemanticDefinitionListRuleMetadata:
+    """Tests for FMT002 rule metadata."""
+
+    def test_rule_id(self, definition_list_rule):
+        """Test that rule has correct ID."""
+        assert definition_list_rule.id == "FMT002"
+
+    def test_rule_name(self, definition_list_rule):
+        """Test that rule has a name."""
+        assert definition_list_rule.name != ""
+
+    def test_rule_description(self, definition_list_rule):
+        """Test that rule has a description."""
+        assert definition_list_rule.description != ""
+
+    def test_rule_severity(self, definition_list_rule):
+        """Test that rule has WARNING severity by default."""
+        assert definition_list_rule.severity == Severity.WARNING

@@ -88,10 +88,15 @@ class AsciiDocLinter:
     def lint_string(self, content: str) -> List[Finding]:
         """Lint a string and return a report"""
         document = self.parser.parse(content)
+        raw_lines = content.splitlines()
         findings = []
 
         for rule in self.rules:
-            rule_findings = rule.check(document)
+            # WhitespaceRule needs raw lines, not parsed elements
+            if isinstance(rule, WhitespaceRule):
+                rule_findings = rule.check(raw_lines)
+            else:
+                rule_findings = rule.check(document)
             findings.extend(rule_findings)
 
         return findings

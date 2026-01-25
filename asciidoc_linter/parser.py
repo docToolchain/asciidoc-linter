@@ -47,5 +47,9 @@ class AsciiDocParser:
         for line_number, line in enumerate(content.splitlines(), 1):
             if line.startswith("="):
                 level = len(line) - len(line.lstrip("="))
-                elements.append(Header(line_number, line, level))
+                # Only treat as header if there's content after the = characters
+                # Block delimiters like ==== should not be treated as headers
+                rest = line[level:]
+                if rest.startswith(" ") and rest.strip():
+                    elements.append(Header(line_number, line, level))
         return elements

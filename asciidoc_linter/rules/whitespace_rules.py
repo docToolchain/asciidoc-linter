@@ -58,20 +58,35 @@ class WhitespaceRule(Rule):
             self.consecutive_empty_lines = 0
 
         # Check for proper list marker spacing
-        if line_content.lstrip().startswith(("*", "-", ".")):
-            marker = line_content.lstrip()[0]
-            content = line_content.lstrip()[1:]
+        stripped = line_content.lstrip()
+        if stripped.startswith(("*", "-", ".")):
+            # Skip block delimiters (----, ****, ....)
+            if stripped.rstrip() in ("----", "****", "....") or (
+                len(stripped) >= 4
+                and stripped.rstrip() == stripped[0] * len(stripped.rstrip())
+            ):
+                pass  # Block delimiter, not a list marker
+            else:
+                # Count consecutive markers for nested lists (**, ***, etc.)
+                marker = stripped[0]
+                marker_count = 0
+                for char in stripped:
+                    if char == marker:
+                        marker_count += 1
+                    else:
+                        break
+                content = stripped[marker_count:]
 
-            if not content.startswith(" "):
-                findings.append(
-                    Finding(
-                        rule_id=self.id,
-                        position=Position(line=line_number + 1),
-                        message=f"Missing space after the marker '{marker}'",
-                        severity=self.severity,
-                        context=line_content,
+                if content and not content.startswith(" "):
+                    findings.append(
+                        Finding(
+                            rule_id=self.id,
+                            position=Position(line=line_number + 1),
+                            message=f"Missing space after the marker '{marker * marker_count}'",
+                            severity=self.severity,
+                            context=line_content,
+                        )
                     )
-                )
 
         # Check for trailing whitespace
         if line_content.rstrip() != line_content:
@@ -106,43 +121,53 @@ class WhitespaceRule(Rule):
                     break
                 level += 1
 
-            # Check spacing after = characters
-            if len(line_content) > level and line_content[level] != " ":
-                findings.append(
-                    Finding(
-                        rule_id=self.id,
-                        position=Position(line=line_number + 1),
-                        message=f"Missing space after {'=' * level}",
-                        severity=self.severity,
-                        context=line_content,
-                    )
-                )
+            # Skip block delimiters (====) - they have only = characters
+            rest = line_content[level:]
+            is_section_title = rest.startswith(" ") and rest.strip()
 
-            # Check for blank line before section title (except for first line)
-            if line_number > 0:
-                prev_content = self.get_line_content(context[line_number - 1])
-                prev_content_stripped = prev_content.strip()
-                if prev_content_stripped and not prev_content_stripped.startswith(("[.", "[[")):
-                    findings.append(
-                        Finding(
-                            rule_id=self.id,
-                            position=Position(line=line_number + 1),
-                            message="Section title should be preceded by a blank line",
-                            severity=self.severity,
-                            context=line_content,
+            if is_section_title:
+                # Check for blank line before section title (except for first line)
+                if line_number > 0:
+                    prev_content = self.get_line_content(context[line_number - 1])
+                    prev_content_stripped = prev_content.strip()
+                    if prev_content_stripped and not prev_content_stripped.startswith(
+                        ("[.", "[[")
+                    ):
+                        findings.append(
+                            Finding(
+                                rule_id=self.id,
+                                position=Position(line=line_number + 1),
+                                message="Section title should be preceded by a blank line",
+                                severity=self.severity,
+                                context=line_content,
+                            )
                         )
-                    )
 
-            # Check for blank line after section title (except for last line)
-            if line_number < len(context) - 1:
-                next_content = self.get_line_content(context[line_number + 1])
-                stripped_next_content = next_content.strip()
-                if stripped_next_content and not stripped_next_content.startswith(":"):
+                # Check for blank line after section title (except for last line)
+                if line_number < len(context) - 1:
+                    next_content = self.get_line_content(context[line_number + 1])
+                    stripped_next_content = next_content.strip()
+                    if stripped_next_content and not stripped_next_content.startswith(
+                        ":"
+                    ):
+                        findings.append(
+                            Finding(
+                                rule_id=self.id,
+                                position=Position(line=line_number + 1),
+                                message="Section title should be followed by a blank line",
+                                severity=self.severity,
+                                context=line_content,
+                            )
+                        )
+            elif len(line_content) > level and line_content[level] != " ":
+                # Not a block delimiter and missing space - report error
+                # But skip if it's a block delimiter (only = characters)
+                if rest.strip():  # Has non-whitespace content after =
                     findings.append(
                         Finding(
                             rule_id=self.id,
                             position=Position(line=line_number + 1),
-                            message="Section title should be followed by a blank line",
+                            message=f"Missing space after {'=' * level}",
                             severity=self.severity,
                             context=line_content,
                         )

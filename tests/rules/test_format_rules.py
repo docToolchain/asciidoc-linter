@@ -4,7 +4,10 @@ Tests for format rules that detect Markdown syntax in AsciiDoc files.
 """
 
 import pytest
-from asciidoc_linter.rules.format_rules import MarkdownSyntaxRule, ExplicitNumberedListRule
+from asciidoc_linter.rules.format_rules import (
+    MarkdownSyntaxRule,
+    ExplicitNumberedListRule,
+)
 from asciidoc_linter.rules.base import Severity
 
 

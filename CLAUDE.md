@@ -102,3 +102,45 @@ GitHub Actions runs on push/PR:
 - `run_black`: formatting check
 - `run_flake8`: linting
 - `self_test_readme`: lints README.adoc with the tool itself
+
+## Important Implementation Details
+
+### Parser vs Raw Lines
+The linter has two data representations:
+- **Parsed elements**: `AsciiDocParser.parse()` returns `List[AsciiDocElement]` (Headers only currently)
+- **Raw lines**: `content.splitlines()` returns `List[str]`
+
+Most rules work with parsed elements, but **WhitespaceRule requires raw lines**. The linter handles this in `lint_string()`:
+```python
+if isinstance(rule, WhitespaceRule):
+    rule_findings = rule.check(raw_lines)
+else:
+    rule_findings = rule.check(document)
+```
+
+### AsciiDoc Block Delimiters
+Block delimiters look similar to other syntax but must be handled differently:
+- `====` - Example/Note block delimiter (NOT a section title)
+- `----` - Listing/source block delimiter (NOT a list marker)
+- `****` - Sidebar block delimiter (NOT a list marker)
+- `....` - Literal block delimiter (NOT a list marker)
+
+The parser excludes these by checking for content after `=` characters:
+```python
+rest = line[level:]
+if rest.startswith(" ") and rest.strip():  # Has " Title" after ===
+    elements.append(Header(...))
+```
+
+### Testing WhitespaceRule
+When testing `WhitespaceRule.check()`, always pass a list of strings, not a raw multi-line string:
+```python
+# Correct
+findings = rule.check(content.splitlines())
+
+# Wrong - iterates over characters, not lines
+findings = rule.check(content)
+```
+
+### Nested List Markers
+AsciiDoc supports nested lists with repeated markers (`**`, `***`). The whitespace rule counts consecutive markers before checking for space.

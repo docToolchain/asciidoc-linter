@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 WORKDIR /app
 
 # Copy the project files into the Docker image
-COPY pyproject.toml setup.py ./
+COPY pyproject.toml setup.py README.adoc ./
 COPY asciidoc_linter/ ./asciidoc_linter/
 
 # Install the project

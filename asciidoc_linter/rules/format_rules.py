@@ -260,3 +260,103 @@ class MarkdownSyntaxRule(Rule):
             )
 
         return findings
+
+
+class ExplicitNumberedListRule(Rule):
+    """
+    FMT001: Detect explicit numbered lists in AsciiDoc files.
+
+    This rule detects lines starting with explicit numbers (1., 2., 3., etc.)
+    instead of the AsciiDoc auto-numbering dot syntax (.).
+
+    LLMs often generate explicit numbered lists which:
+    - Don't auto-renumber when items are added/removed
+    - Are not semantic AsciiDoc
+    - Create maintenance burden
+    """
+
+    id = "FMT001"
+    name = "Explicit Numbered List Detection"
+    description = (
+        "Detects explicit numbered lists (1., 2., etc.) and suggests "
+        "using AsciiDoc dot-syntax (.) instead"
+    )
+    severity = Severity.WARNING
+
+    # Regex pattern for explicit numbered list: starts with number, dot, space
+    EXPLICIT_NUMBERED_LIST_PATTERN = re.compile(r"^(\d+)\.\s+(.+)$")
+
+    # AsciiDoc block delimiters that indicate code/literal blocks
+    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
+
+    def __init__(self):
+        super().__init__()
+        self.enabled = True
+
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        """Check the entire document for explicit numbered lists."""
+        if not self.enabled:
+            return []
+
+        findings = []
+        in_code_block = False
+        current_delimiter = None
+
+        for line_number, line in enumerate(document):
+            line_content = self._get_line_content(line)
+            stripped = line_content.strip()
+
+            # Check for code block delimiters
+            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
+                if not in_code_block:
+                    in_code_block = True
+                    current_delimiter = stripped
+                elif stripped == current_delimiter:
+                    in_code_block = False
+                    current_delimiter = None
+                continue
+
+            # Skip content inside code blocks
+            if in_code_block:
+                continue
+
+            findings.extend(self._check_line(line_content, line_number))
+
+        return findings
+
+    def _get_line_content(self, line: Union[str, object]) -> str:
+        """Extract the content from a line object or return the line if it's a string."""
+        if hasattr(line, "content"):
+            return line.content
+        return str(line)
+
+    def _check_line(self, line: str, line_number: int) -> List[Finding]:
+        """Check a single line for explicit numbered list pattern."""
+        findings = []
+
+        # Skip empty lines
+        if not line.strip():
+            return findings
+
+        # Skip AsciiDoc comments
+        if line.strip().startswith("//"):
+            return findings
+
+        match = self.EXPLICIT_NUMBERED_LIST_PATTERN.match(line)
+
+        if match:
+            number = match.group(1)
+            findings.append(
+                Finding(
+                    rule_id=self.id,
+                    position=Position(line=line_number + 1),
+                    message=(
+                        f"Explicit numbered list detected: '{number}. ' should be "
+                        f"'. ' (AsciiDoc auto-numbered list syntax)"
+                    ),
+                    severity=self.severity,
+                    context=line,
+                )
+            )
+
+        return findings

@@ -268,11 +268,11 @@ For major changes, please open an issue first to discuss what you would like to 
 
 === Development Guidelines
 
-1. Write tests for new rules
-2. Update documentation
-3. Follow Python code style guidelines
-4. Add appropriate error messages and context
-5. Ensure test coverage remains above 90%
+. Write tests for new rules
+. Update documentation
+. Follow Python code style guidelines
+. Add appropriate error messages and context
+. Ensure test coverage remains above 90%
 
 == License
 
@@ -286,7 +286,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 == Roadmap
 
-1. Phase 1 (Current)
+=== Phase 1 (Current)
+
 * ✅ Basic heading rules
 * ✅ Block structure rules
 * ✅ Whitespace rules
@@ -294,13 +295,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 * ⚠️ Table validation
 * ⏳ Configuration system
 
-2. Phase 2 (Next)
+=== Phase 2 (Next)
+
 * 🔲 Fix table content validation
 * 🔲 Improve test coverage
 * 🔲 Add link checking
 * 🔲 Add format rules
 
-3. Phase 3 (Future)
+=== Phase 3 (Future)
+
 * 🔲 IDE integration
 * 🔲 Git pre-commit hooks
 * 🔲 Custom rule development

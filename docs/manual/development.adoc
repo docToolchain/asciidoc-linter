@@ -1,4 +1,5 @@
 // development.adoc - Development guide
+
 = Development Guide
 
 == Setting Up Development Environment
@@ -82,15 +83,15 @@ class MyNewRule(Rule):
     RULE_ID: Short description.
     Detailed explanation of what the rule checks.
     """
-    
+
     def __init__(self):
         super().__init__()
         self.id = "RULE_ID"
-    
+
     @property
     def description(self) -> str:
         return "Description of what this rule checks"
-    
+
     def check(self, content: str) -> List[Finding]:
         findings = []
         # Implementation here

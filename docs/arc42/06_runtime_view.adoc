@@ -24,12 +24,12 @@ deactivate registry
 loop for each rule
     engine -> rule: check(content)
     activate rule
-    
+
     rule -> finding: create(message, position)
     activate finding
     finding --> rule: finding
     deactivate finding
-    
+
     rule --> engine: findings[]
     deactivate rule
 end
@@ -64,12 +64,12 @@ deactivate config
 loop for each rule class
     registry -> factory: create_rule(class, config)
     activate factory
-    
+
     factory -> rule: <<create>>
     activate rule
     rule --> factory: rule
     deactivate rule
-    
+
     factory --> registry: configured_rule
     deactivate factory
 end

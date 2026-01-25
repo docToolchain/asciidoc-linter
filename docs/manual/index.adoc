@@ -1,4 +1,5 @@
 // index.adoc - Main documentation
+
 = AsciiDoc Linter Manual
 :toc: left
 :icons: font

@@ -1,4 +1,5 @@
 // testing.adoc - Testing guide
+
 = Testing Strategy and Guide
 :toc:
 :toc-title: Table of Contents
@@ -98,10 +99,10 @@ def test_rule_pattern(self):
     # Given: Setup test data and context
     content = "test content"
     rule = TestRule(config)
-    
+
     # When: Execute the rule
     findings = rule.check(content)
-    
+
     # Then: Verify results
     assert_findings(findings)
 ----
@@ -114,10 +115,10 @@ def test_integration_pattern(self):
     # Given: Setup test environment
     doc = create_test_document()
     linter = setup_linter()
-    
+
     # When: Process document
     results = linter.process(doc)
-    
+
     # Then: Verify complete workflow
     verify_results(results)
 ----
@@ -220,26 +221,26 @@ class TestRuleName(unittest.TestCase):
     def setUp(self):
         """Setup test environment"""
         self.rule = RuleUnderTest()
-    
+
     def test_valid_case(self):
         """Test with valid input"""
         # Given
         content = "valid content"
-        
+
         # When
         findings = self.rule.check(content)
-        
+
         # Then
         self.assertEqual(len(findings), 0)
-    
+
     def test_invalid_case(self):
         """Test with invalid input"""
         # Given
         content = "invalid content"
-        
+
         # When
         findings = self.rule.check(content)
-        
+
         # Then
         self.assertEqual(len(findings), 1)
         self.assertEqual(findings[0].severity, Severity.ERROR)

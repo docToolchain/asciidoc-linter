@@ -1,4 +1,5 @@
 // introduction.adoc - Project introduction
+
 = Introduction
 
 == About the Project

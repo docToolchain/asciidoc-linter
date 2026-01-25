@@ -53,7 +53,7 @@ class AsciiDocLinter:
     def load_config(self, config_path: str) -> None:
         """Load configuration from a YAML file"""
         try:
-            with open(config_path, "r") as config_file:
+            with open(config_path, "r", encoding="utf-8") as config_file:
                 config = yaml.safe_load(config_file)
                 self.apply_config(config)
         except Exception as e:
@@ -74,7 +74,9 @@ class AsciiDocLinter:
         try:
             return [
                 finding.set_file(str(file_path))
-                for finding in self.lint_string(Path(file_path).read_text())
+                for finding in self.lint_string(
+                    Path(file_path).read_text(encoding="utf-8")
+                )
             ]
         except Exception as e:
             return [

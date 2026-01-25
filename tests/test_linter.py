@@ -184,3 +184,119 @@ rules:
 
     # Ensure that the WS001 rule is disabled and no findings are reported
     assert len(report.findings) == 0
+
+
+# Tests for UTF-8 encoding support (Issue #24)
+
+
+def test_lint_file_utf8_characters(tmp_path):
+    """Test linting a file with UTF-8 characters (German umlauts, emojis, etc.)"""
+    test_file = tmp_path / "utf8_test.adoc"
+    utf8_content = """= Überschrift mit Umlauten
+
+== Abschnitt mit Sonderzeichen
+
+Größe, Höhe, Länge – diese Wörter enthalten Umlaute.
+
+=== Emojis und Symbole
+
+Ein Beispiel mit Emoji: 🚀 und Symbole: © ® ™
+
+=== Internationaler Text
+
+日本語テスト – Chinesisch: 中文测试 – Russisch: Русский текст
+"""
+    # Write with explicit UTF-8 encoding
+    test_file.write_text(utf8_content, encoding="utf-8")
+
+    linter = AsciiDocLinter()
+    findings = linter.lint_file(test_file)
+
+    # Should not have any encoding-related errors
+    encoding_errors = [f for f in findings if "codec" in f.message.lower()]
+    assert len(encoding_errors) == 0, f"Unexpected encoding errors: {encoding_errors}"
+
+
+def test_lint_file_utf8_config(tmp_path):
+    """Test that config files with UTF-8 content are read correctly"""
+    test_file = tmp_path / "test.adoc"
+    test_file.write_text("= Title\n\nContent\n", encoding="utf-8")
+
+    config_file = tmp_path / ".asciidoc-lint.yml"
+    # Config with UTF-8 comment
+    config_content = """# Konfigurationsdatei für AsciiDoc-Linter
+# Größe: klein
+rules:
+  WS001:
+    enabled: false
+"""
+    config_file.write_text(config_content, encoding="utf-8")
+
+    linter = AsciiDocLinter(config_path=str(config_file))
+    report = linter.lint([str(test_file)])
+
+    # Should successfully load config without encoding errors
+    assert isinstance(report, LintReport)
+
+
+def test_lint_file_invalid_utf8_gives_error(tmp_path):
+    """Test that files with invalid UTF-8 give a clear error message"""
+    test_file = tmp_path / "invalid_utf8.adoc"
+    # Write invalid UTF-8 bytes directly
+    test_file.write_bytes(b"= Title\n\nInvalid byte: \x80\x81\x82\n")
+
+    linter = AsciiDocLinter()
+    findings = linter.lint_file(test_file)
+
+    # Should have exactly one error about encoding
+    assert len(findings) == 1
+    assert "Error linting file" in findings[0].message
+    # Error message should mention encoding or decode issue
+    assert (
+        "decode" in findings[0].message.lower()
+        or "codec" in findings[0].message.lower()
+        or "encoding" in findings[0].message.lower()
+    )
+
+
+def test_lint_file_uses_explicit_utf8_encoding(tmp_path):
+    """Test that lint_file uses explicit UTF-8 encoding (not system default)"""
+    test_file = tmp_path / "test.adoc"
+    test_file.write_text("= Title\n\nContent\n", encoding="utf-8")
+
+    linter = AsciiDocLinter()
+
+    # Mock Path.read_text to verify encoding parameter is passed
+    with patch.object(Path, "read_text") as mock_read_text:
+        mock_read_text.return_value = "= Title\n\nContent\n"
+        linter.lint_file(test_file)
+
+        # Verify read_text was called with encoding='utf-8'
+        mock_read_text.assert_called_once_with(encoding="utf-8")
+
+
+def test_load_config_uses_explicit_utf8_encoding(tmp_path):
+    """Test that load_config uses explicit UTF-8 encoding"""
+    config_file = tmp_path / ".asciidoc-lint.yml"
+    config_file.write_text("rules:\n  WS001:\n    enabled: false\n", encoding="utf-8")
+
+    linter = AsciiDocLinter()
+
+    # Use mock to verify encoding parameter
+    import builtins
+
+    original_open = builtins.open
+    open_calls = []
+
+    def mock_open(*args, **kwargs):
+        open_calls.append((args, kwargs))
+        return original_open(*args, **kwargs)
+
+    with patch.object(builtins, "open", mock_open):
+        linter.load_config(str(config_file))
+
+    # Find the call to our config file
+    config_call = [c for c in open_calls if str(config_file) in str(c[0])]
+    assert len(config_call) == 1
+    # Verify encoding='utf-8' was passed
+    assert config_call[0][1].get("encoding") == "utf-8"

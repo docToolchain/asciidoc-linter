@@ -171,11 +171,13 @@ def test_lint_with_config_file(tmp_path, sample_asciidoc):
     test_file.write_text(sample_asciidoc)
 
     config_file = tmp_path / ".asciidoc-lint.yml"
-    config_file.write_text("""
+    config_file.write_text(
+        """
 rules:
   WS001:
     enabled: false
-""")
+"""
+    )
 
     linter = AsciiDocLinter(config_path=config_file)
     report = linter.lint([test_file])

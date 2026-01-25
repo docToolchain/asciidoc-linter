@@ -477,6 +477,30 @@ It helps maintain consistent documentation by enforcing rules for heading struct
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">⚠️ Beta</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FMT001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect explicit numbered lists (1., 2., etc.) instead of AsciiDoc dot-syntax</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FMT002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect non-semantic definition list patterns (<strong>Term</strong>: instead of Term::)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FMT003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect counter syntax in section titles (1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FMT004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect Markdown syntax in AsciiDoc files (headings, links, images, code blocks)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -489,9 +513,6 @@ It helps maintain consistent documentation by enforcing rules for heading struct
 </li>
 <li>
 <p>LINK001: Broken internal references</p>
-</li>
-<li>
-<p>FMT001: Markdown-compatible styles detection</p>
 </li>
 </ul>
 </div>
@@ -656,10 +677,10 @@ jobs:
 <div class="ulist">
 <ul>
 <li>
-<p>Test Coverage: 94%</p>
+<p>Test Coverage: 95%</p>
 </li>
 <li>
-<p>Test Success Rate: 100% (127/127 tests passing)</p>
+<p>Test Success Rate: 100% (216/216 tests passing)</p>
 </li>
 <li>
 <p>Known Issues:</p>
@@ -667,12 +688,6 @@ jobs:
 <ul>
 <li>
 <p>Table content validation needs improvement</p>
-</li>
-<li>
-<p>Rules.py requires test coverage</p>
-</li>
-<li>
-<p>Reporter module needs additional tests</p>
 </li>
 </ul>
 </div>
@@ -711,6 +726,7 @@ python run_tests_html.py</code></pre>
 │       ├── base.py
 │       ├── base_rules.py
 │       ├── block_rules.py
+│       ├── format_rules.py
 │       ├── heading_rules.py
 │       ├── image_rules.py
 │       ├── table_rules.py
@@ -723,6 +739,7 @@ python run_tests_html.py</code></pre>
 │   ├── test_reporter.py
 │   └── rules/
 │       ├── test_block_rules.py
+│       ├── test_format_rules.py
 │       ├── test_heading_rules.py
 │       ├── test_image_rules.py
 │       ├── test_table_rules.py
@@ -840,7 +857,7 @@ For major changes, please open an issue first to discuss what you would like to 
 <p>🔲 Add link checking</p>
 </li>
 <li>
-<p>🔲 Add format rules</p>
+<p>✅ Add format rules (FMT001-FMT004)</p>
 </li>
 </ul>
 </div>

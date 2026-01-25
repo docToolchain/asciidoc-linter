@@ -48,6 +48,9 @@ class MarkdownSyntaxRule(Rule):
     # Markdown blockquote: > text (at start of line)
     MARKDOWN_BLOCKQUOTE_PATTERN = re.compile(r"^(>+)\s+(.+)$")
 
+    # AsciiDoc block delimiters that indicate code/literal blocks
+    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
+
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -58,8 +61,27 @@ class MarkdownSyntaxRule(Rule):
             return []
 
         findings = []
+        in_code_block = False
+        current_delimiter = None
+
         for line_number, line in enumerate(document):
             line_content = self._get_line_content(line)
+            stripped = line_content.strip()
+
+            # Check for code block delimiters
+            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
+                if not in_code_block:
+                    in_code_block = True
+                    current_delimiter = stripped
+                elif stripped == current_delimiter:
+                    in_code_block = False
+                    current_delimiter = None
+                continue
+
+            # Skip content inside code blocks
+            if in_code_block:
+                continue
+
             findings.extend(self._check_line(line_content, line_number))
         return findings
 

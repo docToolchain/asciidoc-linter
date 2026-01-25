@@ -235,6 +235,58 @@ class TestRuleMetadata:
 # Integration tests
 
 
+class TestCodeBlockSkipping:
+    """Tests for skipping content inside code blocks."""
+
+    def test_skips_markdown_inside_listing_block(self, rule):
+        """Test that Markdown inside ---- blocks is not flagged."""
+        content = [
+            "Some text",
+            "",
+            "[source,bash]",
+            "----",
+            "# This is a bash comment, not a Markdown heading",
+            "echo 'hello'",
+            "----",
+            "",
+            "More text",
+        ]
+        findings = rule.check(content)
+
+        # Should not detect any Markdown patterns
+        assert len(findings) == 0
+
+    def test_skips_markdown_inside_literal_block(self, rule):
+        """Test that Markdown inside .... blocks is not flagged."""
+        content = [
+            "....",
+            "# Not a heading",
+            "[link](url)",
+            "....",
+        ]
+        findings = rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_detects_markdown_outside_code_block(self, rule):
+        """Test that Markdown outside code blocks is still detected."""
+        content = [
+            "# This IS a Markdown heading",
+            "",
+            "----",
+            "# This is inside a code block",
+            "----",
+            "",
+            "## This is also a Markdown heading",
+        ]
+        findings = rule.check(content)
+
+        # Should detect the headings outside the code block
+        assert len(findings) == 2
+        assert "# " in findings[0].message
+        assert "## " in findings[1].message
+
+
 class TestIntegration:
     """Integration tests with mixed content."""
 

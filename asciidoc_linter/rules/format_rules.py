@@ -503,3 +503,108 @@ class NonSemanticDefinitionListRule(Rule):
             severity=self.severity,
             context=line,
         )
+
+
+class CounterInTitleRule(Rule):
+    """
+    FMT003: Detect counter syntax in section titles.
+
+    This rule detects {counter:name} usage in section titles, which is often
+    unnecessary or misused by LLMs trying to create numbered sections.
+
+    Problems with counter in titles:
+    - Simple sequential sections don't need explicit counters
+    - Counter state can be confusing across includes
+    - Often mimics numbered headings from other formats unnecessarily
+    """
+
+    id = "FMT003"
+    name = "Counter Syntax in Title Detection"
+    description = (
+        "Detects {counter:...} usage in section titles and suggests "
+        "reviewing if counters are really needed"
+    )
+    severity = Severity.WARNING
+
+    # Regex pattern for counter in section title
+    # Matches lines starting with = followed by {counter:name} or {counter2:name}
+    COUNTER_IN_TITLE_PATTERN = re.compile(r"^(=+)\s+.*\{counter2?:([^}]+)\}")
+
+    # AsciiDoc block delimiters that indicate code/literal blocks
+    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
+
+    def __init__(self):
+        super().__init__()
+        self.enabled = True
+
+    def check(self, document: List[Union[str, object]]) -> List[Finding]:
+        """Check the entire document for counter syntax in section titles."""
+        if not self.enabled:
+            return []
+
+        findings = []
+        in_code_block = False
+        current_delimiter = None
+
+        for line_number, line in enumerate(document):
+            line_content = self._get_line_content(line)
+            stripped = line_content.strip()
+
+            # Check for code block delimiters
+            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
+                if not in_code_block:
+                    in_code_block = True
+                    current_delimiter = stripped
+                elif stripped == current_delimiter:
+                    in_code_block = False
+                    current_delimiter = None
+                continue
+
+            # Skip content inside code blocks
+            if in_code_block:
+                continue
+
+            findings.extend(self._check_line(line_content, line_number))
+
+        return findings
+
+    def _get_line_content(self, line: Union[str, object]) -> str:
+        """Extract the content from a line object or return the line if it's a string."""
+        if hasattr(line, "content"):
+            return line.content
+        return str(line)
+
+    def _check_line(self, line: str, line_number: int) -> List[Finding]:
+        """Check a single line for counter syntax in section title."""
+        findings = []
+
+        # Skip empty lines
+        if not line.strip():
+            return findings
+
+        # Only check lines that start with = (section titles)
+        if not line.strip().startswith("="):
+            return findings
+
+        match = self.COUNTER_IN_TITLE_PATTERN.match(line)
+
+        if match:
+            counter_name = match.group(2)
+            # Remove format specifier if present (e.g., "step:%02d" -> "step")
+            if ":" in counter_name:
+                counter_name = counter_name.split(":")[0]
+
+            findings.append(
+                Finding(
+                    rule_id=self.id,
+                    position=Position(line=line_number + 1),
+                    message=(
+                        f"Counter syntax in section title detected: '{{counter:{counter_name}}}'. "
+                        f"Consider using explicit numbering or descriptive titles instead"
+                    ),
+                    severity=self.severity,
+                    context=line,
+                )
+            )
+
+        return findings

@@ -4,7 +4,7 @@ Tests for format rules that detect Markdown syntax in AsciiDoc files.
 """
 
 import pytest
-from asciidoc_linter.rules.format_rules import MarkdownSyntaxRule
+from asciidoc_linter.rules.format_rules import MarkdownSyntaxRule, ExplicitNumberedListRule
 from asciidoc_linter.rules.base import Severity
 
 
@@ -333,3 +333,140 @@ class TestIntegration:
 
         # Should not detect any Markdown patterns
         assert len(findings) == 0
+
+
+# =============================================================================
+# FMT001: Explicit Numbered List Detection Tests
+# =============================================================================
+
+
+@pytest.fixture
+def numbered_list_rule():
+    """Create an ExplicitNumberedListRule instance for testing."""
+    return ExplicitNumberedListRule()
+
+
+class TestExplicitNumberedListDetection:
+    """Tests for detecting explicit numbered lists."""
+
+    def test_detects_simple_numbered_list(self, numbered_list_rule):
+        """Test detection of simple 1. 2. 3. numbered list."""
+        content = ["1. First item", "2. Second item", "3. Third item"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 3
+        assert findings[0].rule_id == "FMT001"
+        assert ". " in findings[0].message
+
+    def test_detects_single_numbered_item(self, numbered_list_rule):
+        """Test detection of a single numbered item."""
+        content = ["1. Only item"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_high_numbers(self, numbered_list_rule):
+        """Test detection of high numbered items like 10. or 100."""
+        content = ["10. Tenth item", "100. Hundredth item"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 2
+
+    def test_ignores_asciidoc_ordered_list(self, numbered_list_rule):
+        """Test that AsciiDoc . syntax is not flagged."""
+        content = [". First item", ". Second item", ". Third item"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_decimal_numbers(self, numbered_list_rule):
+        """Test that decimal numbers like 1.5 are not flagged."""
+        content = ["The value is 1.5 kg", "Version 2.0 released"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_number_dot_no_space(self, numbered_list_rule):
+        """Test that number.word (no space) is not flagged."""
+        content = ["See section 1.Introduction", "Chapter 2.Methods"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_numbered_list_in_code_block(self, numbered_list_rule):
+        """Test that numbered lists inside code blocks are not flagged."""
+        content = [
+            "Some text",
+            "",
+            "----",
+            "1. This is inside a code block",
+            "2. Should not be flagged",
+            "----",
+            "",
+            "More text",
+        ]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_numbered_list_in_literal_block(self, numbered_list_rule):
+        """Test that numbered lists inside literal blocks are not flagged."""
+        content = [
+            "....",
+            "1. Inside literal block",
+            "....",
+        ]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_detects_outside_code_block(self, numbered_list_rule):
+        """Test that numbered lists outside code blocks are detected."""
+        content = [
+            "1. Before code block",
+            "",
+            "----",
+            "1. Inside code block",
+            "----",
+            "",
+            "2. After code block",
+        ]
+        findings = numbered_list_rule.check(content)
+
+        # Should detect only the ones outside
+        assert len(findings) == 2
+
+    def test_ignores_numbered_in_middle_of_line(self, numbered_list_rule):
+        """Test that numbers in the middle of a line are not flagged."""
+        content = ["See step 1. for details", "Refer to item 2. above"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_message_suggests_dot_syntax(self, numbered_list_rule):
+        """Test that the message suggests using . syntax."""
+        content = ["1. First item"]
+        findings = numbered_list_rule.check(content)
+
+        assert len(findings) == 1
+        assert ". " in findings[0].message or "dot" in findings[0].message.lower()
+
+
+class TestExplicitNumberedListRuleMetadata:
+    """Tests for FMT001 rule metadata."""
+
+    def test_rule_id(self, numbered_list_rule):
+        """Test that rule has correct ID."""
+        assert numbered_list_rule.id == "FMT001"
+
+    def test_rule_name(self, numbered_list_rule):
+        """Test that rule has a name."""
+        assert numbered_list_rule.name != ""
+
+    def test_rule_description(self, numbered_list_rule):
+        """Test that rule has a description."""
+        assert numbered_list_rule.description != ""
+
+    def test_rule_severity(self, numbered_list_rule):
+        """Test that rule has WARNING severity by default."""
+        assert numbered_list_rule.severity == Severity.WARNING

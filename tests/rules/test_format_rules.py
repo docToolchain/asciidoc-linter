@@ -8,6 +8,7 @@ from asciidoc_linter.rules.format_rules import (
     MarkdownSyntaxRule,
     ExplicitNumberedListRule,
     NonSemanticDefinitionListRule,
+    CounterInTitleRule,
 )
 from asciidoc_linter.rules.base import Severity
 
@@ -638,3 +639,171 @@ class TestNonSemanticDefinitionListRuleMetadata:
     def test_rule_severity(self, definition_list_rule):
         """Test that rule has WARNING severity by default."""
         assert definition_list_rule.severity == Severity.WARNING
+
+
+# =============================================================================
+# FMT003: Counter Syntax in Title Detection Tests
+# =============================================================================
+
+
+@pytest.fixture
+def counter_rule():
+    """Create a CounterInTitleRule instance for testing."""
+    return CounterInTitleRule()
+
+
+class TestCounterInTitleDetection:
+    """Tests for detecting counter syntax in section titles."""
+
+    def test_detects_counter_in_level2_heading(self, counter_rule):
+        """Test detection of {counter:name} in level 2 heading."""
+        content = ["== Phase {counter:phase}"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+        assert findings[0].rule_id == "FMT003"
+        assert "counter" in findings[0].message.lower()
+
+    def test_detects_counter_in_level3_heading(self, counter_rule):
+        """Test detection of {counter:name} in level 3 heading."""
+        content = ["=== Step {counter:step}: Setup"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_counter_in_level1_heading(self, counter_rule):
+        """Test detection of {counter:name} in level 1 heading."""
+        content = ["= Document {counter:doc}"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_counter_at_start_of_title(self, counter_rule):
+        """Test detection of counter at start of title."""
+        content = ["== {counter:section} Overview"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_multiple_counters_in_document(self, counter_rule):
+        """Test detection of multiple counters in different headings."""
+        content = [
+            "== Phase {counter:phase}",
+            "",
+            "Some content",
+            "",
+            "=== Step {counter:step}",
+            "",
+            "== Phase {counter:phase}",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 3
+
+    def test_detects_counter_with_format_specifier(self, counter_rule):
+        """Test detection of counter with format specifier."""
+        content = ["== Step {counter:step:%02d}: Setup"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_detects_counter2_variant(self, counter_rule):
+        """Test detection of {counter2:name} variant."""
+        content = ["== Section {counter2:section}"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+
+    def test_ignores_counter_in_regular_content(self, counter_rule):
+        """Test that counters in regular content are not flagged."""
+        content = [
+            "== Regular Heading",
+            "",
+            "The current phase is {counter:phase}.",
+            "Step {counter:step} is complete.",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_heading_without_counter(self, counter_rule):
+        """Test that headings without counters are not flagged."""
+        content = [
+            "= Document Title",
+            "== Section One",
+            "=== Subsection",
+            "== Section Two",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_counter_inside_code_block(self, counter_rule):
+        """Test that counters inside code blocks are not flagged."""
+        content = [
+            "== Regular Heading",
+            "",
+            "----",
+            "== Phase {counter:phase}",
+            "----",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_ignores_counter_inside_literal_block(self, counter_rule):
+        """Test that counters inside literal blocks are not flagged."""
+        content = [
+            "....",
+            "== Step {counter:step}",
+            "....",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 0
+
+    def test_detects_outside_code_block(self, counter_rule):
+        """Test that counters outside code blocks are detected."""
+        content = [
+            "== Before {counter:a}",
+            "",
+            "----",
+            "== Inside {counter:b}",
+            "----",
+            "",
+            "== After {counter:c}",
+        ]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 2
+
+    def test_message_suggests_review(self, counter_rule):
+        """Test that the message suggests reviewing counter usage."""
+        content = ["== Phase {counter:phase}"]
+        findings = counter_rule.check(content)
+
+        assert len(findings) == 1
+        msg = findings[0].message.lower()
+        assert "counter" in msg
+        # Should suggest review or alternative
+        assert "review" in msg or "consider" in msg or "suggest" in msg
+
+
+class TestCounterInTitleRuleMetadata:
+    """Tests for FMT003 rule metadata."""
+
+    def test_rule_id(self, counter_rule):
+        """Test that rule has correct ID."""
+        assert counter_rule.id == "FMT003"
+
+    def test_rule_name(self, counter_rule):
+        """Test that rule has a name."""
+        assert counter_rule.name != ""
+
+    def test_rule_description(self, counter_rule):
+        """Test that rule has a description."""
+        assert counter_rule.description != ""
+
+    def test_rule_severity(self, counter_rule):
+        """Test that rule has WARNING severity by default."""
+        assert counter_rule.severity == Severity.WARNING

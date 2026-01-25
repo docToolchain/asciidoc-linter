@@ -20,6 +20,7 @@ from .rules.format_rules import (
     MarkdownSyntaxRule,
     ExplicitNumberedListRule,
     NonSemanticDefinitionListRule,
+    CounterInTitleRule,
 )
 from .parser import AsciiDocParser
 from .reporter import LintReport
@@ -41,6 +42,7 @@ class AsciiDocLinter:
             MarkdownSyntaxRule(),
             ExplicitNumberedListRule(),
             NonSemanticDefinitionListRule(),
+            CounterInTitleRule(),
         ]
         self.config_path = config_path
 
@@ -110,6 +112,7 @@ class AsciiDocLinter:
                     MarkdownSyntaxRule,
                     ExplicitNumberedListRule,
                     NonSemanticDefinitionListRule,
+                    CounterInTitleRule,
                 ),
             ):
                 rule_findings = rule.check(raw_lines)

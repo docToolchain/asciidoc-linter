@@ -68,13 +68,32 @@ This project is part of docToolchain (https://doctoolchain.org), a collection of
 |Table formatting consistency
 |WARNING/ERROR
 |⚠️ Beta
+
+|FMT001
+|Detect explicit numbered lists (1., 2., etc.) instead of AsciiDoc dot-syntax
+|WARNING
+|✅ Stable
+
+|FMT002
+|Detect non-semantic definition list patterns (*Term*: instead of Term::)
+|WARNING
+|✅ Stable
+
+|FMT003
+|Detect counter syntax in section titles ({counter:...})
+|WARNING
+|✅ Stable
+
+|FMT004
+|Detect Markdown syntax in AsciiDoc files (headings, links, images, code blocks)
+|WARNING
+|✅ Stable
 |===
 
 === Planned Rules
 
 * TABLE002: Table content validation
 * LINK001: Broken internal references
-* FMT001: Markdown-compatible styles detection
 
 == Installation
 
@@ -197,12 +216,10 @@ jobs:
 
 === Current Status
 
-* Test Coverage: 94%
-* Test Success Rate: 100% (127/127 tests passing)
+* Test Coverage: 95%
+* Test Success Rate: 100% (216/216 tests passing)
 * Known Issues:
 ** Table content validation needs improvement
-** Rules.py requires test coverage
-** Reporter module needs additional tests
 
 === Running Tests
 
@@ -234,6 +251,7 @@ asciidoc-linter/
 │       ├── base.py
 │       ├── base_rules.py
 │       ├── block_rules.py
+│       ├── format_rules.py
 │       ├── heading_rules.py
 │       ├── image_rules.py
 │       ├── table_rules.py
@@ -246,6 +264,7 @@ asciidoc-linter/
 │   ├── test_reporter.py
 │   └── rules/
 │       ├── test_block_rules.py
+│       ├── test_format_rules.py
 │       ├── test_heading_rules.py
 │       ├── test_image_rules.py
 │       ├── test_table_rules.py
@@ -300,7 +319,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 * 🔲 Fix table content validation
 * 🔲 Improve test coverage
 * 🔲 Add link checking
-* 🔲 Add format rules
+* ✅ Add format rules (FMT001-FMT004)
 
 === Phase 3 (Future)
 

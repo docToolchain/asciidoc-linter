@@ -76,6 +76,29 @@ This document describes the requirements for the AsciiDoc Linter, focusing on th
 |✅ Implemented
 |===
 
+=== Format Rules
+
+[cols="1,2,1"]
+|===
+|Rule ID |Description |Status
+
+|FMT001
+|Detect explicit numbered lists (1., 2., etc.) and suggest AsciiDoc dot-syntax
+|✅ Implemented
+
+|FMT002
+|Detect non-semantic definition list patterns (*Term*: instead of Term::)
+|✅ Implemented
+
+|FMT003
+|Detect counter syntax in section titles ({counter:...})
+|✅ Implemented
+
+|FMT004
+|Detect Markdown syntax in AsciiDoc files (headings, links, images, code blocks, blockquotes)
+|✅ Implemented
+|===
+
 == Planned Rules
 
 === Table Rules
@@ -95,25 +118,6 @@ This document describes the requirements for the AsciiDoc Linter, focusing on th
 |TABLE003
 |Validate table structure (column count consistency)
 |High
-|===
-
-=== Format Rules
-
-[cols="1,2,1"]
-|===
-|Rule ID |Description |Priority
-
-|FMT001
-|Detect Markdown-compatible styles that should be AsciiDoc syntax
-|Medium
-
-|FMT002
-|Check for consistent list marker usage
-|Low
-
-|FMT003
-|Verify consistent code block syntax
-|Medium
 |===
 
 === Link Rules
@@ -139,8 +143,8 @@ The rules are organized into the following categories:
 * Block Rules: AsciiDoc block elements
 * Whitespace Rules: Spacing and layout
 * Image Rules: Image attributes and references
+* Format Rules: LLM-generated formatting issues (Markdown syntax, numbered lists, etc.)
 * Table Rules (planned): Table formatting and content
-* Format Rules (planned): General formatting concerns
 * Link Rules (planned): References and links
 
 == Implementation Phases
@@ -154,8 +158,8 @@ The rules are organized into the following categories:
 
 === Phase 2 - Enhancement Rules (Current)
 
-* 🔲 Table validation (TABLE001, TABLE002, TABLE003)
-* 🔲 Format rules (FMT001, FMT002, FMT003)
+* ⚠️ Table validation (TABLE001 implemented, TABLE002/003 planned)
+* ✅ Format rules (FMT001, FMT002, FMT003, FMT004)
 * 🔲 Link validation (LINK001, LINK002)
 
 === Phase 3 - Polish Rules (Planned)

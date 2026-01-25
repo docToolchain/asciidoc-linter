@@ -187,7 +187,10 @@ jobs:
         run: docker build -t asciidoc-linter .
 
       - name: Run AsciiDoc Linter
-        run: docker run --rm -v ${{ github.workspace }}:/docs asciidoc-linter .
+        run: |
+          for file in $(find . -name "*.adoc" -type f); do
+            docker run --rm -v ${{ github.workspace }}:/docs asciidoc-linter "$file"
+          done
 ----
 
 == Development

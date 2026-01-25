@@ -140,6 +140,56 @@ WARNING: Missing alt text for image: diagram.png (line 80)
   image::diagram.png[]
 ----
 
+== Using with Docker
+
+You can run the AsciiDoc Linter in a Docker container without installing Python locally.
+
+=== Build the Docker image
+
+[source,bash]
+----
+docker build -t asciidoc-linter .
+----
+
+=== Run the linter
+
+[source,bash]
+----
+docker run --rm -v $(pwd):/docs asciidoc-linter document.adoc
+----
+
+Replace `document.adoc` with the path to the AsciiDoc file you want to lint.
+The `-v $(pwd):/docs` option mounts the current directory to `/docs` inside the container.
+
+== Using as a GitHub Action
+
+You can automatically lint your AsciiDoc files on every push or pull request by adding a workflow file.
+
+Create `.github/workflows/asciidoc-linter.yml`:
+
+[source,yaml]
+----
+name: AsciiDoc Linter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t asciidoc-linter .
+
+      - name: Run AsciiDoc Linter
+        run: docker run --rm -v ${{ github.workspace }}:/docs asciidoc-linter .
+----
+
 == Development
 
 === Current Status

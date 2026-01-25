@@ -1,4 +1,5 @@
 // block_rules.adoc - Documentation for block-related rules
+
 = Block Rules Documentation
 :toc: left
 :icons: font

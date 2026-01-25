@@ -1,4 +1,5 @@
 // architecture-canvas.adoc - Architecture Communication Canvas
+
 = Architecture Communication Canvas: AsciiDoc Linter
 :toc: macro
 :toc-title: Table of Contents
@@ -135,13 +136,13 @@ package "AsciiDoc Linter" {
   [Document Parser] as parser
   [Rule Engine] as engine
   [Reporter] as reporter
-  
+
   package "Rules" {
     [Heading Rules]
     [Block Rules]
     [Format Rules]
   }
-  
+
   package "Reporters" {
     [Console Reporter]
     [JSON Reporter]

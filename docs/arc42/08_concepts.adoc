@@ -13,29 +13,29 @@ package "Domain Model" {
         +path: Path
         +get_lines(): List[str]
     }
-    
+
     class Rule {
         +rule_id: str
         +check(content: str): List[Finding]
     }
-    
+
     class Finding {
         +message: str
         +severity: Severity
         +position: Position
     }
-    
+
     class Position {
         +line: int
         +column: int
     }
-    
+
     enum Severity {
         ERROR
         WARNING
         INFO
     }
-    
+
     Document --> "*" Finding : produces
     Rule --> "*" Finding : creates
     Finding --> "1" Position : has
@@ -115,7 +115,7 @@ pytest --> coverage
 --> "Production"
 --> (*)
 
-note right 
+note right
   * Version bump
   * Changelog update
   * PyPI release
@@ -136,7 +136,7 @@ rules:
     severity: error
     options:
       max_level: 6
-      
+
   heading_format:
     enabled: true
     severity: warning
@@ -155,17 +155,17 @@ package "Plugin System" {
         +get_rules(): List[Rule]
         +get_config(): Dict
     }
-    
+
     class "CustomRulePlugin" {
         +get_rules()
         +get_config()
     }
-    
+
     class "PluginLoader" {
         +load_plugins()
         +get_available_rules()
     }
-    
+
     RulePlugin <|.. CustomRulePlugin
     PluginLoader --> RulePlugin : loads
 }

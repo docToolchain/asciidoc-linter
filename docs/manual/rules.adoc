@@ -1,4 +1,5 @@
 // rules.adoc - Documentation of all linter rules
+
 = AsciiDoc Linter Rules
 
 == Heading Rules

@@ -12,7 +12,7 @@
 Deployment_Node(computer, "Developer Workstation", "Windows, Linux, or macOS") {
     Container(python, "Python Runtime", "Python 3.8+", "Executes the linter")
     Container(pip, "pip", "Package Manager", "Manages dependencies")
-    
+
     Container(linter, "AsciiDoc Linter", "Python Package", "Validates documentation")
 }
 

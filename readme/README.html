@@ -321,6 +321,13 @@
 <li><a href="#_example_output">Example Output</a></li>
 </ul>
 </li>
+<li><a href="#_using_with_docker">Using with Docker</a>
+<ul class="sectlevel2">
+<li><a href="#_build_the_docker_image">Build the Docker image</a></li>
+<li><a href="#_run_the_linter">Run the linter</a></li>
+</ul>
+</li>
+<li><a href="#_using_as_a_github_action">Using as a GitHub Action</a></li>
 <li><a href="#_development">Development</a>
 <ul class="sectlevel2">
 <li><a href="#_current_status">Current Status</a></li>
@@ -566,6 +573,71 @@ ERROR: Multiple top-level headings found (line 30)
 WARNING: Missing alt text for image: diagram.png (line 80)
   image::diagram.png[]</code></pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_with_docker">Using with Docker</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can run the AsciiDoc Linter in a Docker container without installing Python locally.</p>
+</div>
+<div class="sect2">
+<h3 id="_build_the_docker_image">Build the Docker image</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">docker build -t asciidoc-linter .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_run_the_linter">Run the linter</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">docker run --rm -v $(pwd):/docs asciidoc-linter document.adoc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace <code>document.adoc</code> with the path to the AsciiDoc file you want to lint.
+The <code>-v $(pwd):/docs</code> option mounts the current directory to <code>/docs</code> inside the container.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_as_a_github_action">Using as a GitHub Action</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can automatically lint your AsciiDoc files on every push or pull request by adding a workflow file.</p>
+</div>
+<div class="paragraph">
+<p>Create <code>.github/workflows/asciidoc-linter.yml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">name: AsciiDoc Linter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t asciidoc-linter .
+
+      - name: Run AsciiDoc Linter
+        run: |
+          for file in $(find . -name "*.adoc" -type f); do
+            docker run --rm -v ${{ github.workspace }}:/docs asciidoc-linter "$file"
+          done</code></pre>
 </div>
 </div>
 </div>

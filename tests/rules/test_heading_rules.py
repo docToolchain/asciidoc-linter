@@ -316,6 +316,7 @@ class TestHeadingAttributesAndRoles(unittest.TestCase):
         Given a WhitespaceRule instance
         """
         from asciidoc_linter.rules.whitespace_rules import WhitespaceRule
+
         self.rule = WhitespaceRule()
 
     def test_attributes_after_heading(self):
@@ -333,7 +334,7 @@ class TestHeadingAttributesAndRoles(unittest.TestCase):
 :another-attribute: value
 """
         # When: We check the document
-        findings = self.rule.check(content)
+        findings = self.rule.check(content.splitlines())
 
         # Then: No findings should be reported
         self.assertEqual(
@@ -355,7 +356,7 @@ class TestHeadingAttributesAndRoles(unittest.TestCase):
 == Section
 """
         # When: We check the document
-        findings = self.rule.check(content)
+        findings = self.rule.check(content.splitlines())
 
         # Then: No findings should be reported
         self.assertEqual(

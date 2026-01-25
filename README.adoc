@@ -1,5 +1,4 @@
 = AsciiDoc Linter
-:toc: left
 :icons: font
 :source-highlighter: rouge
 :experimental:

@@ -1,0 +1,7 @@
+- id: asciidoc-linter
+  name: AsciiDoc Linter
+  description: Lint AsciiDoc files for common issues and style violations
+  entry: asciidoc-linter
+  language: python
+  files: \.(adoc|asciidoc)$
+  args: [--format, plain]

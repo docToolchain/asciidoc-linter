@@ -52,9 +52,7 @@ More content.
 def test_linter_initialization():
     """Test that the linter initializes with correct default rules"""
     linter = AsciiDocLinter()
-    assert (
-        len(linter.rules) == 11
-    )  # Verify number of default rules (FMT001, FMT002, FMT003, FMT004)
+    assert len(linter.rules) == 12  # Verify number of default rules (FMT001-FMT005)
     assert hasattr(linter, "parser")  # Verify parser is initialized
 
 

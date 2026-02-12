@@ -284,6 +284,141 @@ class TestWhitespaceRule(unittest.TestCase):
             len(findings), 0, "Disabled WS001 rule should not produce any findings"
         )
 
+    def test_bold_syntax_not_flagged_as_list_marker(self):
+        """
+        Given a document with bold text syntax at the start of lines
+        When the whitespace rule is checked
+        Then no findings should be reported
+        Because *text* and **text** are bold formatting, not list markers
+        """
+        # Given: A document with bold text at line start (common in ADRs)
+        content = [
+            "*Status:* Accepted",
+            "*Context:* The system requires...",
+            "*Decision:* We decided to...",
+            "*Consequences:*",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings),
+            0,
+            f"Bold text should not be flagged as list marker, got: "
+            f"{[f.message for f in findings]}",
+        )
+
+    def test_double_bold_syntax_not_flagged_as_list_marker(self):
+        """
+        Given a document with double-asterisk bold text
+        When the whitespace rule is checked
+        Then no findings should be reported
+        Because **text** is bold formatting, not a nested list marker
+        """
+        # Given: A document with double-bold at line start
+        content = [
+            "**Positive:**",
+            "- Item 1",
+            "",
+            "**Negative:**",
+            "- Item 2",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings),
+            0,
+            f"Double-bold text should not be flagged as list marker, got: "
+            f"{[f.message for f in findings]}",
+        )
+
+    def test_mid_line_bold_not_flagged(self):
+        """
+        Given a document with bold text in the middle of lines
+        When the whitespace rule is checked
+        Then no findings should be reported
+        Because mid-line *bold* text is never a list marker
+        """
+        # Given: Mid-line bold text
+        content = [
+            "This is *important* text.",
+            "Here is **very important** content.",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings),
+            0,
+            f"Mid-line bold should not be flagged, got: "
+            f"{[f.message for f in findings]}",
+        )
+
+    def test_list_marker_without_space_still_flagged(self):
+        """
+        Given a document with actual list markers missing spaces
+        When the whitespace rule is checked
+        Then findings should be reported
+        Because list markers require a space after the marker
+        """
+        # Given: Actual list markers without spaces
+        content = [
+            "*Item without space",
+            "**Nested item without space",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: Two findings should be reported
+        self.assertEqual(
+            len(findings),
+            2,
+            f"List markers without space should be flagged, got: "
+            f"{[f.message for f in findings]}",
+        )
+
+    def test_valid_list_markers_not_flagged(self):
+        """
+        Given a document with valid list markers (with spaces)
+        When the whitespace rule is checked
+        Then no findings should be reported
+        """
+        # Given: Valid list markers
+        content = [
+            "* Item 1",
+            "** Nested item",
+            "*** Deeply nested",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No findings should be reported
+        self.assertEqual(
+            len(findings),
+            0,
+            f"Valid list markers should not be flagged, got: "
+            f"{[f.message for f in findings]}",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

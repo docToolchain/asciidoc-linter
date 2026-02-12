@@ -32,6 +32,33 @@ class WhitespaceRule(Rule):
             return line.content
         return str(line)
 
+    def _is_bold_syntax(self, stripped: str) -> bool:
+        """Check if a line starting with * is bold syntax rather than a list marker.
+
+        Bold syntax: *text* or **text** where the text is wrapped in
+        matching asterisks. A list marker would be * followed by a space
+        and then text (e.g., '* item').
+        """
+        # Count leading asterisks
+        marker_count = 0
+        for char in stripped:
+            if char == "*":
+                marker_count += 1
+            else:
+                break
+
+        # Check if the remaining text (after leading asterisks) contains
+        # a closing set of asterisks, indicating bold formatting
+        rest = stripped[marker_count:]
+        if rest and "*" in rest:
+            # Check for closing asterisks (at least marker_count of them)
+            # Bold text ends with matching asterisks: *word* or **word**
+            closing_marker = "*" * marker_count
+            if closing_marker in rest:
+                return True
+
+        return False
+
     def check_line(
         self,
         line: Union[str, object],
@@ -78,15 +105,20 @@ class WhitespaceRule(Rule):
                 content = stripped[marker_count:]
 
                 if content and not content.startswith(" "):
-                    findings.append(
-                        Finding(
-                            rule_id=self.id,
-                            position=Position(line=line_number + 1),
-                            message=f"Missing space after the marker '{marker * marker_count}'",
-                            severity=self.severity,
-                            context=line_content,
+                    # For asterisk markers, check if this is bold syntax
+                    # Bold: *text* or **text** (has closing asterisks)
+                    if marker == "*" and self._is_bold_syntax(stripped):
+                        pass  # Bold formatting, not a list marker
+                    else:
+                        findings.append(
+                            Finding(
+                                rule_id=self.id,
+                                position=Position(line=line_number + 1),
+                                message=f"Missing space after the marker '{marker * marker_count}'",
+                                severity=self.severity,
+                                context=line_content,
+                            )
                         )
-                    )
 
         # Check for trailing whitespace
         if line_content.rstrip() != line_content:

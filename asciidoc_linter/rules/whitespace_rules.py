@@ -165,7 +165,7 @@ class WhitespaceRule(Rule):
                     prev_content = self.get_line_content(context[line_number - 1])
                     prev_content_stripped = prev_content.strip()
                     if prev_content_stripped and not prev_content_stripped.startswith(
-                        ("[.", "[[")
+                        "["
                     ):
                         findings.append(
                             Finding(

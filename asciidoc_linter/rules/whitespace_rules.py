@@ -109,6 +109,8 @@ class WhitespaceRule(Rule):
                     # Bold: *text* or **text** (has closing asterisks)
                     if marker == "*" and self._is_bold_syntax(stripped):
                         pass  # Bold formatting, not a list marker
+                    elif marker == "." and marker_count == 1:
+                        pass  # Block title syntax (.Title), not a list marker
                     else:
                         findings.append(
                             Finding(

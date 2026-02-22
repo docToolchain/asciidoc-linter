@@ -88,6 +88,11 @@ This project is part of docToolchain (https://doctoolchain.org), a collection of
 |Detect Markdown syntax in AsciiDoc files (headings, links, images, code blocks)
 |WARNING
 |✅ Stable
+
+|FMT005
+|Detect Markdown table syntax (pipe-separated tables with separator lines)
+|ERROR
+|✅ Stable
 |===
 
 === Planned Rules
@@ -212,12 +217,45 @@ jobs:
           done
 ----
 
+== Using with pre-commit
+
+You can integrate AsciiDoc Linter into your https://pre-commit.com[pre-commit] workflow to automatically check AsciiDoc files before committing.
+
+=== Installation
+
+Add the following to your `.pre-commit-config.yaml`:
+
+[source,yaml]
+----
+repos:
+  - repo: https://github.com/docToolchain/asciidoc-linter
+    rev: v0.2.0  # Use the latest release tag
+    hooks:
+      - id: asciidoc-linter
+----
+
+=== Usage
+
+[source,bash]
+----
+# Install pre-commit hooks
+pre-commit install
+
+# Run manually on all files
+pre-commit run --all-files
+
+# Run automatically on git commit
+git commit -m "Your commit message"
+----
+
+The hook will automatically check all `.adoc` and `.asciidoc` files in your repository before each commit.
+
 == Development
 
 === Current Status
 
 * Test Coverage: 95%
-* Test Success Rate: 100% (216/216 tests passing)
+* Test Success Rate: 100% (248/248 tests passing)
 * Known Issues:
 ** Table content validation needs improvement
 
@@ -324,7 +362,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 === Phase 3 (Future)
 
 * 🔲 IDE integration
-* 🔲 Git pre-commit hooks
+* ✅ Git pre-commit hooks
 * 🔲 Custom rule development
 * 🔲 Performance optimization
 

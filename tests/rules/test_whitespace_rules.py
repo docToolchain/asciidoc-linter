@@ -57,8 +57,9 @@ class TestWhitespaceRule(unittest.TestCase):
         """
         Given a document with both valid and invalid list markers
         When the whitespace rule is checked
-        Then three findings should be reported
+        Then two findings should be reported (for * and - markers without space)
         And each finding should mention space after the marker
+        Note: .Title is a valid block title, not an invalid list marker
         """
         # Given: A document with various list markers
         content = [
@@ -67,7 +68,7 @@ class TestWhitespaceRule(unittest.TestCase):
             "- Valid item",
             "-Invalid item",
             ". Valid item",
-            ".Invalid item",
+            ".Block title",  # valid block title, should NOT be flagged
         ]
 
         # When: We check each line for whitespace issues
@@ -75,9 +76,9 @@ class TestWhitespaceRule(unittest.TestCase):
         for i, line in enumerate(content):
             findings.extend(self.rule.check_line(line, i, content))
 
-        # Then: Three findings should be reported
+        # Then: Two findings should be reported (for * and - only)
         self.assertEqual(
-            len(findings), 3, "Three invalid list markers should produce three findings"
+            len(findings), 2, "Two invalid list markers should produce two findings"
         )
 
         # And: Each finding should mention space after the marker
@@ -86,6 +87,42 @@ class TestWhitespaceRule(unittest.TestCase):
                 "space after the marker" in finding.message,
                 "Finding should mention missing space after marker",
             )
+
+    def test_block_title_not_flagged_as_list_marker(self):
+        """
+        Given a document with AsciiDoc block titles
+        When the whitespace rule is checked
+        Then no findings should be reported
+        Because .Title is valid block title syntax, not a list marker
+        """
+        # Given: A document with block titles (from the issue report)
+        content = [
+            ".A mountain sunset",
+            "[#img-sunset,link=https://www.flickr.com/photos/javh/5448336655]",
+            "image::sunset.jpg[Sunset,200,100]",
+            "",
+            ".Specify GitLab CI stages",
+            "[source,yaml]",
+            "----",
+            "image: node:16-buster",
+            "----",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No findings should be reported for block titles
+        block_title_findings = [
+            f for f in findings if "space after the marker" in f.message
+        ]
+        self.assertEqual(
+            len(block_title_findings),
+            0,
+            f"Block titles should not be flagged as list markers, got: "
+            f"{[f.message for f in block_title_findings]}",
+        )
 
     def test_admonition_block_spacing(self):
         """

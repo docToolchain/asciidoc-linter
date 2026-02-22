@@ -328,6 +328,12 @@
 </ul>
 </li>
 <li><a href="#_using_as_a_github_action">Using as a GitHub Action</a></li>
+<li><a href="#_using_with_pre_commit">Using with pre-commit</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_2">Installation</a></li>
+<li><a href="#_usage_2">Usage</a></li>
+</ul>
+</li>
 <li><a href="#_development">Development</a>
 <ul class="sectlevel2">
 <li><a href="#_current_status">Current Status</a></li>
@@ -501,6 +507,12 @@ It helps maintain consistent documentation by enforcing rules for heading struct
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FMT005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect Markdown table syntax (pipe-separated tables with separator lines)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -670,6 +682,47 @@ jobs:
 </div>
 </div>
 <div class="sect1">
+<h2 id="_using_with_pre_commit">Using with pre-commit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can integrate AsciiDoc Linter into your <a href="https://pre-commit.com">pre-commit</a> workflow to automatically check AsciiDoc files before committing.</p>
+</div>
+<div class="sect2">
+<h3 id="_installation_2">Installation</h3>
+<div class="paragraph">
+<p>Add the following to your <code>.pre-commit-config.yaml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">repos:
+  - repo: https://github.com/docToolchain/asciidoc-linter
+    rev: v0.2.0  # Use the latest release tag
+    hooks:
+      - id: asciidoc-linter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usage_2">Usage</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Install pre-commit hooks
+pre-commit install
+
+# Run manually on all files
+pre-commit run --all-files
+
+# Run automatically on git commit
+git commit -m "Your commit message"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The hook will automatically check all <code>.adoc</code> and <code>.asciidoc</code> files in your repository before each commit.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_development">Development</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -680,7 +733,7 @@ jobs:
 <p>Test Coverage: 95%</p>
 </li>
 <li>
-<p>Test Success Rate: 100% (216/216 tests passing)</p>
+<p>Test Success Rate: 100% (248/248 tests passing)</p>
 </li>
 <li>
 <p>Known Issues:</p>
@@ -870,7 +923,7 @@ For major changes, please open an issue first to discuss what you would like to 
 <p>🔲 IDE integration</p>
 </li>
 <li>
-<p>🔲 Git pre-commit hooks</p>
+<p>✅ Git pre-commit hooks</p>
 </li>
 <li>
 <p>🔲 Custom rule development</p>

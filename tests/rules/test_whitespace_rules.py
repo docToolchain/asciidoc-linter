@@ -261,6 +261,35 @@ class TestWhitespaceRule(unittest.TestCase):
             len(findings), 0, "Well-formatted document should not produce any findings"
         )
 
+    def test_discrete_heading_no_false_positive(self):
+        """
+        Given a document where [discrete] immediately precedes a section heading
+        When the whitespace rule is checked
+        Then no finding should be reported for missing preceding blank line
+        Because [discrete] is a valid block attribute that must directly precede the heading
+        """
+        # Given: A collapsible block with a discrete heading (no blank line between
+        # [discrete] and the heading is correct AsciiDoc syntax)
+        content = [
+            "[%collapsible]",
+            "====",
+            "[discrete]",
+            "== Core Concepts",
+            "content here",
+            "====",
+        ]
+
+        # When: We check each line for whitespace issues
+        findings = []
+        for i, line in enumerate(content):
+            findings.extend(self.rule.check_line(line, i, content))
+
+        # Then: No finding about a missing preceding blank line should be reported
+        self.assertFalse(
+            any("preceded by" in f.message for f in findings),
+            "[discrete] before a heading should not trigger 'preceded by blank line' finding",
+        )
+
     def test_ws001_rule_can_be_disabled(self):
         """
         Given a document with various whitespace issues

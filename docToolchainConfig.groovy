@@ -121,7 +121,7 @@ microsite.with {
     // the base url for code files in github
     // Example: https://github.com/doctoolchain/doctoolchain/edit/master/src/docs
     branch = System.getenv("DTC_PROJECT_BRANCH")?:'-'
-    gitRepoUrl = 'https://github.com/doctoolchain/asciidoc-linter/edit/master/src/docs'
+    gitRepoUrl = 'https://github.com/doctoolchain/asciidoc-linter/edit/master/docs'
 
     //
     // the location of the landing page

@@ -372,8 +372,10 @@ class NonSemanticDefinitionListRule(Rule):
     Detected patterns:
     - *Term*: definition (single asterisk bold)
     - **Term**: definition (double asterisk bold)
-    - - *Term*: definition (list item with bold term)
-    - * *Term*: definition (list item with bold term)
+
+    Intentionally ignored patterns (valid list items with bold lead-in terms):
+    - - *Term*: definition (dash list item with bold term)
+    - * *Term*: definition (asterisk list item with bold term)
     """
 
     id = "FMT002"
@@ -475,19 +477,8 @@ class NonSemanticDefinitionListRule(Rule):
             findings.append(self._create_finding(term, line, line_number))
             return findings
 
-        # Check for list item with single bold: - *Term*:
-        match = self.LIST_SINGLE_BOLD_PATTERN.match(line)
-        if match:
-            term = match.group(1)
-            findings.append(self._create_finding(term, line, line_number))
-            return findings
-
-        # Check for asterisk list with bold: * *Term*:
-        match = self.ASTERISK_LIST_BOLD_PATTERN.match(line)
-        if match:
-            term = match.group(1)
-            findings.append(self._create_finding(term, line, line_number))
-            return findings
+        # Skip list items with bold lead-in terms: - *Term*: and * *Term*:
+        # These are valid AsciiDoc list items, not fake definition lists.
 
         return findings
 

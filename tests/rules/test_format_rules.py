@@ -507,19 +507,36 @@ class TestNonSemanticDefinitionListDetection:
 
         assert len(findings) == 1
 
-    def test_detects_list_item_with_bold_term(self, definition_list_rule):
-        """Test detection of - *Term*: pattern."""
+    def test_ignores_list_item_with_bold_term(self, definition_list_rule):
+        """Test that - *Term*: pattern is not flagged (valid list item)."""
         content = ["- *Term*: This is the definition"]
         findings = definition_list_rule.check(content)
 
-        assert len(findings) == 1
+        assert len(findings) == 0
 
-    def test_detects_asterisk_list_with_bold_term(self, definition_list_rule):
-        """Test detection of * *Term*: pattern."""
+    def test_ignores_asterisk_list_with_bold_term(self, definition_list_rule):
+        """Test that * *Term*: pattern is not flagged (valid list item)."""
         content = ["* *Term*: This is the definition"]
         findings = definition_list_rule.check(content)
 
-        assert len(findings) == 1
+        assert len(findings) == 0
+
+    def test_ignores_bold_lead_in_within_bulleted_list(self, definition_list_rule):
+        """Test that bold lead-in terms in bulleted lists are not flagged.
+
+        This is a common and valid AsciiDoc writing pattern where list items
+        have a bold introductory phrase followed by a colon and explanation.
+        These should not be confused with non-semantic definition lists.
+        """
+        content = [
+            "* *Transparency and accountability*: Members want clearer metrics.",
+            "* *Inflation protection*: Fixed-dollar amounts have been eroded.",
+            "- *Equity across hire dates*: Benefits tied to arbitrary dates.",
+            "- *Data requests*: Multiple sections identify specific data.",
+        ]
+        findings = definition_list_rule.check(content)
+
+        assert len(findings) == 0
 
     def test_detects_multiple_patterns(self, definition_list_rule):
         """Test detection of multiple non-semantic patterns."""
@@ -530,7 +547,8 @@ class TestNonSemanticDefinitionListDetection:
         ]
         findings = definition_list_rule.check(content)
 
-        assert len(findings) == 3
+        # Only standalone bold patterns are flagged; list items are ignored
+        assert len(findings) == 2
 
     def test_ignores_proper_definition_list(self, definition_list_rule):
         """Test that proper AsciiDoc definition lists are not flagged."""

@@ -31,6 +31,18 @@ class TestFindCodeBlockContentLines(unittest.TestCase):
         lines = ["....", "lit", "....", "x", "++++", "pass", "++++"]
         self.assertEqual(find_code_block_content_lines(lines), {1, 5})
 
+    def test_comment_block_content_is_skipped(self):
+        """//// comment blocks are not parsed by AsciiDoc, so skip their body."""
+        lines = [
+            "before",  # 0
+            "////",  # 1 opening comment delimiter
+            "== not a real heading",  # 2 content
+            "--flag inside comment",  # 3 content
+            "////",  # 4 closing comment delimiter
+            "after",  # 5
+        ]
+        self.assertEqual(find_code_block_content_lines(lines), {2, 3})
+
     def test_unterminated_block_runs_to_eof(self):
         """An unterminated block extends to the end of the document."""
         lines = ["----", "a", "b"]

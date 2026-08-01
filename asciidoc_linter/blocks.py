@@ -1,21 +1,23 @@
-# blocks.py - Shared helpers for detecting AsciiDoc verbatim blocks
+# blocks.py - Shared helpers for detecting AsciiDoc non-parsed blocks
 """
-Shared helper for locating the content of AsciiDoc verbatim blocks.
+Shared helper for locating the content of AsciiDoc blocks whose body is not
+parsed as AsciiDoc structure.
 
 Content inside listing (``----``), literal (``....``) and passthrough
-(``++++``) blocks is verbatim: it represents example or source text rather
-than real AsciiDoc structure, so lint rules must not be applied to it.
-Centralising the detection here keeps every rule (and the parser) consistent
-and avoids the drift that caused issues #52 and #54, where some rules skipped
-code blocks and others did not.
+(``++++``) blocks is verbatim (example or source text), and content inside
+comment (``////``) blocks is not rendered at all. In every case the body must
+not be linted, since it is not real AsciiDoc markup. Centralising the
+detection here keeps every rule (and the parser) consistent and avoids the
+drift that caused issues #52 and #54, where some rules skipped these blocks
+and others did not.
 """
 
 from typing import List, Optional, Set, Union
 
-# Characters whose repeated run delimits a verbatim block: listing (-),
-# literal (.) and passthrough (+). Example (=), sidebar (*) and quote (_)
-# blocks hold parseable content and are intentionally excluded.
-VERBATIM_DELIMITER_CHARS = "-.+"
+# Characters whose repeated run delimits a block whose body must be skipped:
+# listing (-), literal (.), passthrough (+) and comment (/). Example (=),
+# sidebar (*) and quote (_) blocks hold parseable content and are excluded.
+VERBATIM_DELIMITER_CHARS = "-.+/"
 
 # Minimum run length AsciiDoc requires for a block delimiter.
 MIN_DELIMITER_LENGTH = 4

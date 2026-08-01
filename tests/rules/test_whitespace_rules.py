@@ -516,6 +516,35 @@ class TestWhitespaceRule(unittest.TestCase):
             f"{[f.message for f in marker_findings]}",
         )
 
+    def test_pem_block_with_long_delimiter_not_flagged(self):
+        """
+        Given a PEM certificate inside a block with a long (16-dash) delimiter
+        When the whitespace rule checks the whole document
+        Then the '-----BEGIN/END-----' lines are not flagged as markers
+        Because AsciiDoc delimiters may be any run of four or more characters.
+        """
+        # Given: A PEM block delimited by a 16-dash run (as seen in real docs)
+        content = [
+            "[source,]",
+            "----------------",
+            "-----BEGIN CERTIFICATE-----",
+            "MIIEQDCCAyigAwIBAgIBATANBgkqhkiG9w0BAQsFADCBjTELMAkGA1UEBhMCREUx",
+            "-----END CERTIFICATE-----",
+            "----------------",
+        ]
+
+        # When: We check the whole document
+        findings = self.rule.check(content)
+
+        # Then: No marker findings for the PEM header/footer lines
+        marker_findings = [f for f in findings if "marker" in f.message]
+        self.assertEqual(
+            len(marker_findings),
+            0,
+            f"PEM lines inside a long-delimiter block must not be flagged, got: "
+            f"{[f.message for f in marker_findings]}",
+        )
+
     def test_section_title_in_source_block_not_flagged(self):
         """
         Given a source block containing AsciiDoc section-title syntax

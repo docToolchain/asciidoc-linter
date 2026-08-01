@@ -45,6 +45,35 @@ class TestFindCodeBlockContentLines(unittest.TestCase):
     def test_no_blocks(self):
         self.assertEqual(find_code_block_content_lines(["a", "== b", "c"]), set())
 
+    def test_long_delimiter_runs(self):
+        """Delimiters may be any run of >= 4 chars (AsciiDoc), not just four."""
+        lines = [
+            "[source,]",  # 0
+            "----------------",  # 1 opening delimiter (16 dashes)
+            "-----BEGIN CERTIFICATE-----",  # 2 content, not a delimiter
+            "base64data",  # 3
+            "-----END CERTIFICATE-----",  # 4
+            "----------------",  # 5 closing delimiter
+            "after",  # 6
+        ]
+        self.assertEqual(find_code_block_content_lines(lines), {2, 3, 4})
+
+    def test_closing_delimiter_must_match_length(self):
+        """A shorter run inside a longer block is content, not a close."""
+        lines = [
+            "--------",  # 0 opening (8 dashes)
+            "---",  # 1 content: 3 dashes is not even a delimiter
+            "----",  # 2 content: 4 dashes, wrong length, does not close
+            "--------",  # 3 real close (8 dashes)
+            "outside",  # 4
+        ]
+        self.assertEqual(find_code_block_content_lines(lines), {1, 2})
+
+    def test_short_runs_are_not_delimiters(self):
+        """Runs shorter than four characters never open a block."""
+        lines = ["---", "not in a block", "..."]
+        self.assertEqual(find_code_block_content_lines(lines), set())
+
 
 class TestParserSkipsVerbatimBlocks(unittest.TestCase):
     """The parser must not emit Headers for section titles inside blocks."""

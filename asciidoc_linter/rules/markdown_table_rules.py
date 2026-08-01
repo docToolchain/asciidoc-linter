@@ -8,6 +8,7 @@ accidentally use Markdown table syntax instead of AsciiDoc tables.
 import re
 from typing import List, Union
 from .base import Rule, Finding, Severity, Position
+from ..blocks import find_code_block_content_lines
 
 
 class MarkdownTableRule(Rule):
@@ -40,9 +41,6 @@ class MarkdownTableRule(Rule):
     # AsciiDoc table delimiter
     ASCIIDOC_TABLE_DELIMITER = re.compile(r"^\s*\|===\s*$")
 
-    # AsciiDoc block delimiters that indicate code/literal blocks
-    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
-
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -57,36 +55,18 @@ class MarkdownTableRule(Rule):
 
     def _preprocess(self, document):
         """Extract lines and determine which to skip (code blocks, tables)."""
-        lines = []
-        in_code_block = False
-        current_delimiter = None
+        lines = [self._get_line_content(line) for line in document]
+        # Verbatim block content (----, ...., ++++) is never a Markdown table.
+        skip_lines = set(find_code_block_content_lines(lines))
+
         in_asciidoc_table = False
-        skip_lines = set()
-
-        for i, line in enumerate(document):
-            line_content = self._get_line_content(line)
-            lines.append(line_content)
-            stripped = line_content.strip()
-
-            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
-                if not in_code_block:
-                    in_code_block = True
-                    current_delimiter = stripped
-                elif stripped == current_delimiter:
-                    in_code_block = False
-                    current_delimiter = None
-                skip_lines.add(i)
+        for i, line_content in enumerate(lines):
+            if i in skip_lines:
                 continue
-
-            if in_code_block:
-                skip_lines.add(i)
-                continue
-
             if self.ASCIIDOC_TABLE_DELIMITER.match(line_content):
                 in_asciidoc_table = not in_asciidoc_table
                 skip_lines.add(i)
                 continue
-
             if in_asciidoc_table:
                 skip_lines.add(i)
 

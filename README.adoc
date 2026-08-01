@@ -280,6 +280,7 @@ python run_tests_html.py
 asciidoc-linter/
 ├── asciidoc_linter/
 │   ├── __init__.py
+│   ├── blocks.py
 │   ├── cli.py
 │   ├── linter.py
 │   ├── parser.py
@@ -297,6 +298,7 @@ asciidoc-linter/
 ├── tests/
 │   ├── __init__.py
 │   ├── test_base.py
+│   ├── test_blocks.py
 │   ├── test_cli.py
 │   ├── test_linter.py
 │   ├── test_reporter.py

@@ -2,6 +2,7 @@
 
 from typing import List, Union
 from .base import Rule, Finding, Severity, Position
+from ..blocks import find_code_block_content_lines
 
 
 class WhitespaceRule(Rule):
@@ -22,7 +23,13 @@ class WhitespaceRule(Rule):
         if not self.enabled:
             return []
         findings = []
+        # Content inside verbatim blocks (----, ...., ++++) is example/source
+        # text, not real AsciiDoc structure, so it must not be linted (#52, #54).
+        code_block_lines = find_code_block_content_lines(document)
+        self.consecutive_empty_lines = 0
         for line_number, line in enumerate(document):
+            if line_number in code_block_lines:
+                continue
             findings.extend(self.check_line(line, line_number, document))
         return findings
 

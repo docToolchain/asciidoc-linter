@@ -103,6 +103,21 @@ class TestCliFileProcessing(unittest.TestCase):
         self.assertEqual(exit_code, 1)
         mock_lint.assert_called_once()
 
+    @patch("asciidoc_linter.linter.AsciiDocLinter.lint")
+    def test_fail_level_error_tolerates_warnings(self, mock_lint):
+        """Issue #58: --fail-level error ignores warnings for the exit code"""
+        mock_lint.return_value = LintReport(
+            [Finding(message="Foo", severity=Severity.WARNING)]
+        )
+
+        self.assertEqual(main(["doc.adoc", "--fail-level", "error"]), 0)
+        self.assertEqual(main(["doc.adoc", "--fail-level", "warning"]), 1)
+        self.assertEqual(main(["doc.adoc"]), 1)
+
+    def test_invalid_fail_level(self):
+        with self.assertRaises(SystemExit):
+            create_parser().parse_args(["doc.adoc", "--fail-level", "fatal"])
+
 
 class TestCliReporters(unittest.TestCase):
     """Test reporter selection and usage"""

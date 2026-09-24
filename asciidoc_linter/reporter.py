@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import List, Dict
 import json
 
-from .rules.base import Finding
+from .rules.base import Finding, Severity
 
 
 @dataclass
@@ -26,7 +26,13 @@ class LintReport:
 
     @property
     def exit_code(self) -> int:
-        return 1 if self.findings else 0
+        return self.exit_code_for(Severity.INFO)
+
+    def exit_code_for(self, fail_level: Severity) -> int:
+        """1 if any finding has fail_level or a higher severity, else 0"""
+        fail_level = Severity(fail_level)
+        failing = [f for f in self.findings if f.severity.rank >= fail_level.rank]
+        return 1 if failing else 0
 
     def __bool__(self):
         return bool(self.findings)

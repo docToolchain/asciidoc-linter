@@ -80,6 +80,18 @@ def test_lint_report_exit_code(sample_report, empty_report):
     assert empty_report.exit_code == 0
 
 
+def test_lint_report_exit_code_for_fail_level():
+    """Issue #58: only findings at or above the fail level fail the run"""
+    warnings_only = LintReport([Finding(message="w", severity=Severity.WARNING)])
+    assert warnings_only.exit_code_for(Severity.INFO) == 1
+    assert warnings_only.exit_code_for(Severity.WARNING) == 1
+    assert warnings_only.exit_code_for(Severity.ERROR) == 0
+
+    info_only = LintReport([Finding(message="i", severity=Severity.INFO)])
+    assert info_only.exit_code_for(Severity.WARNING) == 0
+    assert info_only.exit_code_for("info") == 1
+
+
 def test_lint_report_grouped_findings(sample_report, sample_finding, empty_report):
     """Test LintReport.grouped_findings"""
     grouped = sample_report.grouped_findings()

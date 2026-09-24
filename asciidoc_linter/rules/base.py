@@ -32,6 +32,11 @@ class Severity(str, Enum):
             return self.value.lower() == other.lower()
         return super().__eq__(other)
 
+    @property
+    def rank(self) -> int:
+        """Numeric weight for comparisons: info < warning < error"""
+        return {"info": 0, "warning": 1, "error": 2}[self.value]
+
 
 @dataclass
 class Position:

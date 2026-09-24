@@ -128,7 +128,18 @@ asciidoc-linter doc1.adoc doc2.adoc
 
 # Check with specific output format
 asciidoc-linter --format json document.adoc
+
+# Fail (exit code 1) only on errors, tolerate warnings and info findings
+asciidoc-linter --fail-level error document.adoc
 ----
+
+=== Exit Codes
+
+The linter exits with `1` if at least one finding has the severity set by `--fail-level` or a higher one, otherwise with `0`.
+
+* `info` (default): any finding fails the run
+* `warning`: warnings and errors fail the run
+* `error`: only errors fail the run
 
 === Output Formats
 

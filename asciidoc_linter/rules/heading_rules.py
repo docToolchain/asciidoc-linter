@@ -29,7 +29,8 @@ class HeadingFormatRule(Rule):
         findings = []
         match = self.heading_pattern.match(line)
 
-        if match:
+        # Lines made only of "=" are block delimiters (e.g. ====), not headings
+        if match and line.strip("= \t"):
             equals, space, text = match.groups()
             level = len(equals)
 

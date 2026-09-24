@@ -269,6 +269,12 @@ image::diagram.png[Diagram]
 image::missing.png[Missing Image]
 ----
 
+==== Image Path Resolution
+
+Like AsciiDoc, the rule resolves relative image targets against `:imagesdir:`.
+A relative `imagesdir` is itself relative to the document's directory, not to the directory the linter runs in.
+The rule skips the existence check for URLs, for targets or an `imagesdir` that contain attribute references, and for content linted without a file path.
+
 == Format Rules
 
 === FMT004: Markdown Syntax Detection

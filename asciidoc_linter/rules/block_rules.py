@@ -128,13 +128,14 @@ class BlockSpacingRule(Rule):
                 del self.open_blocks[stripped_line]
             else:
                 # This is an opening delimiter
-                if line_num > 0:
-                    # Skip block attribute lines ([source]) and titles (.Title)
-                    prev_index = line_num - 1
-                    while prev_index > 0 and self._is_block_prefix(
-                        document[prev_index].strip()
-                    ):
-                        prev_index -= 1
+                # Skip block attribute lines ([source]), titles (.Title) and
+                # line comments; the start of the file is a valid boundary
+                prev_index = line_num - 1
+                while prev_index >= 0 and self._is_block_prefix(
+                    document[prev_index].strip()
+                ):
+                    prev_index -= 1
+                if prev_index >= 0:
                     prev_line = document[prev_index].strip()
                     if prev_line and not prev_line.startswith("="):
                         findings.append(
@@ -152,10 +153,12 @@ class BlockSpacingRule(Rule):
 
     @staticmethod
     def _is_block_prefix(line: str) -> bool:
-        """True for block attribute lines ([source]) and block titles (.Title)"""
+        """True for block attribute lines ([source]), block titles (.Title)
+        and line comments (// ...), but not comment block delimiters (////)"""
         is_attribute = line.startswith("[") and line.endswith("]")
         is_title = len(line) > 1 and line[0] == "." and line[1] not in ". "
-        return is_attribute or is_title
+        is_comment = line.startswith("//") and not line.startswith("///")
+        return is_attribute or is_title or is_comment
 
     def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
         findings = []

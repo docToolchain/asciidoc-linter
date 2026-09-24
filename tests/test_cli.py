@@ -24,6 +24,7 @@ class TestCliArgumentParsing(unittest.TestCase):
         self.assertEqual(args.files, ["test.adoc"])
         self.assertEqual(args.format, "console")
         self.assertIsNone(args.config)
+        self.assertEqual(args.fail_level, "info")
         self.assertFalse(args.verbose)
         self.assertFalse(args.debug)
 
@@ -102,6 +103,35 @@ class TestCliFileProcessing(unittest.TestCase):
 
         self.assertEqual(exit_code, 1)
         mock_lint.assert_called_once()
+
+
+class TestCliFailLevel(unittest.TestCase):
+    """--fail-level sets the lowest severity that fails the run (#58)"""
+
+    def _exit_code(self, severity, *extra_args):
+        report = LintReport([Finding(message="Foo", severity=severity)])
+        with patch(
+            "asciidoc_linter.linter.AsciiDocLinter.lint", return_value=report
+        ), patch("builtins.print"):
+            return main(["file.adoc", *extra_args])
+
+    def test_default_fails_on_any_finding(self):
+        self.assertEqual(self._exit_code(Severity.INFO), 1)
+
+    def test_warning_passes_with_fail_level_error(self):
+        self.assertEqual(self._exit_code(Severity.WARNING, "--fail-level", "error"), 0)
+
+    def test_warning_fails_with_fail_level_warning(self):
+        self.assertEqual(
+            self._exit_code(Severity.WARNING, "--fail-level", "warning"), 1
+        )
+
+    def test_error_fails_with_fail_level_error(self):
+        self.assertEqual(self._exit_code(Severity.ERROR, "--fail-level", "error"), 1)
+
+    def test_invalid_fail_level_is_rejected(self):
+        with self.assertRaises(SystemExit), patch("sys.stderr"):
+            create_parser().parse_args(["file.adoc", "--fail-level", "fatal"])
 
 
 class TestCliReporters(unittest.TestCase):

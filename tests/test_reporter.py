@@ -80,6 +80,29 @@ def test_lint_report_exit_code(sample_report, empty_report):
     assert empty_report.exit_code == 0
 
 
+@pytest.mark.parametrize(
+    "severities, fail_level, expected",
+    [
+        ([], Severity.INFO, 0),
+        ([Severity.INFO], Severity.INFO, 1),
+        ([Severity.INFO], Severity.WARNING, 0),
+        ([Severity.WARNING], Severity.WARNING, 1),
+        ([Severity.WARNING], Severity.ERROR, 0),
+        ([Severity.WARNING, Severity.ERROR], Severity.ERROR, 1),
+        ([Severity.ERROR], Severity.INFO, 1),
+    ],
+)
+def test_lint_report_exit_code_for(severities, fail_level, expected):
+    """exit_code_for() fails only on findings at or above the threshold (#58)"""
+    report = LintReport([Finding(message="m", severity=s) for s in severities])
+    assert report.exit_code_for(fail_level) == expected
+
+
+def test_severity_rank_order():
+    """INFO < WARNING < ERROR"""
+    assert Severity.INFO.rank < Severity.WARNING.rank < Severity.ERROR.rank
+
+
 def test_lint_report_grouped_findings(sample_report, sample_finding, empty_report):
     """Test LintReport.grouped_findings"""
     grouped = sample_report.grouped_findings()

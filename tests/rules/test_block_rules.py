@@ -214,6 +214,64 @@ class TestBlockSpacingRule(unittest.TestCase):
             len(findings), 0, "Blocks adjacent to headings should not produce findings"
         )
 
+    def test_comment_and_attribute_at_file_start(self):
+        """
+        Given a table preceded only by a line comment and an attribute line
+        When the block spacing rule is checked
+        Then no findings should be reported (issue #64)
+        """
+        content = ["// generated file", '[cols="1,1"]', "|===", "| a | b", "|==="]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_block_on_first_line(self):
+        """
+        Given a block that opens on the first line of the file
+        When the block spacing rule is checked
+        Then no findings should be reported
+        """
+        content = ["----", "code", "----"]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_attribute_on_first_line(self):
+        """
+        Given a block whose attribute line is the first line of the file
+        When the block spacing rule is checked
+        Then no findings should be reported
+        """
+        content = ["[source,bash]", "----", "code", "----"]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_comment_between_paragraph_and_block(self):
+        """
+        Given a paragraph, then a line comment directly before a block
+        When the block spacing rule is checked
+        Then the missing blank line is still reported
+        """
+        content = ["Some text", "// note", "[source]", "----", "code", "----"]
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("preceded by", findings[0].message)
+
+    def test_comment_after_blank_line(self):
+        """
+        Given a blank line, a line comment and a block
+        When the block spacing rule is checked
+        Then no findings should be reported
+        """
+        content = ["Some text", "", "// note", "----", "code", "----"]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_comment_block_delimiter_is_not_a_prefix(self):
+        """
+        Given text directly followed by a comment block delimiter (////)
+        When the block spacing rule is checked
+        Then the comment block itself is reported as not preceded by a blank line
+        """
+        content = ["Some text", "////", "comment", "////"]
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].position.line, 2)
+
 
 if __name__ == "__main__":
     unittest.main()

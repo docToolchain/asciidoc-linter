@@ -15,6 +15,9 @@ asciidoc-linter doc1.adoc doc2.adoc
 # Check with specific output format
 asciidoc-linter --format json document.adoc
 
+# Fail only on errors, tolerate warnings
+asciidoc-linter --fail-level error document.adoc
+
 # Use specific configuration
 asciidoc-linter --config my-config.yml document.adoc
 
@@ -39,6 +42,10 @@ asciidoc-linter --debug document.adoc
 |None
 |Path to configuration file
 
+|--fail-level
+|info
+|Lowest severity that makes the exit code 1 (error, warning, info)
+
 |--verbose
 |False
 |Enable verbose output
@@ -51,6 +58,12 @@ asciidoc-linter --debug document.adoc
 |False
 |Suppress non-error output
 |===
+
+=== Exit Codes
+
+The exit code is 0 if no finding reaches the `--fail-level`, otherwise 1.
+With the default `info`, any finding fails the run.
+Use `--fail-level error` to let warnings and info findings pass in CI.
 
 == Configuration
 

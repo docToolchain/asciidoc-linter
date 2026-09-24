@@ -8,6 +8,7 @@ import sys
 from typing import List, Optional
 from .linter import AsciiDocLinter
 from .reporter import ConsoleReporter, JsonReporter, HtmlReporter, Reporter
+from .rules.base import Severity
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -22,6 +23,13 @@ def create_parser() -> argparse.ArgumentParser:
         choices=["console", "plain", "json", "html"],
         default="console",
         help="Output format (default: console)",
+    )
+    parser.add_argument(
+        "--fail-level",
+        choices=[s.value for s in (Severity.ERROR, Severity.WARNING, Severity.INFO)],
+        default=Severity.INFO.value,
+        help="Lowest severity that makes the exit code 1 (default: info, "
+        "i.e. any finding fails)",
     )
     parser.add_argument(
         "--verbose",
@@ -62,7 +70,7 @@ def main(args: Optional[List[str]] = None) -> int:
     # Set reporter based on format argument
     print(get_reporter(parsed_args.format).format_report(report))
 
-    return report.exit_code
+    return report.exit_code_for(Severity(parsed_args.fail_level))
 
 
 if __name__ == "__main__":

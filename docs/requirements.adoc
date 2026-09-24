@@ -99,6 +99,17 @@ This document describes the requirements for the AsciiDoc Linter, focusing on th
 |✅ Implemented
 |===
 
+=== List Rules
+
+[cols="1,2,1"]
+|===
+|Rule ID |Description |Status
+
+|LIST001
+|Detect lists not separated from a preceding paragraph by an empty line
+|✅ Implemented
+|===
+
 == Planned Rules
 
 === Table Rules
@@ -144,6 +155,7 @@ The rules are organized into the following categories:
 * Whitespace Rules: Spacing and layout
 * Image Rules: Image attributes and references
 * Format Rules: LLM-generated formatting issues (Markdown syntax, numbered lists, etc.)
+* List Rules: Broken list structure
 * Table Rules (planned): Table formatting and content
 * Link Rules (planned): References and links
 
@@ -160,6 +172,7 @@ The rules are organized into the following categories:
 
 * ⚠️ Table validation (TABLE001 implemented, TABLE002/003 planned)
 * ✅ Format rules (FMT001, FMT002, FMT003, FMT004)
+* ✅ List rules (LIST001)
 * 🔲 Link validation (LINK001, LINK002)
 
 === Phase 3 - Polish Rules (Planned)

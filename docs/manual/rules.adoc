@@ -42,7 +42,9 @@ Ensures proper heading format (spacing and capitalization).
 ==== Description
 
 This rule checks two aspects of heading format:
-1. There must be a space after the = characters 2. The heading text should start with an uppercase letter
+
+. There must be a space after the = characters
+. The heading text should start with an uppercase letter
 
 ==== Examples
 
@@ -238,7 +240,11 @@ Verifies image attributes and file references.
 ==== Description
 
 This rule checks:
-1. All images have alt text 2. Referenced local images exist 3. Block images have titles 4. Image attributes are properly formatted
+
+. All images have alt text
+. Referenced local images exist
+. Block images have titles
+. Image attributes are properly formatted
 
 ==== Examples
 
@@ -345,11 +351,56 @@ print("Hello")
 ----
 ----
 
+== List Rules
+
+=== LIST001: List After Paragraph
+
+Detects list items that directly follow a paragraph line.
+
+==== Description
+
+AsciiDoc needs an empty line between a paragraph and a list.
+Without it, the list items become part of the paragraph text, and no list is rendered.
+
+The rule reports the first list item of each affected list.
+Lists that follow a section title, a block title (`.Title`), a block attribute line (`[...]`) or a comment are fine.
+
+==== Examples
+
+.Broken list (will be flagged)
+[source,asciidoc]
+----
+Required tools:
+
+Clang++
+* make
+* zip
+----
+
+.Correct list
+[source,asciidoc]
+----
+Required tools:
+
+* Clang++
+* make
+* zip
+----
+
+==== Edge Cases
+
+The rule correctly ignores:
+
+* Nested list items and list continuations (`+`)
+* Lists after a definition list term (`Term::`)
+* Content inside tables and verbatim blocks
+
 == Planned Rules
 
 === TABLE001: Table Formatting (Planned)
 
 Will check table formatting consistency:
+
 * Column alignment
 * Header row presence
 * Cell content formatting
@@ -357,6 +408,7 @@ Will check table formatting consistency:
 === LINK001: Link Verification (Planned)
 
 Will verify:
+
 * Internal cross-references
 * External link validity
 * Anchor definitions

@@ -93,6 +93,11 @@ This project is part of docToolchain (https://doctoolchain.org), a collection of
 |Detect Markdown table syntax (pipe-separated tables with separator lines)
 |ERROR
 |✅ Stable
+
+|LIST001
+|Detect lists not separated from a preceding paragraph by an empty line
+|WARNING
+|✅ Stable
 |===
 
 === Planned Rules

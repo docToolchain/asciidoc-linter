@@ -23,6 +23,7 @@ from .rules.format_rules import (
     CounterInTitleRule,
 )
 from .rules.markdown_table_rules import MarkdownTableRule
+from .rules.list_rules import ListAfterParagraphRule
 from .parser import AsciiDocParser
 from .reporter import LintReport
 
@@ -49,6 +50,7 @@ class AsciiDocLinter:
             NonSemanticDefinitionListRule(),
             CounterInTitleRule(),
             MarkdownTableRule(),
+            ListAfterParagraphRule(),
         ]
         self.config_path = config_path
 

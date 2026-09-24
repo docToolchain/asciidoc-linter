@@ -7,7 +7,8 @@ build-backend = "setuptools.build_meta"
 name = "asciidoc-linter"
 version = "0.1.0"
 description = "A linter for AsciiDoc files"
-readme = {file = "README.adoc", content-type = "text/asciidoc"}
+# PyPI renders only text/plain, text/markdown and text/x-rst
+readme = {file = "README.adoc", content-type = "text/plain"}
 authors = [
     {name = "Project Author", email = "author@example.com"}
 ]
@@ -28,6 +29,11 @@ classifiers = [
 dependencies = [
     "pyyaml",  # Add this line
 ]
+
+[project.urls]
+Homepage = "https://github.com/docToolchain/asciidoc-linter"
+Documentation = "https://github.com/docToolchain/asciidoc-linter#readme"
+Issues = "https://github.com/docToolchain/asciidoc-linter/issues"
 
 [project.optional-dependencies]
 test = [

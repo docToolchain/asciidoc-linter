@@ -599,6 +599,55 @@ class TestWhitespaceRule(unittest.TestCase):
         self.assertEqual(len(marker_findings), 1)
         self.assertEqual(marker_findings[0].position.line, 5)
 
+    def test_document_header_author_and_revision_lines(self):
+        """
+        Given a document title directly followed by author and revision lines
+        When the whitespace rule is checked
+        Then no section title spacing finding is reported (issue #55)
+        """
+        content = [
+            "= Documentation",
+            "firstname lastname <email@domain.org>",
+            "v1.0, 2026-05-01: Initial version",
+            ":toc:",
+            "",
+            "== Introduction",
+            "",
+            "This repository contains documentation",
+        ]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_document_title_after_comment_and_attributes(self):
+        """
+        Given a document title preceded by a comment and an attribute entry
+        When the whitespace rule is checked
+        Then the author line directly after the title is accepted
+        """
+        content = ["// header", ":lang: en", "= Title", "Jane Doe", "", "Text"]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_section_title_followed_by_text_still_flagged(self):
+        """
+        Given a level-1 section title directly followed by text
+        When the whitespace rule is checked
+        Then the missing blank line is still reported
+        """
+        content = ["= Title", "", "== Section", "Text right after"]
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("followed by a blank line", findings[0].message)
+
+    def test_level0_title_in_body_still_flagged(self):
+        """
+        Given a level-0 title after body content, directly followed by text
+        When the whitespace rule is checked
+        Then the missing blank line is still reported
+        """
+        content = ["Intro text", "", "= Part Two", "Text right after"]
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("followed by a blank line", findings[0].message)
+
 
 if __name__ == "__main__":
     unittest.main()

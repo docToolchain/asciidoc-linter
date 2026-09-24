@@ -21,9 +21,31 @@ class HeadingFormatRule(Rule):
         self.id = "HEAD002"
         self.heading_pattern = re.compile(r"^(=+)(\s*)(.*)$")
 
+    # Markup at the start of a title that renders as no (or non-textual)
+    # visible text: inline macros (image:x.png[alt], kbd:[Ctrl], link:u[t],
+    # https://u[t]), attribute references ({name}) and anchors ([[id]],
+    # [#id], <<ref>>). Skipped before the capitalization check (#63).
+    LEADING_MARKUP_PATTERN = re.compile(
+        r"^\s*(?:"
+        r"[A-Za-z][\w-]*:{1,2}[^\s\[]*\[[^\]]*\]"
+        r"|\{[\w-]+\}"
+        r"|\[\[[^\]]*\]\]"
+        r"|\[#[^\]]*\]"
+        r"|<<[^>]*>>"
+        r")"
+    )
+
     @property
     def description(self) -> str:
         return "Ensures proper heading format (spacing and capitalization)"
+
+    def _visible_text(self, text: str) -> str:
+        """Return the title text with leading macros and references removed"""
+        match = self.LEADING_MARKUP_PATTERN.match(text)
+        while match:
+            text = text[match.end() :]
+            match = self.LEADING_MARKUP_PATTERN.match(text)
+        return text.strip()
 
     def check_line(self, line: str, line_num: int) -> List[Finding]:
         findings = []
@@ -48,8 +70,8 @@ class HeadingFormatRule(Rule):
 
             # Check if heading starts with lowercase (only if we have text)
             if text:
-                # Split into words and check first word
-                words = text.strip().split()
+                # Split the visible text into words and check the first word
+                words = self._visible_text(text).split()
                 if words and words[0][0].islower():
                     findings.append(
                         Finding(

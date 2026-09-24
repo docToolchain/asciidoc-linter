@@ -83,6 +83,42 @@ class TestHeadingFormatRule(unittest.TestCase):
         case_findings = [f for f in findings if "uppercase" in f.message]
         self.assertEqual(len(case_findings), 2, "Should have two 'uppercase' findings")
 
+    def test_leading_inline_macro_is_skipped(self):
+        """
+        Given headings that start with inline macros or attribute references
+        When the heading format rule is checked
+        Then the first visible word decides the capitalization (issue #63)
+        """
+        content = [
+            "= image:arc42-logo.png[arc42] Template",
+            "== image:logo.png[Company logo] Project Title",
+            "== kbd:[Ctrl] icon:gear[] Settings",
+            "== {product-name} Overview",
+            "== [[anchor]]Intro",
+            "== link:https://example.org[Example] Site",
+            "== image:logo.png[]",
+        ]
+        self.assertEqual(self.rule.check(content), [])
+
+    def test_lowercase_text_after_macro_is_reported(self):
+        """
+        Given a heading whose first visible word after a macro is lowercase
+        When the heading format rule is checked
+        Then a capitalization finding is reported
+        """
+        findings = self.rule.check(["== image:logo.png[Logo] project title"])
+        self.assertEqual(len(findings), 1)
+        self.assertIn("uppercase", findings[0].message)
+
+    def test_lowercase_title_is_still_reported(self):
+        """
+        Given a heading that starts with a lowercase word, not a macro
+        When the heading format rule is checked
+        Then a capitalization finding is reported
+        """
+        findings = self.rule.check(["== lower case title"])
+        self.assertEqual(len(findings), 1)
+
 
 class TestHeadingHierarchyRule(unittest.TestCase):
     """Tests for HEAD001: Heading Hierarchy Rule.

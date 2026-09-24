@@ -3,7 +3,7 @@
 import os
 import re
 from typing import List, Dict, Any, Union
-from .base import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
 
 
 class ImageAttributesRule(Rule):
@@ -22,6 +22,7 @@ class ImageAttributesRule(Rule):
     def check(self, document: List[Any]) -> List[Finding]:
         """Check the entire document for image-related issues."""
         findings = []
+        document = mask_verbatim_blocks(document)
         for i, line in enumerate(document):
             findings.extend(self.check_line(line, i, document))
         return findings

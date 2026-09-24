@@ -1,7 +1,7 @@
 # block_rules.py - Rules for checking AsciiDoc blocks
 
 from typing import List, Dict, Any, Union
-from .base import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
 
 
 class UnterminatedBlockRule(Rule):
@@ -73,6 +73,7 @@ class UnterminatedBlockRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str):
@@ -128,7 +129,13 @@ class BlockSpacingRule(Rule):
             else:
                 # This is an opening delimiter
                 if line_num > 0:
-                    prev_line = document[line_num - 1].strip()
+                    # Skip block attribute lines ([source]) and titles (.Title)
+                    prev_index = line_num - 1
+                    while prev_index > 0 and self._is_block_prefix(
+                        document[prev_index].strip()
+                    ):
+                        prev_index -= 1
+                    prev_line = document[prev_index].strip()
                     if prev_line and not prev_line.startswith("="):
                         findings.append(
                             Finding(
@@ -143,6 +150,13 @@ class BlockSpacingRule(Rule):
 
         return findings
 
+    @staticmethod
+    def _is_block_prefix(line: str) -> bool:
+        """True for block attribute lines ([source]) and block titles (.Title)"""
+        is_attribute = line.startswith("[") and line.endswith("]")
+        is_title = len(line) > 1 and line[0] == "." and line[1] not in ". "
+        return is_attribute or is_title
+
     def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
         findings = []
         self.open_blocks = {}  # Reset open blocks
@@ -154,6 +168,7 @@ class BlockSpacingRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str):

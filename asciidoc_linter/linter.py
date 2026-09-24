@@ -74,7 +74,7 @@ class AsciiDocLinter:
     def apply_config(self, config: dict) -> None:
         """Apply configuration to the linter"""
         rules_config = config.get("rules", {})
-        for rule in self.rules:
+        for rule in list(self.rules):
             rule_config = rules_config.get(rule.id, {})
             if not rule_config.get("enabled", True):
                 self.rules.remove(rule)
@@ -101,26 +101,12 @@ class AsciiDocLinter:
 
     def lint_string(self, content: str) -> List[Finding]:
         """Lint a string and return a report"""
-        document = self.parser.parse(content)
+        # The parsed elements only carry headers; rules work on raw lines
+        self.parser.parse(content)
         raw_lines = content.splitlines()
         findings = []
 
         for rule in self.rules:
-            # These rules need raw lines, not parsed elements
-            if isinstance(
-                rule,
-                (
-                    WhitespaceRule,
-                    MarkdownSyntaxRule,
-                    ExplicitNumberedListRule,
-                    NonSemanticDefinitionListRule,
-                    CounterInTitleRule,
-                    MarkdownTableRule,
-                ),
-            ):
-                rule_findings = rule.check(raw_lines)
-            else:
-                rule_findings = rule.check(document)
-            findings.extend(rule_findings)
+            findings.extend(rule.check(raw_lines))
 
         return findings

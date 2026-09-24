@@ -234,3 +234,31 @@ class RuleRegistry:
     def create_all_rules(cls) -> List[Rule]:
         """Create instances of all registered rules"""
         return [rule_class() for rule_class in cls.get_all_rules()]
+
+
+VERBATIM_DELIMITERS = {"----", "....", "++++", "////"}
+
+
+def mask_verbatim_blocks(lines: List[Any]) -> List[Any]:
+    """Blank out the content of listing, literal, passthrough and comment blocks.
+
+    Delimiter lines are kept so block rules still see the block. A delimiter
+    only counts at the start of a line; the block ends at the same delimiter.
+    """
+    masked = []
+    open_delimiter = None
+    for line in lines:
+        if not isinstance(line, str):
+            masked.append(line)
+            continue
+        candidate = line.rstrip()
+        if open_delimiter is None:
+            if candidate in VERBATIM_DELIMITERS:
+                open_delimiter = candidate
+            masked.append(line)
+        elif candidate == open_delimiter:
+            open_delimiter = None
+            masked.append(line)
+        else:
+            masked.append("")
+    return masked

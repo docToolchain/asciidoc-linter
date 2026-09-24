@@ -4,7 +4,7 @@ This module contains rules for checking AsciiDoc heading structure and format.
 """
 
 from typing import List, Optional, Tuple, Dict, Any, Union
-from .base import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
 import re
 
 
@@ -29,7 +29,8 @@ class HeadingFormatRule(Rule):
         findings = []
         match = self.heading_pattern.match(line)
 
-        if match:
+        # Lines made only of "=" are block delimiters (e.g. ====), not headings
+        if match and line.strip("= \t"):
             equals, space, text = match.groups()
             level = len(equals)
 
@@ -72,6 +73,7 @@ class HeadingFormatRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str):
@@ -116,6 +118,7 @@ class HeadingHierarchyRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         headings = self.get_heading_levels(lines)
         if not headings:
@@ -164,6 +167,7 @@ class MultipleTopLevelHeadingsRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str) and self.heading_pattern.match(line):

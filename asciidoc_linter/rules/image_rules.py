@@ -2,8 +2,14 @@
 
 import os
 import re
-from typing import List, Dict, Any, Union
+from typing import List, Dict, Any, Optional, Union
 from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
+
+# URL schemes (http://, https://, ftp://, ...) and data URIs
+URL_PATTERN = re.compile(r"^(?:[A-Za-z][A-Za-z0-9+.-]*://|data:)")
+# :imagesdir: value (set) and :imagesdir!: / :!imagesdir: (unset)
+IMAGESDIR_SET_PATTERN = re.compile(r"^:imagesdir:\s*(.*?)\s*$")
+IMAGESDIR_UNSET_PATTERN = re.compile(r"^:(?:imagesdir!|!imagesdir):\s*$")
 
 
 class ImageAttributesRule(Rule):
@@ -14,32 +20,61 @@ class ImageAttributesRule(Rule):
     description = "Checks for proper image attributes and file references"
     severity = Severity.WARNING
 
-    def __init__(self):
+    def __init__(self, base_dir: Optional[str] = "."):
         super().__init__()
         self.current_line = 0
         self.current_context = ""
+        # Directory that relative image targets resolve against (the
+        # document's directory). None means unknown: skip the existence check.
+        self.base_dir = base_dir
+        self.imagesdir = ""
 
     def check(self, document: List[Any]) -> List[Finding]:
         """Check the entire document for image-related issues."""
         findings = []
+        self.imagesdir = ""
         document = mask_verbatim_blocks(document)
         for i, line in enumerate(document):
             findings.extend(self.check_line(line, i, document))
         return findings
 
+    def _track_imagesdir(self, line: str) -> None:
+        """Follow :imagesdir: attribute entries in document order."""
+        stripped = line.strip()
+        if IMAGESDIR_UNSET_PATTERN.match(stripped):
+            self.imagesdir = ""
+            return
+        match = IMAGESDIR_SET_PATTERN.match(stripped)
+        if match:
+            self.imagesdir = match.group(1)
+
+    def _resolve_image_path(self, target: str) -> Optional[str]:
+        """Resolve a target like AsciiDoc does, or None if it can't be checked.
+
+        Relative targets resolve against imagesdir, which itself is relative
+        to the document's directory.
+        """
+        if self.base_dir is None or URL_PATTERN.match(target) or "{" in target:
+            return None
+        if os.path.isabs(target):
+            return target
+        if URL_PATTERN.match(self.imagesdir) or "{" in self.imagesdir:
+            return None
+        return os.path.join(self.base_dir, self.imagesdir, target)
+
     def _check_image_path(self, path: str) -> List[Finding]:
         """Check if the image file exists and is accessible."""
         findings = []
 
-        # Skip external URLs
-        if path.startswith(("http://", "https://", "ftp://")):
-            return []
-
         # Clean up path
         path = path.strip()
 
+        resolved = self._resolve_image_path(path)
+        if resolved is None:
+            return []
+
         # Check if file exists
-        if not os.path.isfile(path):
+        if not os.path.isfile(resolved):
             findings.append(
                 Finding(
                     rule_id=self.id,
@@ -147,6 +182,7 @@ class ImageAttributesRule(Rule):
             line_content = str(line)
 
         self.current_context = line_content
+        self._track_imagesdir(line_content)
 
         # Check for block images
         block_image_match = re.match(

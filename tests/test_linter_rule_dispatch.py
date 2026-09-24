@@ -81,3 +81,23 @@ def test_indented_delimiter_inside_listing_does_not_close_it(tmp_path):
 def test_rules_still_fire_after_verbatim_block(tmp_path):
     content = "= T\n\n== Eins\n\n----\ncode\n----\n\nimage::missing.png[]\n"
     assert "IMG001" in rule_ids_for(tmp_path, content)
+
+
+def test_image_resolves_against_document_dir_and_imagesdir(tmp_path, monkeypatch):
+    """Lint from another working directory; imagesdir is relative to the doc (#60)"""
+    doc_dir = tmp_path / "d"
+    (doc_dir / "img").mkdir(parents=True)
+    (doc_dir / "img" / "b.png").touch()
+    doc = doc_dir / "doc.adoc"
+    doc.write_text("= T\n:imagesdir: img\n\nimage:b.png[Bild b]\n", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+
+    report = AsciiDocLinter().lint(["d/doc.adoc"])
+
+    assert [f for f in report.findings if f.rule_id == "IMG001"] == []
+
+
+def test_lint_string_skips_image_existence_check():
+    """Without a document path the base directory is unknown (#60)"""
+    findings = AsciiDocLinter().lint_string("= T\n\nimage::missing.png[Missing]\n")
+    assert [f for f in findings if "not found" in f.message] == []

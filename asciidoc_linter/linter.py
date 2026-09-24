@@ -3,7 +3,7 @@
 Main linter module that processes AsciiDoc files and applies rules
 """
 
-from typing import List
+from typing import List, Optional
 from pathlib import Path
 import yaml
 
@@ -87,7 +87,8 @@ class AsciiDocLinter:
             return [
                 finding.set_file(str(file_path))
                 for finding in self.lint_string(
-                    Path(file_path).read_text(encoding="utf-8")
+                    Path(file_path).read_text(encoding="utf-8"),
+                    base_dir=str(Path(file_path).parent),
                 )
             ]
         except Exception as e:
@@ -99,14 +100,22 @@ class AsciiDocLinter:
                 )
             ]
 
-    def lint_string(self, content: str) -> List[Finding]:
-        """Lint a string and return a report"""
+    def lint_string(
+        self, content: str, base_dir: Optional[str] = None
+    ) -> List[Finding]:
+        """Lint a string and return a report
+
+        base_dir is the document's directory; relative image targets resolve
+        against it. Without it, image files are not checked for existence.
+        """
         # The parsed elements only carry headers; rules work on raw lines
         self.parser.parse(content)
         raw_lines = content.splitlines()
         findings = []
 
         for rule in self.rules:
+            if isinstance(rule, ImageAttributesRule):
+                rule.base_dir = base_dir
             findings.extend(rule.check(raw_lines))
 
         return findings

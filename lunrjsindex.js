@@ -42,18 +42,18 @@ var documents = [
 
 {
     "id": 5,
-    "uri": "arc42/05_building_block_view.html",
-    "menu": "arc42",
-    "title": "Building Block View",
-    "text": " Table of Contents Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation "
-},
-
-{
-    "id": 6,
     "uri": "arc42/03_system_scope_and_context.html",
     "menu": "arc42",
     "title": "System Scope and Context",
     "text": " Table of Contents System Scope and Context Business Context Technical Context System Scope and Context Business Context Technical Context "
+},
+
+{
+    "id": 6,
+    "uri": "arc42/05_building_block_view.html",
+    "menu": "arc42",
+    "title": "Building Block View",
+    "text": " Table of Contents Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation Building Block View Level 1 - System Overview Level 2 - Core Components Level 3 - Rule Implementation "
 },
 
 {

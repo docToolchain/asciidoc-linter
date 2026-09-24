@@ -102,17 +102,20 @@ class AsciiDocLinter:
                 rule_config = {}
             if not isinstance(rule_config, dict):
                 raise ConfigError(f"configuration of rule {rule.id} must be a mapping")
-            if not rule_config.get("enabled", True):
-                self.rules.remove(rule)
-                continue
+            # Validate the severity even for disabled rules, so a typo does
+            # not go unnoticed until the rule is enabled again
             try:
-                rule.severity = Severity(rule_config.get("severity", rule.severity))
+                severity = Severity(rule_config.get("severity", rule.severity))
             except ValueError as e:
                 raise ConfigError(
                     f"invalid severity for rule {rule.id}: "
                     f"{rule_config.get('severity')!r} "
                     "(expected error, warning or info)"
                 ) from e
+            if not rule_config.get("enabled", True):
+                self.rules.remove(rule)
+            else:
+                rule.severity = severity
 
     def lint_file(self, file_path: Path) -> List[Finding]:
         """Lint a single file and return a report"""

@@ -321,8 +321,16 @@ def test_apply_config_removes_consecutive_disabled_rules():
         "rules: [WS001]\n",
         "rules:\n  WS001: off\n",
         "rules:\n  WS001:\n    severity: fatal\n",
+        "rules:\n  WS001:\n    enabled: false\n    severity: fatal\n",
     ],
-    ids=["yaml-syntax", "top-level-list", "rules-list", "rule-scalar", "severity"],
+    ids=[
+        "yaml-syntax",
+        "top-level-list",
+        "rules-list",
+        "rule-scalar",
+        "severity",
+        "severity-disabled-rule",
+    ],
 )
 def test_load_config_invalid_raises_config_error(tmp_path, config_content):
     """A broken config must raise ConfigError instead of falling back (#59)"""
@@ -339,7 +347,9 @@ def test_load_config_missing_file_raises_config_error(tmp_path):
         AsciiDocLinter().load_config(str(tmp_path / "missing.yml"))
 
 
-@pytest.mark.parametrize("config_content", ["", "# only a comment\n", "other: 1\n"])
+@pytest.mark.parametrize(
+    "config_content", ["", "# only a comment\n", "other: 1\n", "rules:\n"]
+)
 def test_load_config_without_rules_is_valid(tmp_path, config_content):
     """An empty config or one without a rules key keeps all default rules"""
     config_file = tmp_path / "empty.yml"

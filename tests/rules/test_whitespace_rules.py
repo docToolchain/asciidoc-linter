@@ -599,6 +599,35 @@ class TestWhitespaceRule(unittest.TestCase):
         self.assertEqual(len(marker_findings), 1)
         self.assertEqual(marker_findings[0].position.line, 5)
 
+    def test_document_header_without_blank_line_not_flagged(self):
+        """Issue #55: author and revision lines follow the title directly."""
+        content = [
+            "= Documentation",
+            "firstname lastname <email@domain.org>",
+            "v1.0, 2026-05-01: Initial version",
+            ":toc:",
+            "",
+            "== Introduction",
+            "",
+            "This repository contains documentation",
+        ]
+        self.assertEqual([f.message for f in self.rule.check(content)], [])
+
+    def test_document_title_after_attribute_entries_not_flagged(self):
+        content = ["// comment", ":doctype: book", "= Title", "Author Name", ""]
+        self.assertEqual([f.message for f in self.rule.check(content)], [])
+
+    def test_level_zero_title_inside_body_still_checked(self):
+        content = ["= Title", "", "Some text", "= Part", "text"]
+        messages = [f.message for f in self.rule.check(content)]
+        self.assertIn("Section title should be preceded by a blank line", messages)
+        self.assertIn("Section title should be followed by a blank line", messages)
+
+    def test_section_title_needs_blank_line_after(self):
+        content = ["= Title", "", "== Section", "text"]
+        messages = [f.message for f in self.rule.check(content)]
+        self.assertEqual(messages, ["Section title should be followed by a blank line"])
+
 
 if __name__ == "__main__":
     unittest.main()

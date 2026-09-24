@@ -66,6 +66,22 @@ class WhitespaceRule(Rule):
 
         return False
 
+    def _is_document_title(
+        self, level: int, line_number: int, context: List[Union[str, object]]
+    ) -> bool:
+        """True for a level-0 title that opens the document header.
+
+        Only blank lines, comments and attribute entries may precede it.
+        The author and revision lines follow it directly, without a blank line.
+        """
+        if level != 1:
+            return False
+        for prev in context[:line_number]:
+            stripped = self.get_line_content(prev).strip()
+            if stripped and not stripped.startswith(("//", ":")):
+                return False
+        return True
+
     def check_line(
         self,
         line: Union[str, object],
@@ -166,7 +182,11 @@ class WhitespaceRule(Rule):
             rest = line_content[level:]
             is_section_title = rest.startswith(" ") and rest.strip()
 
-            if is_section_title:
+            if is_section_title and self._is_document_title(
+                level, line_number, context
+            ):
+                pass  # Header lines (author, revision) follow without a blank
+            elif is_section_title:
                 # Check for blank line before section title (except for first line)
                 if line_number > 0:
                     prev_content = self.get_line_content(context[line_number - 1])

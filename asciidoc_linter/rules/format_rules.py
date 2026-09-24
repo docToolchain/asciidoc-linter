@@ -8,6 +8,7 @@ accidentally use Markdown syntax instead of AsciiDoc.
 import re
 from typing import List, Union
 from .base import Rule, Finding, Severity, Position
+from ..blocks import find_code_block_content_lines
 
 
 class MarkdownSyntaxRule(Rule):
@@ -48,9 +49,6 @@ class MarkdownSyntaxRule(Rule):
     # Markdown blockquote: > text (at start of line)
     MARKDOWN_BLOCKQUOTE_PATTERN = re.compile(r"^(>+)\s+(.+)$")
 
-    # AsciiDoc block delimiters that indicate code/literal blocks
-    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
-
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -61,27 +59,12 @@ class MarkdownSyntaxRule(Rule):
             return []
 
         findings = []
-        in_code_block = False
-        current_delimiter = None
-
+        # Content inside verbatim blocks (----, ...., ++++) is exempt (#52, #54).
+        code_block_lines = find_code_block_content_lines(document)
         for line_number, line in enumerate(document):
+            if line_number in code_block_lines:
+                continue
             line_content = self._get_line_content(line)
-            stripped = line_content.strip()
-
-            # Check for code block delimiters
-            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
-                if not in_code_block:
-                    in_code_block = True
-                    current_delimiter = stripped
-                elif stripped == current_delimiter:
-                    in_code_block = False
-                    current_delimiter = None
-                continue
-
-            # Skip content inside code blocks
-            if in_code_block:
-                continue
-
             findings.extend(self._check_line(line_content, line_number))
         return findings
 
@@ -286,9 +269,6 @@ class ExplicitNumberedListRule(Rule):
     # Regex pattern for explicit numbered list: starts with number, dot, space
     EXPLICIT_NUMBERED_LIST_PATTERN = re.compile(r"^(\d+)\.\s+(.+)$")
 
-    # AsciiDoc block delimiters that indicate code/literal blocks
-    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
-
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -299,27 +279,12 @@ class ExplicitNumberedListRule(Rule):
             return []
 
         findings = []
-        in_code_block = False
-        current_delimiter = None
-
+        # Content inside verbatim blocks (----, ...., ++++) is exempt (#52, #54).
+        code_block_lines = find_code_block_content_lines(document)
         for line_number, line in enumerate(document):
+            if line_number in code_block_lines:
+                continue
             line_content = self._get_line_content(line)
-            stripped = line_content.strip()
-
-            # Check for code block delimiters
-            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
-                if not in_code_block:
-                    in_code_block = True
-                    current_delimiter = stripped
-                elif stripped == current_delimiter:
-                    in_code_block = False
-                    current_delimiter = None
-                continue
-
-            # Skip content inside code blocks
-            if in_code_block:
-                continue
-
             findings.extend(self._check_line(line_content, line_number))
 
         return findings
@@ -399,9 +364,6 @@ class NonSemanticDefinitionListRule(Rule):
     # Pattern 4: * *Term*: (asterisk list item with bold term)
     ASTERISK_LIST_BOLD_PATTERN = re.compile(r"^\*\s+\*([^*]+)\*:\s+")
 
-    # AsciiDoc block delimiters that indicate code/literal blocks
-    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
-
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -412,27 +374,12 @@ class NonSemanticDefinitionListRule(Rule):
             return []
 
         findings = []
-        in_code_block = False
-        current_delimiter = None
-
+        # Content inside verbatim blocks (----, ...., ++++) is exempt (#52, #54).
+        code_block_lines = find_code_block_content_lines(document)
         for line_number, line in enumerate(document):
+            if line_number in code_block_lines:
+                continue
             line_content = self._get_line_content(line)
-            stripped = line_content.strip()
-
-            # Check for code block delimiters
-            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
-                if not in_code_block:
-                    in_code_block = True
-                    current_delimiter = stripped
-                elif stripped == current_delimiter:
-                    in_code_block = False
-                    current_delimiter = None
-                continue
-
-            # Skip content inside code blocks
-            if in_code_block:
-                continue
-
             findings.extend(self._check_line(line_content, line_number))
 
         return findings
@@ -521,9 +468,6 @@ class CounterInTitleRule(Rule):
     # Matches lines starting with = followed by {counter:name} or {counter2:name}
     COUNTER_IN_TITLE_PATTERN = re.compile(r"^(=+)\s+.*\{counter2?:([^}]+)\}")
 
-    # AsciiDoc block delimiters that indicate code/literal blocks
-    ASCIIDOC_CODE_BLOCK_DELIMITERS = {"----", "....", "++++"}
-
     def __init__(self):
         super().__init__()
         self.enabled = True
@@ -534,27 +478,12 @@ class CounterInTitleRule(Rule):
             return []
 
         findings = []
-        in_code_block = False
-        current_delimiter = None
-
+        # Content inside verbatim blocks (----, ...., ++++) is exempt (#52, #54).
+        code_block_lines = find_code_block_content_lines(document)
         for line_number, line in enumerate(document):
+            if line_number in code_block_lines:
+                continue
             line_content = self._get_line_content(line)
-            stripped = line_content.strip()
-
-            # Check for code block delimiters
-            if stripped in self.ASCIIDOC_CODE_BLOCK_DELIMITERS:
-                if not in_code_block:
-                    in_code_block = True
-                    current_delimiter = stripped
-                elif stripped == current_delimiter:
-                    in_code_block = False
-                    current_delimiter = None
-                continue
-
-            # Skip content inside code blocks
-            if in_code_block:
-                continue
-
             findings.extend(self._check_line(line_content, line_number))
 
         return findings

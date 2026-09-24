@@ -485,6 +485,120 @@ class TestWhitespaceRule(unittest.TestCase):
             f"{[f.message for f in findings]}",
         )
 
+    def test_cli_options_in_source_block_not_flagged(self):
+        """
+        Given a source block containing CLI options starting with '--'
+        When the whitespace rule checks the whole document
+        Then no 'missing space after marker' findings should be reported
+        Because content inside ---- blocks is verbatim (issue #54).
+        """
+        # Given: A bash source block with double-dash CLI options
+        content = [
+            "= Title",
+            "",
+            "[source,bash]",
+            "----",
+            "mytool \\",
+            "  --kunde 4711 \\",
+            "--adresse foo",
+            "----",
+        ]
+
+        # When: We check the whole document
+        findings = self.rule.check(content)
+
+        # Then: No marker findings for the in-block options
+        marker_findings = [f for f in findings if "marker" in f.message]
+        self.assertEqual(
+            len(marker_findings),
+            0,
+            f"CLI options inside a source block must not be flagged, got: "
+            f"{[f.message for f in marker_findings]}",
+        )
+
+    def test_pem_block_with_long_delimiter_not_flagged(self):
+        """
+        Given a PEM certificate inside a block with a long (16-dash) delimiter
+        When the whitespace rule checks the whole document
+        Then the '-----BEGIN/END-----' lines are not flagged as markers
+        Because AsciiDoc delimiters may be any run of four or more characters.
+        """
+        # Given: A PEM block delimited by a 16-dash run (as seen in real docs)
+        content = [
+            "[source,]",
+            "----------------",
+            "-----BEGIN CERTIFICATE-----",
+            "MIIEQDCCAyigAwIBAgIBATANBgkqhkiG9w0BAQsFADCBjTELMAkGA1UEBhMCREUx",
+            "-----END CERTIFICATE-----",
+            "----------------",
+        ]
+
+        # When: We check the whole document
+        findings = self.rule.check(content)
+
+        # Then: No marker findings for the PEM header/footer lines
+        marker_findings = [f for f in findings if "marker" in f.message]
+        self.assertEqual(
+            len(marker_findings),
+            0,
+            f"PEM lines inside a long-delimiter block must not be flagged, got: "
+            f"{[f.message for f in marker_findings]}",
+        )
+
+    def test_section_title_in_source_block_not_flagged(self):
+        """
+        Given a source block containing AsciiDoc section-title syntax
+        When the whitespace rule checks the whole document
+        Then no 'section title should be preceded by a blank line' finding
+        Because content inside ---- blocks is verbatim (issue #52).
+        """
+        # Given: A source block showing AsciiDoc markup as an example
+        content = [
+            "= Title",
+            "",
+            "[source,asciidoc]",
+            "----",
+            "=== S-01: Example heading",
+            "Some text",
+            "----",
+        ]
+
+        # When: We check the whole document
+        findings = self.rule.check(content)
+
+        # Then: No section-title findings for the in-block heading
+        title_findings = [f for f in findings if "Section title" in f.message]
+        self.assertEqual(
+            len(title_findings),
+            0,
+            f"Section-title syntax inside a source block must not be flagged, "
+            f"got: {[f.message for f in title_findings]}",
+        )
+
+    def test_markers_outside_blocks_still_flagged(self):
+        """
+        Given double-dash content both inside and outside a source block
+        When the whitespace rule checks the whole document
+        Then only the occurrence outside the block is flagged
+        Because the block exemption must not suppress real issues.
+        """
+        # Given: An in-block option and a real out-of-block marker
+        content = [
+            "----",
+            "--inside value",
+            "----",
+            "",
+            "--outside value",
+        ]
+
+        # When: We check the whole document
+        findings = self.rule.check(content)
+
+        # Then: Exactly one marker finding, on the out-of-block line (line 5)
+        marker_findings = [f for f in findings if "marker" in f.message]
+        self.assertEqual(len(marker_findings), 1)
+        self.assertEqual(marker_findings[0].position.line, 5)
+
 
 if __name__ == "__main__":
     unittest.main()

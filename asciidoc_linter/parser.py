@@ -7,6 +7,8 @@ for rule checking
 from typing import List, Optional
 from dataclasses import dataclass
 
+from .blocks import find_code_block_content_lines
+
 
 @dataclass
 class AsciiDocElement:
@@ -44,7 +46,14 @@ class AsciiDocParser:
         """Parse AsciiDoc content into elements"""
         # TODO: Implement actual parsing
         elements = []
-        for line_number, line in enumerate(content.splitlines(), 1):
+        lines = content.splitlines()
+        # Lines inside verbatim blocks (----, ...., ++++) are literal example
+        # text, so section-title syntax there must not become a Header (#52).
+        code_block_lines = find_code_block_content_lines(lines)
+        for index, line in enumerate(lines):
+            if index in code_block_lines:
+                continue
+            line_number = index + 1
             if line.startswith("="):
                 level = len(line) - len(line.lstrip("="))
                 # Only treat as header if there's content after the = characters

@@ -74,7 +74,7 @@ class AsciiDocLinter:
     def apply_config(self, config: dict) -> None:
         """Apply configuration to the linter"""
         rules_config = config.get("rules", {})
-        for rule in self.rules:
+        for rule in list(self.rules):
             rule_config = rules_config.get(rule.id, {})
             if not rule_config.get("enabled", True):
                 self.rules.remove(rule)

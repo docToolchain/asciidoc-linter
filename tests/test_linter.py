@@ -300,3 +300,14 @@ def test_load_config_uses_explicit_utf8_encoding(tmp_path):
     assert len(config_call) == 1
     # Verify encoding='utf-8' was passed
     assert config_call[0][1].get("encoding") == "utf-8"
+
+
+def test_apply_config_removes_consecutive_disabled_rules():
+    """Disabling two adjacent rules must remove both, not skip the second"""
+    linter = AsciiDocLinter()
+    linter.apply_config(
+        {"rules": {"HEAD002": {"enabled": False}, "HEAD001": {"enabled": False}}}
+    )
+    remaining_ids = [rule.id for rule in linter.rules]
+    assert "HEAD002" not in remaining_ids
+    assert "HEAD001" not in remaining_ids

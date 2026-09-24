@@ -355,15 +355,16 @@ print("Hello")
 
 === LIST001: List After Paragraph
 
-Detects list items that directly follow a paragraph line.
+Detects lists that directly follow a paragraph line.
 
 ==== Description
 
-AsciiDoc needs an empty line between a paragraph and a list.
+AsciiDoc needs an empty line between a paragraph and a list, including description lists (`Term::`).
 Without it, the list items become part of the paragraph text, and no list is rendered.
 
 The rule reports the first list item of each affected list.
-Lists that follow a section title, a block title (`.Title`), a block attribute line (`[...]`) or a comment are fine.
+A list may start directly after a section title, or after a block title (`.Title`), a block attribute line (`[...]`) or a comment that opens the block.
+Inside a paragraph, such lines are paragraph text and do not end it.
 
 ==== Examples
 

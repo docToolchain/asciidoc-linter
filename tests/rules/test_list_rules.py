@@ -82,6 +82,25 @@ class TestListAfterParagraphRule(unittest.TestCase):
         content = ["====", "* item", "===="]
         self.assertEqual(self.lines_flagged(content), [])
 
+    def test_description_list_after_paragraph_is_flagged(self):
+        """A glued description list is paragraph text as well"""
+        for term in ["Term:: value", "Term::", "Term;; value", "Term::: value"]:
+            with self.subTest(term=term):
+                self.assertEqual(self.lines_flagged(["Some text", term]), [2])
+
+    def test_double_colon_in_prose_not_flagged(self):
+        """'::' preceded by a space or inside a word is not a term"""
+        for line in ["the scope operator :: works", "use std::vector here"]:
+            with self.subTest(line=line):
+                self.assertEqual(self.lines_flagged(["Some text", line]), [])
+
+    def test_prefix_lines_inside_paragraph_do_not_end_it(self):
+        """.Title, [attrs] and comments after paragraph text are paragraph text"""
+        for prefix in [".Title", "[square]"]:
+            with self.subTest(prefix=prefix):
+                content = ["Paragraph", prefix, "* item"]
+                self.assertEqual(self.lines_flagged(content), [3])
+
 
 if __name__ == "__main__":
     unittest.main()

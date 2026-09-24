@@ -11,8 +11,9 @@ from ..blocks import find_code_block_content_lines
 # Unordered (*, -), ordered (., 1.) and checklist items: marker plus space
 LIST_ITEM_PATTERN = re.compile(r"^\s*(\*{1,5}|-|\.{1,5}|\d+\.)\s+\S")
 
-# Definition list term: "Term::" or "Term;;" (optionally followed by text)
-DLIST_TERM_PATTERN = re.compile(r"^\s*\S.*?(:{2,4}|;;)(\s|$)")
+# Definition list term: "Term::" or "Term;;" (optionally followed by text).
+# Mirrors Asciidoctor: the term ends with a character other than space or colon.
+DLIST_TERM_PATTERN = re.compile(r"^(?!//[^/])\s*(\S|\S.*[^\s:])(:{2,4}|;;)(\s|$)")
 
 # Delimiters of blocks whose content forms its own paragraphs
 BLOCK_DELIMITER_PATTERN = re.compile(
@@ -22,10 +23,11 @@ BLOCK_DELIMITER_PATTERN = re.compile(
 
 class ListAfterParagraphRule(Rule):
     """
-    LIST001: Detect list items that directly follow a paragraph line.
+    LIST001: Detect lists that directly follow a paragraph line.
 
-    AsciiDoc needs an empty line between a paragraph and a list. Without it,
-    the list items are rendered as part of the paragraph text:
+    AsciiDoc needs an empty line between a paragraph and a list (including
+    description lists). Without it, the list items are rendered as part of
+    the paragraph text:
 
         Required tools:
         Clang++
@@ -67,13 +69,15 @@ class ListAfterParagraphRule(Rule):
                     continue
                 run = "list" if self._starts_list(line) else "paragraph"
                 continue
-            if run == "paragraph" and LIST_ITEM_PATTERN.match(line):
+            # Inside a paragraph, titles, attribute lines and comments are
+            # paragraph text too, so they don't end the paragraph
+            if run == "paragraph" and self._starts_list(line):
                 findings.append(
                     Finding(
                         rule_id=self.id,
                         position=Position(line=line_number + 1),
                         message=(
-                            "List item directly follows a paragraph line and "
+                            "List directly follows a paragraph line and "
                             "will be rendered as paragraph text; "
                             "add an empty line before the list"
                         ),

@@ -66,6 +66,23 @@ class WhitespaceRule(Rule):
 
         return False
 
+    def _is_document_title(
+        self, level: int, line_number: int, context: List[Union[str, object]]
+    ) -> bool:
+        """True for a level-0 title (= Title) that opens the document header.
+
+        Only blank lines, line comments and attribute entries may precede it.
+        """
+        if level != 1:
+            return False
+        for previous in context[:line_number]:
+            stripped = self.get_line_content(previous).strip()
+            is_comment = stripped.startswith("//") and not stripped.startswith("///")
+            is_attribute_entry = stripped.startswith(":")
+            if stripped and not (is_comment or is_attribute_entry):
+                return False
+        return True
+
     def check_line(
         self,
         line: Union[str, object],
@@ -167,8 +184,13 @@ class WhitespaceRule(Rule):
             is_section_title = rest.startswith(" ") and rest.strip()
 
             if is_section_title:
+                # The document title opens the header: comments and attribute
+                # entries may precede it, and author, revision and attribute
+                # lines must directly follow it (#55).
+                is_document_title = self._is_document_title(level, line_number, context)
+
                 # Check for blank line before section title (except for first line)
-                if line_number > 0:
+                if line_number > 0 and not is_document_title:
                     prev_content = self.get_line_content(context[line_number - 1])
                     prev_content_stripped = prev_content.strip()
                     if prev_content_stripped and not prev_content_stripped.startswith(
@@ -185,7 +207,7 @@ class WhitespaceRule(Rule):
                         )
 
                 # Check for blank line after section title (except for last line)
-                if line_number < len(context) - 1:
+                if line_number < len(context) - 1 and not is_document_title:
                     next_content = self.get_line_content(context[line_number + 1])
                     stripped_next_content = next_content.strip()
                     if stripped_next_content and not stripped_next_content.startswith(

@@ -2,8 +2,13 @@
 
 import os
 import re
-from typing import List, Dict, Any, Union
+from typing import List, Dict, Any, Optional, Union
 from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
+
+URL_PREFIXES = ("http://", "https://", "ftp://", "data:")
+
+# :imagesdir: value, :!imagesdir: and :imagesdir!: (unset)
+IMAGESDIR_PATTERN = re.compile(r"^:(!)?imagesdir(!)?:\s*(.*)$")
 
 
 class ImageAttributesRule(Rule):
@@ -18,10 +23,14 @@ class ImageAttributesRule(Rule):
         super().__init__()
         self.current_line = 0
         self.current_context = ""
+        # Directory of the linted document; None skips the existence check
+        self.base_dir: Optional[str] = None
+        self.imagesdir = ""
 
     def check(self, document: List[Any]) -> List[Finding]:
         """Check the entire document for image-related issues."""
         findings = []
+        self.imagesdir = ""
         document = mask_verbatim_blocks(document)
         for i, line in enumerate(document):
             findings.extend(self.check_line(line, i, document))
@@ -31,15 +40,31 @@ class ImageAttributesRule(Rule):
         """Check if the image file exists and is accessible."""
         findings = []
 
-        # Skip external URLs
-        if path.startswith(("http://", "https://", "ftp://")):
-            return []
-
         # Clean up path
         path = path.strip()
 
+        # Skip external URLs and data URIs
+        if path.startswith(URL_PREFIXES):
+            return []
+
+        # Without the document's directory, any guess would be wrong
+        if self.base_dir is None:
+            return []
+
+        # Targets with attribute references cannot be resolved here
+        if "{" in path:
+            return []
+
+        # AsciiDoc resolves relative targets against imagesdir
+        if not os.path.isabs(path):
+            if self.imagesdir.startswith(URL_PREFIXES):
+                return []
+            resolved = os.path.join(self.base_dir, self.imagesdir, path)
+        else:
+            resolved = path
+
         # Check if file exists
-        if not os.path.isfile(path):
+        if not os.path.isfile(resolved):
             findings.append(
                 Finding(
                     rule_id=self.id,
@@ -147,6 +172,15 @@ class ImageAttributesRule(Rule):
             line_content = str(line)
 
         self.current_context = line_content
+
+        # Track :imagesdir: entries; relative targets resolve against them
+        imagesdir_match = IMAGESDIR_PATTERN.match(line_content)
+        if imagesdir_match:
+            if imagesdir_match.group(1) or imagesdir_match.group(2):
+                self.imagesdir = ""
+            else:
+                self.imagesdir = imagesdir_match.group(3).strip()
+            return findings
 
         # Check for block images
         block_image_match = re.match(

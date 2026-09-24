@@ -8,8 +8,10 @@ Tests for all image-related rules including:
   - Handles external URLs differently
 """
 
+import tempfile
 import unittest
 from pathlib import Path
+from asciidoc_linter.linter import AsciiDocLinter
 from asciidoc_linter.rules.image_rules import ImageAttributesRule
 
 
@@ -23,6 +25,8 @@ class TestImageAttributesRule(unittest.TestCase):
         Given an ImageAttributesRule instance
         """
         self.rule = ImageAttributesRule()
+        # Resolve relative targets against the working directory
+        self.rule.base_dir = "."
 
     def test_inline_image_without_alt(self):
         """
@@ -233,6 +237,63 @@ class TestImageAttributesRule(unittest.TestCase):
         finally:
             # Clean up: Remove the temporary test image
             test_image.unlink()
+
+
+class TestImagePathResolution(unittest.TestCase):
+    """Issue #60: targets resolve against the document dir and :imagesdir:"""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.doc_dir = Path(self.tmp.name) / "d"
+        (self.doc_dir / "img").mkdir(parents=True)
+        (self.doc_dir / "img" / "b.png").touch()
+        (self.doc_dir / "top.png").touch()
+        self.rule = ImageAttributesRule()
+        self.rule.base_dir = str(self.doc_dir)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def not_found(self, content):
+        findings = self.rule.check(content)
+        return [f.message for f in findings if "not found" in f.message]
+
+    def test_target_resolves_against_imagesdir(self):
+        content = ["= T", ":imagesdir: img", "", "image:b.png[Bild b]"]
+        self.assertEqual(self.not_found(content), [])
+
+    def test_target_resolves_against_document_dir(self):
+        self.assertEqual(self.not_found(["image::top.png[Top image]"]), [])
+
+    def test_missing_file_under_imagesdir_is_reported(self):
+        content = [":imagesdir: img", "image::top.png[Top image]"]
+        self.assertEqual(self.not_found(content), ["Image file not found: top.png"])
+
+    def test_unset_imagesdir(self):
+        content = [":imagesdir: img", ":imagesdir!:", "image::top.png[Top image]"]
+        self.assertEqual(self.not_found(content), [])
+
+    def test_absolute_target(self):
+        target = str(self.doc_dir / "img" / "b.png")
+        content = [":imagesdir: other", f"image::{target}[Absolute]"]
+        self.assertEqual(self.not_found(content), [])
+
+    def test_url_imagesdir_skips_check(self):
+        content = [":imagesdir: https://example.com/img", "image::x.png[Remote]"]
+        self.assertEqual(self.not_found(content), [])
+
+    def test_attribute_reference_skips_check(self):
+        self.assertEqual(self.not_found(["image::{diagrams}/x.png[Diagram]"]), [])
+
+    def test_unknown_base_dir_skips_check(self):
+        self.rule.base_dir = None
+        self.assertEqual(self.not_found(["image::missing.png[Missing]"]), [])
+
+    def test_lint_file_from_other_working_directory(self):
+        doc = self.doc_dir / "doc.adoc"
+        doc.write_text("= T\n:imagesdir: img\n\nimage:b.png[Bild b]\n")
+        findings = AsciiDocLinter().lint_file(doc)
+        self.assertEqual([f.message for f in findings if "not found" in f.message], [])
 
 
 if __name__ == "__main__":

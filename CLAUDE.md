@@ -69,6 +69,7 @@ asciidoc-linter --format json document.adoc
 - **block_rules.py**: BLOCK001 (unterminated), BLOCK002 (spacing)
 - **whitespace_rules.py**: WS001 (whitespace issues)
 - **image_rules.py**: IMG001 (attributes/references)
+- **list_rules.py**: LIST001 (list directly after a paragraph line)
 - **table_rules.py**: TABLE001 (formatting) - beta status
 
 ### Adding New Rules

@@ -9,7 +9,10 @@ Proposed
 === Context
 
 Current implementation has inconsistent severity level handling:
-* Mixed case usage (ERROR vs error) * Inconsistent severity levels across rules * No clear guidelines for severity assignment
+
+* Mixed case usage (ERROR vs error)
+* Inconsistent severity levels across rules
+* No clear guidelines for severity assignment
 
 === Decision
 

@@ -9,7 +9,11 @@ Proposed
 === Context
 
 Current rule registry implementation lacks:
-* Test coverage * Clear registration mechanism * Version handling * Rule dependency management
+
+* Test coverage
+* Clear registration mechanism
+* Version handling
+* Rule dependency management
 
 === Decision
 

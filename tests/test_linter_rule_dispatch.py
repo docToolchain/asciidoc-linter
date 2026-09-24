@@ -34,3 +34,12 @@ def test_rule_fires_through_linter(tmp_path, content, rule_id):
 def test_example_block_delimiter_is_not_a_heading(tmp_path):
     content = "= T\n\n== Eins\n\n====\nExample\n====\n"
     assert rule_ids_for(tmp_path, content) == []
+
+
+@pytest.mark.parametrize(
+    "prefix",
+    ["[source,python]\n", ".Listing title\n", ".Listing title\n[source,python]\n"],
+)
+def test_block_attribute_and_title_lines_belong_to_block(tmp_path, prefix):
+    content = "= T\n\n== Eins\n\n" + prefix + "----\nx = 1\n----\n"
+    assert "BLOCK002" not in rule_ids_for(tmp_path, content)

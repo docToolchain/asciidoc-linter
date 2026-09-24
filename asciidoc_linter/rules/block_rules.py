@@ -128,7 +128,13 @@ class BlockSpacingRule(Rule):
             else:
                 # This is an opening delimiter
                 if line_num > 0:
-                    prev_line = document[line_num - 1].strip()
+                    # Skip block attribute lines ([source]) and titles (.Title)
+                    prev_index = line_num - 1
+                    while prev_index > 0 and self._is_block_prefix(
+                        document[prev_index].strip()
+                    ):
+                        prev_index -= 1
+                    prev_line = document[prev_index].strip()
                     if prev_line and not prev_line.startswith("="):
                         findings.append(
                             Finding(
@@ -142,6 +148,13 @@ class BlockSpacingRule(Rule):
                 self.open_blocks[stripped_line] = line_num
 
         return findings
+
+    @staticmethod
+    def _is_block_prefix(line: str) -> bool:
+        """True for block attribute lines ([source]) and block titles (.Title)"""
+        is_attribute = line.startswith("[") and line.endswith("]")
+        is_title = len(line) > 1 and line[0] == "." and line[1] not in ". "
+        return is_attribute or is_title
 
     def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
         findings = []

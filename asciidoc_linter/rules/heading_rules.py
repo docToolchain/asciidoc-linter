@@ -23,12 +23,12 @@ class HeadingFormatRule(Rule):
 
     # Markup at the start of a title that renders as no (or non-textual)
     # visible text: inline macros (image:x.png[alt], kbd:[Ctrl], link:u[t],
-    # https://u[t]), attribute references ({name}) and anchors ([[id]],
-    # [#id], <<ref>>). Skipped before the capitalization check (#63).
+    # https://u[t]), attribute references ({name}, {counter:x}) and anchors
+    # ([[id]], [#id], <<ref>>). Skipped before the capitalization check (#63).
     LEADING_MARKUP_PATTERN = re.compile(
         r"^\s*(?:"
         r"[A-Za-z][\w-]*:{1,2}[^\s\[]*\[[^\]]*\]"
-        r"|\{[\w-]+\}"
+        r"|\{[^}\s]+\}"
         r"|\[\[[^\]]*\]\]"
         r"|\[#[^\]]*\]"
         r"|<<[^>]*>>"

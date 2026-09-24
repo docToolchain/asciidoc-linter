@@ -94,6 +94,7 @@ class TestHeadingFormatRule(unittest.TestCase):
             "== image:logo.png[Company logo] Project Title",
             "== kbd:[Ctrl] icon:gear[] Settings",
             "== {product-name} Overview",
+            "== {counter:section} Counted",
             "== [[anchor]]Intro",
             "== link:https://example.org[Example] Site",
             "== image:logo.png[]",
@@ -106,9 +107,14 @@ class TestHeadingFormatRule(unittest.TestCase):
         When the heading format rule is checked
         Then a capitalization finding is reported
         """
-        findings = self.rule.check(["== image:logo.png[Logo] project title"])
-        self.assertEqual(len(findings), 1)
-        self.assertIn("uppercase", findings[0].message)
+        for line in [
+            "== image:logo.png[Logo] project title",
+            "== {counter:section} lower title",
+        ]:
+            with self.subTest(line=line):
+                findings = self.rule.check([line])
+                self.assertEqual(len(findings), 1)
+                self.assertIn("uppercase", findings[0].message)
 
     def test_lowercase_title_is_still_reported(self):
         """

@@ -52,6 +52,22 @@ asciidoc-linter --debug document.adoc
 |Suppress non-error output
 |===
 
+=== Exit Codes
+
+[cols="1,3"]
+|===
+|Code |Meaning
+
+|0
+|No findings
+
+|1
+|At least one finding
+
+|2
+|The configuration file is missing, unreadable or invalid; nothing was linted
+|===
+
 == Configuration
 
 === Configuration File

@@ -32,7 +32,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/docToolchain/asciidoc-linter"
-Documentation = "https://doctoolchain.org/asciidoc-linter/"
+Documentation = "https://github.com/docToolchain/asciidoc-linter#readme"
 Issues = "https://github.com/docToolchain/asciidoc-linter/issues"
 
 [project.optional-dependencies]

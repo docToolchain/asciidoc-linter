@@ -6,8 +6,11 @@ Command line interface for the AsciiDoc linter
 import argparse
 import sys
 from typing import List, Optional
-from .linter import AsciiDocLinter
+from .linter import AsciiDocLinter, ConfigError
 from .reporter import ConsoleReporter, JsonReporter, HtmlReporter, Reporter
+
+# Exit code for an unusable configuration (argparse convention for usage errors)
+EXIT_CONFIG_ERROR = 2
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -57,7 +60,11 @@ def main(args: Optional[List[str]] = None) -> int:
     parsed_args = parser.parse_args(args)
 
     linter = AsciiDocLinter(config_path=parsed_args.config)
-    report = linter.lint(parsed_args.files)
+    try:
+        report = linter.lint(parsed_args.files)
+    except ConfigError as e:
+        print(f"Error loading config file: {e}", file=sys.stderr)
+        return EXIT_CONFIG_ERROR
 
     # Set reporter based on format argument
     print(get_reporter(parsed_args.format).format_report(report))

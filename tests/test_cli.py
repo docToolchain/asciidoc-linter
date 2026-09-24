@@ -1,7 +1,11 @@
 # test_cli.py - Tests for command line interface
 """Tests for the command line interface"""
 
+import io
+import os
+import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from unittest.mock import patch
 from asciidoc_linter.cli import main, create_parser, get_reporter
 from asciidoc_linter.rules.base import Finding, Severity
@@ -102,6 +106,50 @@ class TestCliFileProcessing(unittest.TestCase):
 
         self.assertEqual(exit_code, 1)
         mock_lint.assert_called_once()
+
+
+class TestCliConfigErrors(unittest.TestCase):
+    """A broken or missing config file stops the linter with exit code 2 (#59)"""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.doc = os.path.join(self.tmp.name, "file.adoc")
+        with open(self.doc, "w", encoding="utf-8") as f:
+            f.write("= T\n\ntext\n")
+
+    def _run(self, config_path):
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with redirect_stdout(stdout), redirect_stderr(stderr):
+            exit_code = main(["--config", config_path, "--format", "plain", self.doc])
+        return exit_code, stdout.getvalue(), stderr.getvalue()
+
+    def test_broken_config_exits_with_2(self):
+        config = os.path.join(self.tmp.name, "bad.yml")
+        with open(config, "w", encoding="utf-8") as f:
+            f.write("rules: [unclosed\n")
+
+        exit_code, stdout, stderr = self._run(config)
+
+        self.assertEqual(exit_code, 2)
+        self.assertIn("Error loading config file", stderr)
+        self.assertEqual(stdout, "")
+
+    def test_missing_config_exits_with_2(self):
+        exit_code, _, stderr = self._run(os.path.join(self.tmp.name, "missing.yml"))
+
+        self.assertEqual(exit_code, 2)
+        self.assertIn("missing.yml", stderr)
+
+    def test_valid_config_lints_normally(self):
+        config = os.path.join(self.tmp.name, "ok.yml")
+        with open(config, "w", encoding="utf-8") as f:
+            f.write("rules:\n  WS001:\n    enabled: false\n")
+
+        exit_code, stdout, stderr = self._run(config)
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(stderr, "")
 
 
 class TestCliReporters(unittest.TestCase):

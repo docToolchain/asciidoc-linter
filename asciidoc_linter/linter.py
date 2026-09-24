@@ -27,6 +27,10 @@ from .parser import AsciiDocParser
 from .reporter import LintReport
 
 
+class ConfigError(Exception):
+    """Raised when the configuration file cannot be read, parsed or applied"""
+
+
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
 
@@ -63,23 +67,52 @@ class AsciiDocLinter:
         return LintReport(all_findings)
 
     def load_config(self, config_path: str) -> None:
-        """Load configuration from a YAML file"""
+        """Load configuration from a YAML file
+
+        Raises ConfigError if the file cannot be read, parsed or applied.
+        An empty file or a file without a ``rules`` key is valid.
+        """
         try:
             with open(config_path, "r", encoding="utf-8") as config_file:
                 config = yaml.safe_load(config_file)
-                self.apply_config(config)
-        except Exception as e:
-            print(f"Error loading config file: {e}")
+        except (OSError, UnicodeDecodeError, yaml.YAMLError) as e:
+            raise ConfigError(f"{config_path}: {e}") from e
+        try:
+            self.apply_config(config)
+        except ConfigError as e:
+            raise ConfigError(f"{config_path}: {e}") from e
 
     def apply_config(self, config: dict) -> None:
-        """Apply configuration to the linter"""
-        rules_config = config.get("rules", {})
+        """Apply configuration to the linter
+
+        Raises ConfigError if the configuration has an invalid structure.
+        """
+        if config is None:
+            return
+        if not isinstance(config, dict):
+            raise ConfigError("top level must be a mapping")
+        rules_config = config.get("rules")
+        if rules_config is None:
+            rules_config = {}
+        if not isinstance(rules_config, dict):
+            raise ConfigError("'rules' must be a mapping of rule IDs")
         for rule in list(self.rules):
-            rule_config = rules_config.get(rule.id, {})
+            rule_config = rules_config.get(rule.id)
+            if rule_config is None:
+                rule_config = {}
+            if not isinstance(rule_config, dict):
+                raise ConfigError(f"configuration of rule {rule.id} must be a mapping")
             if not rule_config.get("enabled", True):
                 self.rules.remove(rule)
-            else:
+                continue
+            try:
                 rule.severity = Severity(rule_config.get("severity", rule.severity))
+            except ValueError as e:
+                raise ConfigError(
+                    f"invalid severity for rule {rule.id}: "
+                    f"{rule_config.get('severity')!r} "
+                    "(expected error, warning or info)"
+                ) from e
 
     def lint_file(self, file_path: Path) -> List[Finding]:
         """Lint a single file and return a report"""

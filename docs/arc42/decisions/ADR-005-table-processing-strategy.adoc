@@ -9,10 +9,17 @@ Proposed
 === Context
 
 Table processing in AsciiDoc documents requires complex parsing and validation:
-* Tables can contain various content types (text, lists, blocks) * Cell extraction needs to handle multi-line content * Column counting must be reliable * List detection in cells must be accurate
+
+* Tables can contain various content types (text, lists, blocks)
+* Cell extraction needs to handle multi-line content
+* Column counting must be reliable
+* List detection in cells must be accurate
 
 Current implementation has issues:
-* Cell extraction produces incorrect results * List detection generates false positives * Column counting is unreliable
+
+* Cell extraction produces incorrect results
+* List detection generates false positives
+* Column counting is unreliable
 
 === Decision
 
@@ -105,7 +112,12 @@ class TableProcessor:
 === Validation
 
 Success criteria:
-* All current table-related tests pass * Cell extraction matches expected results * List detection has no false positives * Column counting is accurate * Memory usage remains within limits
+
+* All current table-related tests pass
+* Cell extraction matches expected results
+* List detection has no false positives
+* Column counting is accurate
+* Memory usage remains within limits
 
 === Related Diagrams
 

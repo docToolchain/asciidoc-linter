@@ -114,6 +114,14 @@ class TestCliFileProcessing(unittest.TestCase):
         self.assertEqual(main(["doc.adoc", "--fail-level", "warning"]), 1)
         self.assertEqual(main(["doc.adoc"]), 1)
 
+    def test_broken_config_exits_with_2(self):
+        """Issue #59: a missing config file stops the run with exit code 2"""
+        with patch("sys.stderr") as stderr:
+            exit_code = main(["doc.adoc", "--config", "does-not-exist.yml"])
+
+        self.assertEqual(exit_code, 2)
+        self.assertTrue(stderr.write.called)
+
     def test_invalid_fail_level(self):
         with self.assertRaises(SystemExit):
             create_parser().parse_args(["doc.adoc", "--fail-level", "fatal"])

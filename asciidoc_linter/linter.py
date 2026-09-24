@@ -27,6 +27,10 @@ from .parser import AsciiDocParser
 from .reporter import LintReport
 
 
+class ConfigError(Exception):
+    """Raised when the configuration file cannot be read or is invalid"""
+
+
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
 
@@ -63,19 +67,26 @@ class AsciiDocLinter:
         return LintReport(all_findings)
 
     def load_config(self, config_path: str) -> None:
-        """Load configuration from a YAML file"""
+        """Load configuration from a YAML file
+
+        Raises ConfigError if the file cannot be read, parsed or applied.
+        An empty file or one without a "rules" key is valid.
+        """
         try:
             with open(config_path, "r", encoding="utf-8") as config_file:
                 config = yaml.safe_load(config_file)
-                self.apply_config(config)
-        except Exception as e:
-            print(f"Error loading config file: {e}")
+        except (OSError, yaml.YAMLError) as e:
+            raise ConfigError(f"Error loading config file {config_path}: {e}") from e
+        try:
+            self.apply_config(config or {})
+        except (AttributeError, TypeError, ValueError) as e:
+            raise ConfigError(f"Invalid config file {config_path}: {e}") from e
 
     def apply_config(self, config: dict) -> None:
         """Apply configuration to the linter"""
-        rules_config = config.get("rules", {})
+        rules_config = config.get("rules") or {}
         for rule in list(self.rules):
-            rule_config = rules_config.get(rule.id, {})
+            rule_config = rules_config.get(rule.id) or {}
             if not rule_config.get("enabled", True):
                 self.rules.remove(rule)
             else:

@@ -6,7 +6,7 @@ Command line interface for the AsciiDoc linter
 import argparse
 import sys
 from typing import List, Optional
-from .linter import AsciiDocLinter
+from .linter import AsciiDocLinter, ConfigError
 from .rules.base import Severity
 from .reporter import ConsoleReporter, JsonReporter, HtmlReporter, Reporter
 
@@ -64,7 +64,11 @@ def main(args: Optional[List[str]] = None) -> int:
     parsed_args = parser.parse_args(args)
 
     linter = AsciiDocLinter(config_path=parsed_args.config)
-    report = linter.lint(parsed_args.files)
+    try:
+        report = linter.lint(parsed_args.files)
+    except ConfigError as e:
+        print(e, file=sys.stderr)
+        return 2
 
     # Set reporter based on format argument
     print(get_reporter(parsed_args.format).format_report(report))

@@ -7,7 +7,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import Mock, patch
 
-from asciidoc_linter.linter import AsciiDocLinter
+from asciidoc_linter.linter import AsciiDocLinter, ConfigError
 from asciidoc_linter.parser import AsciiDocParser
 from asciidoc_linter.reporter import LintReport
 from asciidoc_linter.rules.base import Finding, Severity
@@ -311,3 +311,39 @@ def test_apply_config_removes_consecutive_disabled_rules():
     remaining_ids = [rule.id for rule in linter.rules]
     assert "HEAD002" not in remaining_ids
     assert "HEAD001" not in remaining_ids
+
+
+@pytest.mark.parametrize(
+    "content",
+    [
+        "rules: [unclosed\n",
+        "- just\n- a list\n",
+        "rules:\n  WS001:\n    severity: fatal\n",
+    ],
+)
+def test_load_config_rejects_invalid_config(tmp_path, content):
+    """Issue #59: a broken config file raises instead of falling back"""
+    config_file = tmp_path / "bad.yml"
+    config_file.write_text(content, encoding="utf-8")
+
+    with pytest.raises(ConfigError):
+        AsciiDocLinter().load_config(str(config_file))
+
+
+def test_load_config_rejects_missing_file(tmp_path):
+    """Issue #59: a missing config file raises instead of falling back"""
+    with pytest.raises(ConfigError):
+        AsciiDocLinter().load_config(str(tmp_path / "missing.yml"))
+
+
+@pytest.mark.parametrize("content", ["", "# only a comment\n", "other: 1\n"])
+def test_load_config_accepts_config_without_rules(tmp_path, content):
+    """An empty config file or one without a rules key keeps all rules"""
+    config_file = tmp_path / "empty.yml"
+    config_file.write_text(content, encoding="utf-8")
+    linter = AsciiDocLinter()
+    rule_count = len(linter.rules)
+
+    linter.load_config(str(config_file))
+
+    assert len(linter.rules) == rule_count

@@ -1,7 +1,7 @@
 # block_rules.py - Rules for checking AsciiDoc blocks
 
 from typing import List, Dict, Any, Union
-from .base import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
 
 
 class UnterminatedBlockRule(Rule):
@@ -73,6 +73,7 @@ class UnterminatedBlockRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str):
@@ -167,6 +168,7 @@ class BlockSpacingRule(Rule):
             lines = document.splitlines()
         else:
             lines = document
+        lines = mask_verbatim_blocks(lines)
 
         for line_num, line in enumerate(lines):
             if isinstance(line, str):

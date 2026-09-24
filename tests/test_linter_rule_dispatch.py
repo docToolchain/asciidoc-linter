@@ -43,3 +43,41 @@ def test_example_block_delimiter_is_not_a_heading(tmp_path):
 def test_block_attribute_and_title_lines_belong_to_block(tmp_path, prefix):
     content = "= T\n\n== Eins\n\n" + prefix + "----\nx = 1\n----\n"
     assert "BLOCK002" not in rule_ids_for(tmp_path, content)
+
+
+RAW_LINE_RULES = ("HEAD", "BLOCK", "IMG")
+
+
+def live_rule_ids(tmp_path, content):
+    """Rule IDs of the rules that work on raw lines"""
+    ids = rule_ids_for(tmp_path, content)
+    return [rule_id for rule_id in ids if rule_id.startswith(RAW_LINE_RULES)]
+
+
+@pytest.mark.parametrize("delimiter", ["----", "....", "++++", "////"])
+@pytest.mark.parametrize(
+    "body",
+    [
+        "image::missing.png[]\n",
+        "see image:missing.png[] here\n",
+        "= Second Title\n",
+        "==== skipped level\n",
+        "== lower case heading\n",
+    ],
+)
+def test_verbatim_block_content_is_ignored(tmp_path, delimiter, body):
+    content = "= T\n\n== Eins\n\n" + delimiter + "\n" + body + delimiter + "\n"
+    assert live_rule_ids(tmp_path, content) == []
+
+
+def test_indented_delimiter_inside_listing_does_not_close_it(tmp_path):
+    content = (
+        "= T\n\n== Eins\n\n[source]\n----\nWARNING: text\n  ----\n\n"
+        "WARNING: more\n  ----\nimage::missing.png[]\n----\n"
+    )
+    assert live_rule_ids(tmp_path, content) == []
+
+
+def test_rules_still_fire_after_verbatim_block(tmp_path):
+    content = "= T\n\n== Eins\n\n----\ncode\n----\n\nimage::missing.png[]\n"
+    assert "IMG001" in rule_ids_for(tmp_path, content)

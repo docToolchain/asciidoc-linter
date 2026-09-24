@@ -84,6 +84,23 @@ class TestListAfterParagraphRule(unittest.TestCase):
                 content = [delimiter, "text", "* not a list", delimiter]
                 self.assertEqual(self.lines_flagged(content), [])
 
+    def test_nested_table_content_ignored(self):
+        content = [
+            "|===",
+            "a|",
+            "!===",
+            "! cell text",
+            "* not a list",
+            "!===",
+            "cell text",
+            "* not a list either",
+            "|===",
+            "",
+            "Text after the table",
+            "* flagged",
+        ]
+        self.assertEqual(self.lines_flagged(content), [12])
+
     def test_list_directly_after_block_delimiter_not_flagged(self):
         content = ["====", "* item", "===="]
         self.assertEqual(self.lines_flagged(content), [])

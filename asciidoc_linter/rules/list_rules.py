@@ -52,17 +52,22 @@ class ListAfterParagraphRule(Rule):
         # Kind of the current run of non-blank lines: None (no run yet),
         # "paragraph" or "list" (runs starting with a list item or term)
         run = None
-        in_table = False
+        # Delimiter that opened the current table; only the same delimiter
+        # closes it, so a nested table (!===) inside |=== stays skipped
+        table_delimiter = None
         for line_number, line in enumerate(lines):
             stripped = line.strip()
             if line_number in skipped:
                 run = None
                 continue
-            if TABLE_DELIMITER_PATTERN.match(stripped):
-                in_table = not in_table
-                run = None
+            if table_delimiter is not None:
+                if stripped == table_delimiter:
+                    table_delimiter = None
+                    run = None
                 continue
-            if in_table:
+            if TABLE_DELIMITER_PATTERN.match(stripped):
+                table_delimiter = stripped
+                run = None
                 continue
             if not stripped or BLOCK_DELIMITER_PATTERN.match(stripped):
                 run = None

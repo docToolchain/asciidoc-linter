@@ -104,6 +104,13 @@ This project is part of docToolchain (https://doctoolchain.org), a collection of
 
 [source,bash]
 ----
+pip install asciidoc-linter
+----
+
+To install the latest development version from source:
+
+[source,bash]
+----
 # Clone the repository
 git clone https://github.com/docToolchain/asciidoc-linter.git
 

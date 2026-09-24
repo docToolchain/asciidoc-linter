@@ -29,7 +29,7 @@ setup(
     author_email="your.email@example.com",
     description="A linter for AsciiDoc files",
     long_description=open("README.adoc", encoding="utf-8").read(),
-    long_description_content_type="text/x-asciidoc",
+    long_description_content_type="text/plain",
     keywords="asciidoc, linter, documentation",
     url="https://github.com/yourusername/asciidoc-linter",
     classifiers=[

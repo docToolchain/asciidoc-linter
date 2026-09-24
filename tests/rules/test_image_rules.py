@@ -285,6 +285,15 @@ class TestImagePathResolution(unittest.TestCase):
         content = [":imagesdir: https://example.org/img", "image::x.png[Remote]"]
         self.assertEqual(self._not_found(content), [])
 
+    def test_uri_schemes_skip_existence_check(self):
+        for target in [
+            "file:/tmp/x.png",
+            "data:image/png;base64,AAAA",
+            "ftp://h/x.png",
+        ]:
+            with self.subTest(target=target):
+                self.assertEqual(self._not_found([f"image::{target}[Remote]"]), [])
+
     def test_attribute_reference_in_target_skips_existence_check(self):
         self.assertEqual(self._not_found(["image::{logo}[Logo image]"]), [])
 

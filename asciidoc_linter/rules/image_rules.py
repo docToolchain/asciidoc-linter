@@ -5,8 +5,9 @@ import re
 from typing import List, Dict, Any, Optional, Union
 from .base import Rule, Finding, Severity, Position, mask_verbatim_blocks
 
-# URL schemes (http://, https://, ftp://, ...) and data URIs
-URL_PATTERN = re.compile(r"^(?:[A-Za-z][A-Za-z0-9+.-]*://|data:)")
+# URI schemes (https:, ftp:, file:, data:, ...). At least two characters, so
+# Windows drive letters (C:/img.png) still count as local paths.
+URL_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]+:")
 # :imagesdir: value (set) and :imagesdir!: / :!imagesdir: (unset)
 IMAGESDIR_SET_PATTERN = re.compile(r"^:imagesdir:\s*(.*?)\s*$")
 IMAGESDIR_UNSET_PATTERN = re.compile(r"^:(?:imagesdir!|!imagesdir):\s*$")

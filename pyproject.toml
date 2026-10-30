@@ -1,32 +1,34 @@
 # pyproject.toml - Project configuration file
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=42", "setuptools-scm[simple]>=9.2", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "asciidoc-linter"
-version = "0.1.0"
+# version = "0.1.0"
 description = "A linter for AsciiDoc files"
 readme = {file = "README.adoc", content-type = "text/asciidoc"}
 authors = [
     {name = "Ralf D. Müller and the docToolchain contributors"}
 ]
 license = {text = "MIT"}
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 keywords = ["asciidoc", "linter", "documentation"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Documentation",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "License :: OSI Approved :: MIT License"
 ]
+dynamic = ["version"]
+
 dependencies = [
-    "pyyaml",  # Add this line
+    "pyyaml",
 ]
 
 [project.optional-dependencies]
@@ -41,9 +43,13 @@ test = [
 [tool.setuptools]
 license-files = ["LICENSE"]
 
+[tool.setuptools_scm]
+version_file = "asciidoc_linter/_version.py"
+write_to_source = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=asciidoc_linter --cov-report=html --cov-report=term-missing -v"
+addopts = "--verbose --cov=asciidoc_linter --cov-report=html --cov-report=term-missing"
 
 [project.scripts]
 asciidoc-linter = "asciidoc_linter.cli:main"

@@ -1,3 +1,6 @@
+# ignore _version.py written by setuptools_scm
+asciidoc_linter/_version.py
+
 # ignore all python cache files
 __pycache__
 
@@ -29,3 +32,6 @@ venv/*
 .coverage
 
 asciidoc_linter.egg-info
+# pixi environments
+.pixi/*
+!.pixi/config.toml

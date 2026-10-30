@@ -49,7 +49,7 @@ write_to_source = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=asciidoc_linter --cov-report=html --cov-report=term-missing -v"
+addopts = "--verbose --cov=asciidoc_linter --cov-report=html --cov-report=term-missing"
 
 [project.scripts]
 asciidoc-linter = "asciidoc_linter.cli:main"
